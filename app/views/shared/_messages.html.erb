@@ -1,0 +1,18 @@
+<% if notice %>
+  <div class="py-2"></div>
+  <div class="alert alert-info alert-dismissible fade show m-0 mb-4" role="alert">
+    <%= notice.html_safe %>
+    <button class="close" aria-label="Close" data-dismiss="alert" type="button">
+      <span aria-hidden="true">⨉</span>
+    </button>
+  </div>
+<% end %>
+<% if alert %>
+  <div class="py-2"></div>
+  <div class="alert alert-danger alert-dismissible fade show m-0 mb-4" role="alert">
+    <%= alert.html_safe %>
+    <button class="close" aria-label="Close" data-dismiss="alert" type="button">
+      <span aria-hidden="true">⨉</span>
+    </button>
+  </div>
+<% end %>
