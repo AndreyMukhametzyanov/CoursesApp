@@ -1,0 +1,44 @@
+AllCops:
+  TargetRubyVersion: 3.0.1
+  NewCops: enable
+  Exclude:
+    - db/**/*
+    - bin/*
+    - vendor/bundle/**/*
+    - config/initializers/*
+
+Metrics/MethodLength:
+  Max: 30
+Style/Copyright:
+  Enabled: false
+Style/MethodCallWithArgsParentheses:
+  Enabled: false
+Style/StringHashKeys:
+  Enabled: false
+Style/MissingElse:
+  Enabled: false
+Style/DocumentationMethod:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false
+Metrics/BlockLength:
+  Max: 60
+  Exclude:
+    - spec/**/*
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 120
+
+Bundler/GemComment:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 40
+
+Layout/EndOfLine:
+  Enabled: false
