@@ -2,5 +2,6 @@
 
 FactoryBot.define do
   factory :user do
+    # some test
   end
 end
