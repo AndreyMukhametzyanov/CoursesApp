@@ -5,7 +5,8 @@ FactoryBot.define do
     first_name { 'Ivan' }
     last_name { 'Ivanov' }
     date_of_birth { '01.01.2001' }
-    email { 'test@test.com' }
+    sequence(:email) { |i| "test#{i}@test.com" }
     password { '11223344' }
+    password_confirmation { '11223344' }
   end
 end

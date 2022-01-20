@@ -4,10 +4,10 @@
        <div><h4>Hello dear <%=current_user.first_name%></h4></div> 
             <button type="button" class="btn btn-outline-primary"> <%= link_to 'Log out', destroy_user_session_path, method: :delete %></button>
             <button type="button" class="btn btn-outline-primary"> <%= link_to current_user.first_name, edit_user_registration_path, method: :get %></button>
-    <%else%>
+    <% else %>
             <button type="button" class="btn btn-outline-primary"><%= link_to 'Sign in', new_user_session_path %></button>
             <button type="button" class="btn btn-outline-primary"><%= link_to 'Sign up', new_user_registration_path %></button>
-    <%end%>
+    <% end %>
 </div>
 
 &copy; @andrey <%= Time.now.year %>
