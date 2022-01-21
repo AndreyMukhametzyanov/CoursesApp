@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2022_01_20_170018) do
   enable_extension "plpgsql"
 
   create_table "courses", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.string "name"
     t.string "description"
     t.integer "level"

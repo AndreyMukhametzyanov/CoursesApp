@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  has_many :course
+  has_many :courses
 
   validates :email, presence: true, uniqueness: true
   validates :email, uniqueness: { case_sensitive: false }
