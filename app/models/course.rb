@@ -5,4 +5,5 @@ class Course < ApplicationRecord
 
   validates :description, :level, presence: true
   validates :name, presence: true, uniqueness: true
+  validates :name, uniqueness: { case_sensitive: false }
 end
