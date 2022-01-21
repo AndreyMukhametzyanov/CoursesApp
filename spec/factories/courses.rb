@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :course do
+    user
     sequence(:name) { |i| "Name#{i}" }
     description { 'MyString' }
     level { 1 }
