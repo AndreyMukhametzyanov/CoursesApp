@@ -2,6 +2,7 @@
 
 class Course < ApplicationRecord
   belongs_to :user
+  has_many :lessons
 
   validates :description, :level, presence: true
   validates :level, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than: 6 }
