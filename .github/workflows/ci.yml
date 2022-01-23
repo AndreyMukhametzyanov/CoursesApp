@@ -52,8 +52,8 @@ jobs:
       - name: Run tests
         env:
           PGHOST: localhost
-          POSTGRES_DB: currencies_with_views_test
-          POSTGRES_USER: currencies_with_views
+          POSTGRES_DB: CoursesApp_test
+          POSTGRES_USER: CoursesApp
           POSTGRES_PASSWORD: postgres
           PGPORT: ${{ job.services.postgres.ports[5432] }}
           RAILS_ENV: test

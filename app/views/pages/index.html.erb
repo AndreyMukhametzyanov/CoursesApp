@@ -1,2 +1,13 @@
-<h1>Welcome to the CLUB</h1>
+<h1>CoursesAPI</h1>
+<div>
+    <% if user_signed_in? %>
+       <div><h4>Hello dear <%=current_user.first_name%></h4></div> 
+            <button type="button" class="btn btn-outline-primary"> <%= link_to 'Log out', destroy_user_session_path, method: :delete %></button>
+            <button type="button" class="btn btn-outline-primary"> <%= link_to current_user.first_name, edit_user_registration_path %></button>
+    <% else %>
+            <button type="button" class="btn btn-outline-primary"><%= link_to 'Sign in', new_user_session_path %></button>
+            <button type="button" class="btn btn-outline-primary"><%= link_to 'Sign up', new_user_registration_path %></button>
+    <% end %>
+</div>
+
 &copy; @andrey <%= Time.now.year %>

@@ -9,9 +9,12 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <%= render partial: 'shared/messages' %>
-    <%= yield %>
+  
+    <div class="container">
+      <%= render partial: 'shared/messages' %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>
