@@ -1,21 +1,13 @@
+# frozen_string_literal: true
+
 class LessonsController < ApplicationController
-    def new 
+  def new; end
 
-    end
+  def create; end
 
-    def create
+  def show; end
 
-    end
+  def edit; end
 
-    def show
-
-    end
-
-    def edit
-        
-    end
-
-    def destroy
-
-    end
+  def destroy; end
 end

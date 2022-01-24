@@ -1,33 +1,27 @@
-<h1>CoursesAPI</h1>
+<h1 class="text-center">Платформа для онлайн курсов</h1>
 <div>
-    <% if user_signed_in? %>
-       <div><h4>Hello dear <%=current_user.first_name%></h4></div> 
-            <button type="button" class="btn btn-outline-primary"> <%= link_to 'Log out', destroy_user_session_path, method: :delete %></button>
-            <button type="button" class="btn btn-outline-primary"> <%= link_to current_user.first_name, edit_user_registration_path %></button>
-     
-        <div class="row">
+    <div class="row">
         <div class="col-sm-12">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-        <% @courses.each do |course| %>
-                <div class="col mb-4">
-                <div class="card">
-                <div class="card-body">
-                <h5 class="card-title mb-4"><%= course.name %></h5>
-                <h6 class="card-title mb-4">Описание: <%= course.description %></h6>
-                <p class="card-text"><%= link_to 'Подробнее', course_path(course.id), class: 'btn btn-info' %></p>
-                </div>
-                </div>
-                </div>
-        <% end %>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <% @courses.each do |course| %>
+                    <div class="col mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">
+                                    <%= course.name %>
+                                </h5>
+                                <h6 class="card-title mb-4">Описание: <%= course.description %>
+                                </h6>
+                                <p class="card-text">
+                                    <%= link_to 'Подробнее' , course_path(course.id), class: 'btn btn-info' %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
         </div>
-        </div>
-        </div>
-
-     
-    <% else %>
-            <button type="button" class="btn btn-outline-primary"><%= link_to 'Sign in', new_user_session_path %></button>
-            <button type="button" class="btn btn-outline-primary"><%= link_to 'Sign up', new_user_registration_path %></button>
-    <% end %>
+    </div>
 </div>
 
 <div>&copy; @andrey <%= Time.now.year %></div>

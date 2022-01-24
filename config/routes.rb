@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :courses do
     resources :lessons
-    member do 
+    member do
       get 'promo'
     end
   end
