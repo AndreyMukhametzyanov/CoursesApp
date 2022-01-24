@@ -2,5 +2,13 @@
 
 Rails.application.routes.draw do
   devise_for :users
-  root 'pages#index'
+
+  root 'courses#index'
+
+  resources :courses do
+    resources :lessons
+    member do 
+      get 'promo'
+    end
+  end
 end

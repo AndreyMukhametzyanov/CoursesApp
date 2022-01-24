@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-sm-12">
+    <nav aria-label="breadcrumb" class="mt-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to 'Главная', root_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @course.name %></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="p-4 border">
+      <h2><%= @course.name %></h2>
+      <p><strong>Краткое описание курса:</strong>   <%= @course.description %></p>
+      <p><strong>Сложность:</strong>  <%= @course.level %></p>
+    </div>
+  </div>
+</div>
