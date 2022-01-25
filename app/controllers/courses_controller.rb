@@ -5,9 +5,18 @@ class CoursesController < ApplicationController
     @courses = Course.all
   end
 
-  def new; end
+  def new
+    @course = Course.new
+  end
 
-  def create; end
+  def create
+    @course = current_user.courses.build(course_params)
+    if @course.save
+      redirect_to courses_path
+    else
+      render :new
+    end
+  end
 
   def show
     @course = Course.find_by_id(params[:id])
@@ -16,4 +25,14 @@ class CoursesController < ApplicationController
   def edit; end
 
   def destroy; end
+
+  def promo
+    @course = Course.find_by_id(params[:id])
+  end
+
+  private
+
+  def course_params
+    params.require(:course).permit(:name, :level, :description)
+  end
 end

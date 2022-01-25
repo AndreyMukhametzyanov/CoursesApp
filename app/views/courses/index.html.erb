@@ -1,4 +1,4 @@
-<h1 class="text-center">Платформа для онлайн курсов</h1>
+<h1 class="text-center my-4">Платформа для онлайн курсов</h1>
 <div>
     <div class="row">
         <div class="col-sm-12">
@@ -10,10 +10,9 @@
                                 <h5 class="card-title mb-4">
                                     <%= course.name %>
                                 </h5>
-                                <h6 class="card-title mb-4">Описание: <%= course.description %>
-                                </h6>
-                                <p class="card-text">
-                                    <%= link_to 'Подробнее' , course_path(course.id), class: 'btn btn-info' %>
+                                <h6 class="card-title my-2">Описание:</h6> <%= course.description %>
+                                <p class="card-text mt-3">
+                                    <%= link_to 'Подробнее' , course_path(course.id), class: 'btn btn-outline-primary' %>
                                 </p>
                             </div>
                         </div>

@@ -15,6 +15,9 @@
       <h2><%= @course.name %></h2>
       <p><strong>Краткое описание курса:</strong>   <%= @course.description %></p>
       <p><strong>Сложность:</strong>  <%= @course.level %></p>
+      <p class="card-text mt-3">
+        <%= link_to 'Смотреть промо', promo_course_path, class: 'btn btn-outline-primary' %>
+      </p>
     </div>
   </div>
 </div>
