@@ -1,0 +1,8 @@
+ru:
+  menu:
+    sign_in: 'Войти'
+    sign_up: 'Зарегистрироваться'
+  headers:
+    sign_in: 'Войти'
+    sign_up: 'Зарегистрироваться'
+
