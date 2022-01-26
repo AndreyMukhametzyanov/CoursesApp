@@ -1,1 +1,29 @@
+<div class="row">
+	<div class="col-sm-12">
+		<nav aria-label="breadcrumb" class="mt-4">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><%= link_to 'Главная', root_path %></li>
+				<li class="breadcrumb-item active" aria-current="page"><%= link_to "#{@course.name}", course_path %></li>
+			</ol>
+		</nav>
+	</div>
+</div>
+
 <h1>Lesson 1</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-10">Основной контент лекции</div>
+		<div class="col-2">
+			<H5>Cписок лекций</H5>
+			<div class="list-group">
+				<%= link_to 'Лекция 1', start_course_path, class: "list-group-item list-group-item-action active" %>
+
+				<a href="#" class="list-group-item list-group-item-action">Лекция 2</a>
+				<a href="#" class="list-group-item list-group-item-action">Лекция 3</a>
+				<a href="#" class="list-group-item list-group-item-action">Лекция 4</a>
+				<a href="#" class="list-group-item list-group-item-action">Лекция 5</a>
+			</div>
+		</div>
+	</div>
+</div>
+<a href="javascript:history.back()">Назад</a>

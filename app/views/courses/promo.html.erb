@@ -1,3 +1,15 @@
+<div class="row">
+  <div class="col-sm-12">
+    <nav aria-label="breadcrumb" class="mt-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to 'Главная', root_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{@course.name}", course_path %></li>
+
+      </ol>
+    </nav>
+  </div>
+</div>
+
 <h1>Промо ролик курса: <%= @course.name %></h1>
 
 <iframe width="640" height="480" src="https://www.youtube.com/embed/1D_HUuWCamw?list=PLWlFXymvoaJ_IY53-NQKwLCkR-KkZ_44-" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -6,3 +18,4 @@
 <p class="card-text mt-3">
   <%= link_to 'Start learning', start_course_path, class: 'btn btn-outline-primary' %>
 </p>
+<a href="javascript:history.back()">Назад</a>

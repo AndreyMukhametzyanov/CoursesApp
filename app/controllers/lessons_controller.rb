@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class LessonsController < ApplicationController
-  def new; end
+  def new
+    @lesson = Lesson.new
+  end
 
   def create; end
 
-  def show; end
+  def show
+    @course = Course.find_by_id(params[:id])
+  end
 
   def edit; end
 
