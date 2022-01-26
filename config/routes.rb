@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :lessons
     member do
       get 'promo'
+      get 'start'
     end
   end
 end

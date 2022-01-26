@@ -30,6 +30,10 @@ class CoursesController < ApplicationController
     @course = Course.find_by_id(params[:id])
   end
 
+  def start
+    redirect_to course_lesson_path(@course, @lesson)
+  end
+
   private
 
   def course_params
