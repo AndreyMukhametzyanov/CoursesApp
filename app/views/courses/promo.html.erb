@@ -3,8 +3,7 @@
     <nav aria-label="breadcrumb" class="mt-4">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><%= link_to 'Главная', root_path %></li>
-        <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{@course.name}", course_path %></li>
-
+        <li class="breadcrumb-item active" aria-current="page"><%= @course.name %></li>
       </ol>
     </nav>
   </div>
@@ -16,6 +15,5 @@
 <p><strong>Краткое описание курса:</strong>   <%= @course.description %></p>
 <p><strong>Сложность:</strong>  <%= @course.level %></p>
 <p class="card-text mt-3">
-  <%= link_to 'Start learning', start_course_path, class: 'btn btn-outline-primary' %>
+  <%= link_to 'Продолжить обучение', start_course_path, class: 'btn btn-outline-primary' %>
 </p>
-<a href="javascript:history.back()">Назад</a>

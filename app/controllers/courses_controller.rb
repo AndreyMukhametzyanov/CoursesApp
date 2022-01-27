@@ -28,7 +28,7 @@ class CoursesController < ApplicationController
 
   def start
     @course = Course.find_by_id(params[:id])
-    @lesson = Lesson.first.id
+    @lesson = Lesson.find_by(course_id: @course.id)
     redirect_to course_lesson_path(@course, @lesson)
   end
 
