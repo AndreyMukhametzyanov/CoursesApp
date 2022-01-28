@@ -18,7 +18,19 @@ class CoursesController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @course = Course.find_by(id: params[:id])
+  end
+
+  def update
+    @course = Course.find_by(id: params[:id])
+    if @course.update(course_params)
+      redirect_to courses_path
+    else
+      render :edit
+    end
+
+  end
 
   def destroy; end
 
@@ -28,7 +40,7 @@ class CoursesController < ApplicationController
 
   def start
     @course = Course.find_by_id(params[:id])
-    @lesson = Lesson.find_by(course_id: @course.id)
+    @lesson = @course.lessons.find(params[:id])
     redirect_to course_lesson_path(@course, @lesson)
   end
 

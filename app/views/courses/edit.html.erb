@@ -1,0 +1,12 @@
+<h1>Edit Course</h1>
+
+<%= simple_form_for @course do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.input :level, collection: 1..5 %>
+
+  <div class="btn btn-outline-primary mt-3">
+    <%= f.button :submit, "Edit" %>
+    <%= f.button :submit, "Destroy" %>
+  </div>
+<% end %>

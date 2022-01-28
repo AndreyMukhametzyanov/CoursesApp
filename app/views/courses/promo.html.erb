@@ -16,4 +16,5 @@
 <p><strong>Сложность:</strong>  <%= @course.level %></p>
 <p class="card-text mt-3">
   <%= link_to 'Продолжить обучение', start_course_path, class: 'btn btn-outline-primary' %>
+  <%= link_to 'Изменить курс', edit_course_path(@course), class: 'btn btn-outline-primary' %>
 </p>
