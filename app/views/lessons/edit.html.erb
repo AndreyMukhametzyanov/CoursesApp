@@ -1,0 +1,12 @@
+<h1>Edit Lesson</h1>
+
+<%= simple_form_for [@course, @lesson] do |f| %>
+	<%= f.input :title %>
+	<%= f.input :content %>
+	<%= f.input :youtube_video_id %>
+	<%= f.input :order_factor, collection: 1..@course.lessons.count %>
+
+	<div class="btn btn-outline-primary mt-3">
+		<%= f.button :submit, "Edit" %>
+	</div>
+<% end %>

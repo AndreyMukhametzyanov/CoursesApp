@@ -4,9 +4,9 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><%= link_to 'Главная', root_path %></li>
         <li class="breadcrumb-item active" aria-current="page"><%= @course.name %></li>
-      </ol>
-    </nav>
-  </div>
+			</ol>
+		</nav>
+	</div>
 </div>
 
 <h1>Промо ролик курса: <%= @course.name %></h1>
@@ -15,6 +15,8 @@
 <p><strong>Краткое описание курса:</strong>   <%= @course.description %></p>
 <p><strong>Сложность:</strong>  <%= @course.level %></p>
 <p class="card-text mt-3">
-  <%= link_to 'Продолжить обучение', start_course_path, class: 'btn btn-outline-primary' %>
-  <%= link_to 'Изменить курс', edit_course_path(@course), class: 'btn btn-outline-primary' %>
+	<% unless @course.lessons.empty? %>
+		<%= link_to 'Продолжить обучение', start_course_path, class: 'btn btn-outline-primary' %>
+		<%= link_to 'Изменить курс', edit_course_path(@course), class: 'btn btn-outline-primary' %>
+	<% end %>
 </p>

@@ -14,11 +14,12 @@
 
 <div class="row">
 	<div class="col-10">
-		<%= @lesson.content %>
+		<%= @lesson.title %>
+		<p><%= @lesson.content %></p>
 	</div>
 	<div class="col-2">
 		<H5>Cписок лекций</H5>
-		<% @course.lessons.each do |lesson| %>
+		<% @course.lessons.order_factor.each do |lesson| %>
 			<div class="list-group">
 				<% css_class = current_page?(course_lesson_path(@course, lesson)) ? "active" : "" %>
 				<%= link_to "Лекция #{lesson.id}", course_lesson_path(@course, lesson), class: "list-group-item list-group-item-action my-1 #{css_class}" %>
@@ -26,5 +27,10 @@
 		<% end %>
 	</div>
 </div>
-
+<p class="card-text mt-3">
+	<%= link_to 'Редактировать лекцию', edit_course_lesson_path(@course,@lesson), class: 'btn btn-outline-primary' %>
+</p>
+<p class="card-text mt-3">
+	<%= link_to 'Создать лекцию', new_course_lesson_path(@course,@lesson), class: 'btn btn-outline-primary' %>
+</p>
 

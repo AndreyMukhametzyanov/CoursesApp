@@ -2,6 +2,7 @@
 
 <%= simple_form_for @course do |f| %>
   <%= f.input :name %>
+  <%= f.input :youtube_video_id %>
   <%= f.input :level, collection: 1..5 %>
   <%= f.input :description %>
 
