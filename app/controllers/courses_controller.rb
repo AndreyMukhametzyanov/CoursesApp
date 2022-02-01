@@ -10,6 +10,7 @@ class CoursesController < ApplicationController
   end
 
   def create
+    # render plain: course_params
     @course = current_user.courses.build(course_params)
     if @course.save
       redirect_to courses_path
@@ -29,10 +30,7 @@ class CoursesController < ApplicationController
     else
       render :edit
     end
-
   end
-
-  def destroy; end
 
   def promo
     @course = Course.find_by_id(params[:id])
@@ -47,6 +45,6 @@ class CoursesController < ApplicationController
   private
 
   def course_params
-    params.require(:course).permit(:name, :level, :description)
+    params.require(:course).permit(:name, :level, :description, :video_link)
   end
 end

@@ -11,7 +11,12 @@
 
 <h1>Промо ролик курса: <%= @course.name %></h1>
 
-<iframe width="640" height="480" src="https://www.youtube.com/embed/1D_HUuWCamw?list=PLWlFXymvoaJ_IY53-NQKwLCkR-KkZ_44-" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="640" height="420"
+				src="https://www.youtube.com/embed/<%= @course.youtube_video_id %>"
+				allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen>
+</iframe>
+
 <p><strong>Краткое описание курса:</strong>   <%= @course.description %></p>
 <p><strong>Сложность:</strong>  <%= @course.level %></p>
 <p class="card-text mt-3">

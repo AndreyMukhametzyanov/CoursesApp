@@ -17,11 +17,15 @@ class Course < ApplicationRecord
   private
 
   def take_video_id
-    self[:youtube_video_id] = video_link.split('=').last
+    video_link.nil? ? nil : self[:youtube_video_id] = video_link.split('=').last
   end
 
   def check_url
-    correct_url = 'https://www.youtube.com/watch?v'
-    errors.add(:video_link, 'this link is not from YouTube hosting') if video_link.split('=').first != correct_url
+    correct = 'https://www.youtube.com/watch?v'
+    return if video_link.nil? || video_link.empty?
+
+    id = video_link.split('=').last
+    correct_link = video_link.split('=').first
+    correct_link == correct ? id : errors.add(:video_link, 'this link is not from YouTube hosting')
   end
 end
