@@ -2,9 +2,9 @@
 	<div class="col-sm-12">
 		<nav aria-label="breadcrumb" class="mt-4">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><%= link_to 'Главная', root_path %></li>
+				<li class="breadcrumb-item"><%= link_to t('courses.breadcrumb.home'), root_path %></li>
 				<li class="breadcrumb-item active" aria-current="page"><%= link_to "#{@course.name}", promo_course_path(@course) %></li>
-				<li class="breadcrumb-item active" aria-current="page">Lessons</li>
+				<li class="breadcrumb-item active" aria-current="page"><%= t('courses.breadcrumb.lessons') %></li>
 			</ol>
 			</ol>
 		</nav>
@@ -18,19 +18,19 @@
 		<p><%= @lesson.content %></p>
 	</div>
 	<div class="col-2">
-		<H5>Cписок лекций</H5>
+		<H5><%= t('lessons.lesson_list') %></H5>
 		<% @course.lessons.order_factor.each do |lesson| %>
 			<div class="list-group">
 				<% css_class = current_page?(course_lesson_path(@course, lesson)) ? "active" : "" %>
-				<%= link_to "Лекция #{lesson.id}", course_lesson_path(@course, lesson), class: "list-group-item list-group-item-action my-1 #{css_class}" %>
+				<%= link_to "#{t('lessons.lesson_num')} #{lesson.id}", course_lesson_path(@course, lesson), class: "list-group-item list-group-item-action my-1 #{css_class}" %>
 			</div>
 		<% end %>
 	</div>
 </div>
 <p class="card-text mt-3">
-	<%= link_to 'Редактировать лекцию', edit_course_lesson_path(@course,@lesson), class: 'btn btn-outline-primary' %>
+	<%= link_to t('lessons.lesson_edit'), edit_course_lesson_path(@course,@lesson), class: 'btn btn-outline-primary' %>
 </p>
 <p class="card-text mt-3">
-	<%= link_to 'Создать лекцию', new_course_lesson_path(@course,@lesson), class: 'btn btn-outline-primary' %>
+	<%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course,@lesson), class: 'btn btn-outline-primary' %>
 </p>
 

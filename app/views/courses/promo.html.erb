@@ -2,14 +2,14 @@
   <div class="col-sm-12">
     <nav aria-label="breadcrumb" class="mt-4">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><%= link_to 'Главная', root_path %></li>
+        <li class="breadcrumb-item"><%= link_to t('courses.breadcrumb.home'), root_path %></li>
         <li class="breadcrumb-item active" aria-current="page"><%= @course.name %></li>
 			</ol>
 		</nav>
 	</div>
 </div>
 
-<h1>Промо ролик курса: <%= @course.name %></h1>
+<h1><%= t('courses.promo.head') %> <%= @course.name %></h1>
 
 <iframe width="640" height="420"
 				src="https://www.youtube.com/embed/<%= @course.youtube_video_id %>"
@@ -17,11 +17,11 @@
 				allowfullscreen>
 </iframe>
 
-<p><strong>Краткое описание курса:</strong>   <%= @course.description %></p>
-<p><strong>Сложность:</strong>  <%= @course.level %></p>
+<p><strong><%= t('courses.promo.description') %></strong>   <%= @course.description %></p>
+<p><strong><%= t('courses.promo.level') %></strong>  <%= @course.level %></p>
 <p class="card-text mt-3">
 	<% unless @course.lessons.empty? %>
-		<%= link_to 'Продолжить обучение', start_course_path, class: 'btn btn-outline-primary' %>
-		<%= link_to 'Изменить курс', edit_course_path(@course), class: 'btn btn-outline-primary' %>
+		<%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
+		<%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
 	<% end %>
 </p>

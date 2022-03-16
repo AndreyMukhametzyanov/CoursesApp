@@ -36,7 +36,7 @@ class LessonsController < ApplicationController
     if @lesson.update(lesson_params)
       redirect_to course_lesson_path(@course, @lesson)
     else
-      redirect_to :edit
+      render :edit
     end
   end
 

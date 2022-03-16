@@ -1,8 +1,44 @@
 ru:
+  activerecord:
+    attributes:
+      course:
+        name: 'Название'
+        level: 'Сложность'
+        description: 'Описание'
+        video_link: 'Ссылка'
+      lesson:
+        title: 'Название'
+        content: 'Текст'
+        order_factor: 'Очередность'
+        youtube_video_id: 'Ссылка'
+
+
   menu:
     sign_in: 'Войти'
     sign_up: 'Зарегистрироваться'
-  headers:
-    sign_in: 'Войти'
-    sign_up: 'Зарегистрироваться'
+    sign_out: 'Выйти'
+    create_course: 'Создать курс'
+  courses:
+    breadcrumb:
+      home: 'Главная'
+      lessons: 'Лекции'
+    index:
+      head: 'Платформа для онлайн курсов'
+      description: 'Описание'
+      detailed: 'Подробнее'
+    promo:
+      head: 'Промо ролик курса'
+      description: 'Краткое описание курса:'
+      level: 'Сложность:'
+      continue: 'Продолжить обучение'
+      edit_course: 'Изменить курс'
+  lessons:
+    lesson_list: 'Cписок лекций'
+    lesson_num: 'Лекция '
+    lesson_edit: 'Редактировать лекцию'
+    lesson_create: 'Создать лекцию'
+  buttons:
+    create: 'Создать'
+    edit: 'Изменить'
+
 

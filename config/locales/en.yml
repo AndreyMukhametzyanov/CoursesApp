@@ -1,3 +1,44 @@
 en:
+  activerecord:
+    attributes:
+      course:
+        name: 'Name'
+        level: 'Level'
+        description: 'description'
+        video_link: 'Video link'
+      lesson:
+        title: 'Title'
+        content: 'Content'
+        order_factor: 'Order_factor'
+        youtube_video_id: 'Video link'
+
+
   menu:
-    head: 'Sign uPSDASD'
+    sign_in: 'Sign in'
+    sign_up: 'Sign up'
+    sign_out: 'Sign out'
+    create_course: 'Create course'
+  courses:
+    breadcrumb:
+      home: 'Home'
+      lessons: 'Lessons'
+    index:
+      head: 'Platform for online courses'
+      description: 'Description'
+      detailed: 'More detailed'
+    promo:
+      head: 'Promo video of the course: '
+      description: 'Description'
+      level: 'Level'
+      continue: 'Continue'
+      edit_course: 'Edit course'
+  lessons:
+    lesson_list: 'Available lessons'
+    lesson_num: 'Lesson '
+    lesson_edit: 'Edit lesson'
+    lesson_create: 'Create lesson'
+  buttons:
+    create: 'Create'
+    edit: 'Edit'
+
+
