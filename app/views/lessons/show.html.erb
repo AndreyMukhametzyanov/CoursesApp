@@ -11,7 +11,6 @@
 	</div>
 </div>
 
-
 <div class="row">
 	<div class="col-10">
 		<%= @lesson.title %>
@@ -19,7 +18,7 @@
 	</div>
 	<div class="col-2">
 		<H5><%= t('lessons.lesson_list') %></H5>
-		<% @course.lessons.order_factor.each do |lesson| %>
+		<% @course.lessons.order_by_factor.each do |lesson| %>
 			<div class="list-group">
 				<% css_class = current_page?(course_lesson_path(@course, lesson)) ? "active" : "" %>
 				<%= link_to "#{t('lessons.lesson_num')} #{lesson.id}", course_lesson_path(@course, lesson), class: "list-group-item list-group-item-action my-1 #{css_class}" %>

@@ -32,6 +32,7 @@ ru:
       level: 'Сложность:'
       continue: 'Продолжить обучение'
       edit_course: 'Изменить курс'
+      create_course: 'Создать новый курс'
   lessons:
     lesson_list: 'Cписок лекций'
     lesson_num: 'Лекция '
@@ -40,5 +41,6 @@ ru:
   buttons:
     create: 'Создать'
     edit: 'Изменить'
+    confirm: 'Подтвердить'
 
 

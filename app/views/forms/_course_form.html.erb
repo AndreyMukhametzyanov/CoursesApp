@@ -1,0 +1,10 @@
+<%= simple_form_for @course do |f| %>
+  <%= f.input :name %>
+  <%= f.input :video_link %>
+  <%= f.input :level, collection: 1..5 %>
+  <%= f.input :description %>
+
+  <div class="btn btn-outline-primary mt-3">
+    <%= f.button :submit, t('buttons.confirm') %>
+  </div>
+<% end %>

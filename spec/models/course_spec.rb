@@ -48,10 +48,8 @@ RSpec.describe Course, type: :model do
   end
 
   describe 'create model' do
-    let(:my_user) do
-      User.new(id: 1, first_name: 'User', last_name: 'Userovich', date_of_birth: '01.01.2002', email: 'test@test.com')
-    end
-    let!(:my_course) { Course.new(user: my_user, name: 'Dota2', description: 'Dota2', level: 1) }
+    let(:my_user) { build(:user) }
+    let!(:my_course) { build(:course) }
     let(:valid_link) { 'https://www.youtube.com/watch?v=sKwibmEWjdU' }
     let(:invalid_link) { 'https://www.yout111ube.com/watch?v=sKwibmEWjdU' }
     let(:empty_link) { nil }

@@ -32,6 +32,7 @@ en:
       level: 'Level'
       continue: 'Continue'
       edit_course: 'Edit course'
+      create_course: 'Create new course'
   lessons:
     lesson_list: 'Available lessons'
     lesson_num: 'Lesson '
@@ -40,5 +41,6 @@ en:
   buttons:
     create: 'Create'
     edit: 'Edit'
+    confirm: 'Confirm'
 
 
