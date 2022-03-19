@@ -16,7 +16,7 @@ class LessonsController < ApplicationController
     if @lesson.save
       redirect_to course_lesson_path(@course, @lesson)
     else
-      :new
+      render :new
     end
   end
 

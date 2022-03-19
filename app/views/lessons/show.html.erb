@@ -6,9 +6,8 @@
 				<li class="breadcrumb-item active" aria-current="page"><%= link_to "#{@course.name}", promo_course_path(@course) %></li>
 				<li class="breadcrumb-item active" aria-current="page"><%= t('courses.breadcrumb.lessons') %></li>
 			</ol>
-			</ol>
 		</nav>
-	</div>
+  </div>
 </div>
 
 <div class="row">
@@ -17,7 +16,7 @@
 		<p><%= @lesson.content %></p>
 	</div>
 	<div class="col-2">
-		<H5><%= t('lessons.lesson_list') %></H5>
+		<h5><%= t('lessons.lesson_list') %></h5>
 		<% @course.lessons.order_by_factor.each do |lesson| %>
 			<div class="list-group">
 				<% css_class = current_page?(course_lesson_path(@course, lesson)) ? "active" : "" %>

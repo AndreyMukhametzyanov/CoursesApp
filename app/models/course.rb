@@ -25,6 +25,6 @@ class Course < ApplicationRecord
     return if video_link.nil? || video_link.empty?
 
     correct_link, id = video_link.split('=')
-    correct_link == correct ? id : errors.add(:video_link, 'this link is not from YouTube hosting')
+    correct_link == correct ? id : errors.add(:video_link)
   end
 end

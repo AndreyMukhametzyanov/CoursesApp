@@ -42,5 +42,7 @@ en:
     create: 'Create'
     edit: 'Edit'
     confirm: 'Confirm'
+  errors:
+    link_error: ' is not from YouTube hosting'
 
 

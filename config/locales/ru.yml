@@ -42,5 +42,7 @@ ru:
     create: 'Создать'
     edit: 'Изменить'
     confirm: 'Подтвердить'
+  errors:
+    link_error: 'указанная ссылка не с youtube'
 
 

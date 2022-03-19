@@ -1,7 +1,13 @@
 <%= simple_form_for @course do |f| %>
-  <%= f.input :name %>
-  <%= f.input :video_link %>
-  <%= f.input :level, collection: 1..5 %>
-  <%= f.input :description %>
-  <%= f.button :submit, t('buttons.confirm'), class: "btn btn-outline-primary mt-3" %>
+	<%= f.input :name %>
+	<%= f.input :video_link %>
+	<%= f.input :level, collection: 1..5 %>
+	<%= f.input :description %>
+
+	<% if @course.new_record? %>
+		<%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary mt-3" %>
+		<% else %>
+		<%= f.button :submit, t('buttons.edit'), class: "btn btn-outline-primary mt-3" %>
+	<% end %>
+
 <% end %>
