@@ -20,14 +20,23 @@ class CoursesController < ApplicationController
 
   def edit
     @course = Course.find_by(id: params[:id])
+    return if @course.owner?(current_user)
+
+    flash[:alert] = 'Вы не можете редактировать пост - вы не являетесь автором'
+    redirect_to courses_path
   end
 
   def update
     @course = Course.find_by(id: params[:id])
-    if @course.update(course_params)
-      redirect_to courses_path
+    if @course.owner?(current_user)
+      if @course.update(course_params)
+        redirect_to courses_path
+      else
+        render :edit
+      end
     else
-      render :edit
+      flash[:alert] = 'Вы не можете редактировать пост - вы не являетесь автором'
+      redirect_to courses_path
     end
   end
 

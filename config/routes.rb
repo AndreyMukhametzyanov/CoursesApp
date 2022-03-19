@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root 'courses#index'
 
   resources :courses do
-    resources :lessons
+    resources :lessons, except: :index
     member do
       get 'promo'
       get 'start'

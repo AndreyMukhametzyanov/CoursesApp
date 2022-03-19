@@ -25,9 +25,10 @@
 		<% end %>
 	</div>
 </div>
+
 <p class="card-text mt-3">
-	<%= link_to t('lessons.lesson_edit'), edit_course_lesson_path(@course,@lesson), class: 'btn btn-outline-primary' %>
-</p>
-<p class="card-text mt-3">
-	<%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course,@lesson), class: 'btn btn-outline-primary' %>
+	<% if @course.owner?(current_user) %>
+		<%= link_to t('lessons.lesson_edit'), edit_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
+		<%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course), class: 'btn btn-outline-primary' %>
+	<% end %>
 </p>

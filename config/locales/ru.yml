@@ -1,5 +1,11 @@
 ru:
   activerecord:
+    errors:
+      models:
+        course:
+          attributes:
+            video_link:
+              is_not_youtube_link: 'не с youtube'
     attributes:
       course:
         name: 'Название'
@@ -43,6 +49,8 @@ ru:
     edit: 'Изменить'
     confirm: 'Подтвердить'
   errors:
-    link_error: 'указанная ссылка не с youtube'
+    create_error: 'Вы не можете создавать урок - вы не являетесь автором'
+    edit_error: 'Вы не можете редактировать урок - вы не являетесь автором'
+
 
 

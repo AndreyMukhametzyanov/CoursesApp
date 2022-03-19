@@ -14,6 +14,11 @@ class Course < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :name, uniqueness: { case_sensitive: false }
 
+  def owner?(user)
+    self.user == user
+  end
+
+
   private
 
   def take_video_id
@@ -25,6 +30,8 @@ class Course < ApplicationRecord
     return if video_link.nil? || video_link.empty?
 
     correct_link, id = video_link.split('=')
-    correct_link == correct ? id : errors.add(:video_link)
+    correct_link == correct ? id : errors.add(:video_link, :is_not_youtube_link)
   end
+
+
 end

@@ -1,5 +1,12 @@
 en:
   activerecord:
+    errors:
+      models:
+        course:
+          attributes:
+            video_link:
+              is_not_youtube_link: 'is not youtube'
+
     attributes:
       course:
         name: 'Name'
@@ -43,6 +50,7 @@ en:
     edit: 'Edit'
     confirm: 'Confirm'
   errors:
-    link_error: ' is not from YouTube hosting'
+    create_error: 'You cannot create a lesson - you are not the author'
+    edit_error: 'You cannot edit the lesson - you are not the author'
 
 
