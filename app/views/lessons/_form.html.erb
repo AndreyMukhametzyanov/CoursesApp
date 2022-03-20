@@ -4,10 +4,10 @@
   <%= f.input :youtube_video_id %>
   <%= f.input :order_factor, collection: 1..@course.lessons.count %>
 
-	<% if @lesson.new_record? %>
-		<%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary mt-3" %>
-	<% else %>
-		<%= f.button :submit, t('buttons.edit'), class: "btn btn-outline-primary mt-3" %>
-	<% end %>
+  <% if @lesson.new_record? %>
+    <%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary mt-3" %>
+  <% else %>
+    <%= f.button :submit, t('buttons.edit'), class: "btn btn-outline-primary mt-3" %>
+  <% end %>
 
 <% end %>
