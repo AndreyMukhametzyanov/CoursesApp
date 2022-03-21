@@ -33,13 +33,21 @@ RSpec.describe CoursesController, type: :controller do
         expect(Course.last.name).to eq(name)
         expect(Course.last.description).to eq(description)
         expect(Course.last.level).to eq(level)
-        expect(response).to have_http_status(200)
-        expect(response).to render_template('courses/index')
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(courses_path)
       end
     end
 
-    context 'when new course is not create' do
+    context 'when new course is not valid' do
+      it 'should render new form' do
+        post :create, params: { course: { user_id: user.id, name: 'Course', video_link: 'asdsa',
+                                          description: 'test',
+                                          level: 1 } }
 
+        expect(Course.last).not_to be_a_new(Course)
+        expect(response).to have_http_status(200)
+        expect(response).to render_template('new')
+      end
     end
 
   end

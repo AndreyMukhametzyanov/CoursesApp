@@ -17,7 +17,7 @@ RSpec.describe Course, type: :model do
 
   describe 'custom validation' do
     context 'when link is not youtube hosting' do
-      let(:error_message) { 'this link is not from YouTube hosting' }
+      let(:error_message) { I18n.t('activerecord.errors.models.course.attributes.video_link.is_not_youtube_link') }
 
       it 'should be not valid' do
         subject.video_link = 'test_link'
@@ -63,7 +63,7 @@ RSpec.describe Course, type: :model do
     end
 
     context 'not valid link' do
-      let(:error_msg) { 'this link is not from YouTube hosting' }
+      let(:error_msg) { I18n.t('activerecord.errors.models.course.attributes.video_link.is_not_youtube_link') }
 
       it 'should be not create model' do
         my_course.video_link = invalid_link
