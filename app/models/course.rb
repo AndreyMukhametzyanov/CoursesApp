@@ -18,11 +18,10 @@ class Course < ApplicationRecord
     self.user == user
   end
 
-
   private
 
   def take_video_id
-    video_link.nil? ? nil : self[:youtube_video_id] = video_link.split('=').last
+    self.youtube_video_id = video_link.split('=').last if video_link
   end
 
   def check_url
@@ -32,6 +31,4 @@ class Course < ApplicationRecord
     correct_link, id = video_link.split('=')
     correct_link == correct ? id : errors.add(:video_link, :is_not_youtube_link)
   end
-
-
 end

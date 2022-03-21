@@ -20,6 +20,28 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#create' do
+    context 'when new course is valid' do
+      let(:name) { 'Course' }
+      let(:description) { 'test' }
+      let(:level) { 1 }
+
+      it 'should render correct page' do
+        post :create, params: { course: { user_id: user.id, name: 'Course', video_link: '',
+                                          description: 'test',
+                                          level: 1 } }
+
+        expect(Course.last.name).to eq(name)
+        expect(Course.last.description).to eq(description)
+        expect(Course.last.level).to eq(level)
+        expect(response).to have_http_status(200)
+        expect(response).to render_template('courses/index')
+      end
+    end
+
+    context 'when new course is not create' do
+
+    end
+
   end
 
   describe '#edit' do
