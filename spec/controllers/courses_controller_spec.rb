@@ -53,12 +53,36 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#edit' do
+    before { get :edit }
+    it 'should returns correct renders for #edit' do
+      expect(response).to have_http_status(302)
+      expect(response).to redirect_to(courses_path)
+    end
   end
 
   describe '#update' do
+    let(:new_name) { "TEST" }
+    let!(:course) { create :course, id: 1, user_id: user.id }
+
+    before do
+      post :update, params: { course: { user_id: user.id, name: new_name, video_link: '',
+                                        description: 'test',
+                                        level: 1 } }
+    end
+
+    it 'should update course and check redirect to root' do
+
+      expect(Course.first.name).to eq(new_name)
+      expect(response).to have_http_status(302)
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   describe '#promo' do
+    before { get :promo }
+    it 'should returns correct renders for #edit' do
+
+    end
   end
 
   describe '#start' do
