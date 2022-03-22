@@ -49,11 +49,11 @@ RSpec.describe CoursesController, type: :controller do
         expect(response).to render_template('new')
       end
     end
-
   end
 
   describe '#edit' do
     before { get :edit }
+
     it 'should returns correct renders for #edit' do
       expect(response).to have_http_status(302)
       expect(response).to redirect_to(courses_path)
@@ -61,20 +61,17 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#update' do
-    let(:new_name) { "TEST" }
-    let!(:course) { create :course, id: 1, user_id: user.id }
+    let(:new_name) { 'new name' }
+    let!(:course) { create :course, id: 1, user: user }
 
     before do
-      post :update, params: { course: { user_id: user.id, name: new_name, video_link: '',
-                                        description: 'test',
-                                        level: 1 } }
+      patch :update, params: { id: course.id, course: { name: new_name } }
     end
 
     it 'should update course and check redirect to root' do
-
-      expect(Course.first.name).to eq(new_name)
+      expect(course.reload.name).to eq(new_name)
       expect(response).to have_http_status(302)
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(courses_path)
     end
   end
 
