@@ -46,8 +46,13 @@ class CoursesController < ApplicationController
 
   def start
     @course = Course.find_by_id(params[:id])
-    @lesson = @course.lessons.find(params[:id])
-    redirect_to course_lesson_path(@course, @lesson)
+    @lesson = @course.lessons.first
+    if @lesson
+      redirect_to course_lesson_path(@course, @lesson)
+    else
+      flash[:alert] = I18n.t('errors.access_error')
+      redirect_to promo_course_path
+    end
   end
 
   private

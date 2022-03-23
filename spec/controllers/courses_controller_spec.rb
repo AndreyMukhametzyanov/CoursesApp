@@ -10,6 +10,7 @@ RSpec.describe CoursesController, type: :controller do
 
   describe '#index' do
     let!(:courses) { create_list :course, 3 }
+
     before { get :index }
 
     it 'should returns correct renders for #index' do
@@ -52,17 +53,19 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#edit' do
-    before { get :edit }
+    let!(:course) { create :course, user: user }
+    before { get :edit, params: { id: course.id } }
 
     it 'should returns correct renders for #edit' do
-      expect(response).to have_http_status(302)
-      expect(response).to redirect_to(courses_path)
+      expect(assigns(:course)).to eq(course)
+      expect(response).to have_http_status(200)
+      expect(response).to render_template('edit')
     end
   end
 
   describe '#update' do
     let(:new_name) { 'new name' }
-    let!(:course) { create :course, id: 1, user: user }
+    let!(:course) { create :course, user: user }
 
     before do
       patch :update, params: { id: course.id, course: { name: new_name } }
@@ -76,12 +79,26 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#promo' do
-    before { get :promo }
-    it 'should returns correct renders for #edit' do
+    let!(:course) { create :course, user: user }
+    before { get :promo, params: { id: course.id } }
 
+    it 'should returns correct renders for #promo' do
+      expect(assigns(:course)).to eq(course)
+      expect(response).to have_http_status(200)
+      expect(response).to render_template('promo')
     end
   end
 
   describe '#start' do
+    let!(:course) { create :course, user: user }
+    let!(:lesson) { create :lesson, course: course, order_factor: 1 }
+    before { get :start, params: { id: course.id } }
+
+    it 'should returns correct renders for #start' do
+      expect(response).to have_http_status(302)
+      expect(response).to redirect_to(course_lessons_path(course, lesson))
+      #Expected "http://test.host/courses/144/lessons.26" to be === "http://test.host/courses/144/lessons/26".
+      # откуда взялась точка?
+    end
   end
 end
