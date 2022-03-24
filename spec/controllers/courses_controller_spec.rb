@@ -90,7 +90,7 @@ RSpec.describe CoursesController, type: :controller do
 
   describe '#start' do
     let!(:course) { create :course, user: user }
-    let!(:lesson) { create :lesson, course: course, order_factor: 1 }
+    let!(:lesson) { create :lesson, course: course }
     before { get :start, params: { id: course.id } }
 
     it 'should returns correct renders for #start' do
