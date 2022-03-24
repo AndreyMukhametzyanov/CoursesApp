@@ -25,15 +25,16 @@ RSpec.describe CoursesController, type: :controller do
       let(:name) { 'Course' }
       let(:description) { 'test' }
       let(:level) { 1 }
+      let(:course) { Course.last }
 
       it 'should render correct page' do
-        post :create, params: { course: { user_id: user.id, name: 'Course', video_link: '',
+        post :create, params: { course: { user: user, name: 'Course', video_link: '',
                                           description: 'test',
                                           level: 1 } }
 
-        expect(Course.last.name).to eq(name)
-        expect(Course.last.description).to eq(description)
-        expect(Course.last.level).to eq(level)
+        expect(course.name).to eq(name)
+        expect(course.description).to eq(description)
+        expect(course.level).to eq(level)
         expect(response).to have_http_status(302)
         expect(response).to redirect_to(courses_path)
       end
@@ -41,7 +42,7 @@ RSpec.describe CoursesController, type: :controller do
 
     context 'when new course is not valid' do
       it 'should render new form' do
-        post :create, params: { course: { user_id: user.id, name: 'Course', video_link: 'asdsa',
+        post :create, params: { course: { user: user, name: 'Course', video_link: 'asdsa',
                                           description: 'test',
                                           level: 1 } }
 
@@ -67,9 +68,7 @@ RSpec.describe CoursesController, type: :controller do
     let(:new_name) { 'new name' }
     let!(:course) { create :course, user: user }
 
-    before do
-      patch :update, params: { id: course.id, course: { name: new_name } }
-    end
+    before { patch :update, params: { id: course.id, course: { name: new_name } } }
 
     it 'should update course and check redirect to root' do
       expect(course.reload.name).to eq(new_name)
@@ -96,9 +95,7 @@ RSpec.describe CoursesController, type: :controller do
 
     it 'should returns correct renders for #start' do
       expect(response).to have_http_status(302)
-      expect(response).to redirect_to(course_lessons_path(course, lesson))
-      #Expected "http://test.host/courses/144/lessons.26" to be === "http://test.host/courses/144/lessons/26".
-      # откуда взялась точка?
+      expect(response).to redirect_to(course_lesson_path(course, lesson))
     end
   end
 end

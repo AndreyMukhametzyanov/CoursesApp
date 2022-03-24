@@ -22,7 +22,7 @@ class CoursesController < ApplicationController
     @course = Course.find_by(id: params[:id])
     return if @course.owner?(current_user)
 
-    flash[:alert] = 'Вы не можете редактировать пост - вы не являетесь автором'
+    edit_error
     redirect_to courses_path
   end
 
@@ -35,7 +35,7 @@ class CoursesController < ApplicationController
         render :edit
       end
     else
-      flash[:alert] = 'Вы не можете редактировать пост - вы не являетесь автором'
+      edit_error
       redirect_to courses_path
     end
   end
@@ -59,5 +59,9 @@ class CoursesController < ApplicationController
 
   def course_params
     params.require(:course).permit(:name, :level, :description, :video_link)
+  end
+
+  def edit_error
+    flash[:alert] = I18n.t('errors.edit_error')
   end
 end

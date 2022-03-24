@@ -2,18 +2,6 @@
   <%= f.input :title %>
   <%= f.input :content %>
   <%= f.input :youtube_video_id %>
-
-  <% if @course.lessons.empty? %>
-    <%= f.input :order_factor%>
-<!--  подумать как сделать дефолтное значение  #-->
-  <% else %>
-    <%= f.input :order_factor, collection: 1..@course.lessons.count %>
-  <% end %>
-
-  <% if @lesson.new_record? %>
-    <%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary mt-3" %>
-  <% else %>
-    <%= f.button :submit, t('buttons.edit'), class: "btn btn-outline-primary mt-3" %>
-  <% end %>
-
+  <%= f.input :order_factor %>
+  <%= f.button :submit, (@lesson.new_record? ? t('buttons.create') : t('buttons.edit')), class: "btn btn-outline-primary mt-3" %>
 <% end %>
