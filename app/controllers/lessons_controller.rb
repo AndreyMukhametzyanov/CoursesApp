@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 class LessonsController < ApplicationController
-
   def new
     @course = Course.find_by_id(params[:course_id])
     if @course.owner?(current_user)
-      @lesson = Lesson.new
+      @lesson = @course.lessons.build
     else
       flash[:alert] = I18n.t('errors.create_error')
       redirect_to promo_course_path(@course)
     end
-
   end
 
   def create
@@ -23,7 +21,7 @@ class LessonsController < ApplicationController
         render :new
       end
     else
-      flash[:alert] = I18n.t('errors.create_error')
+      auth_alert
       redirect_to promo_course_path(@course)
     end
   end
@@ -38,7 +36,7 @@ class LessonsController < ApplicationController
     if @course.owner?(current_user)
       @lesson = @course.lessons.find(params[:id])
     else
-      flash[:alert] = I18n.t('errors.edit_error')
+      auth_alert
       redirect_to promo_course_path(@course)
     end
   end
@@ -53,7 +51,7 @@ class LessonsController < ApplicationController
         render :edit
       end
     else
-      flash[:alert] = I18n.t('errors.edit_error')
+      auth_alert
       redirect_to promo_course_path(@course)
     end
   end
@@ -66,4 +64,7 @@ class LessonsController < ApplicationController
     params.require(:lesson).permit(:title, :content, :youtube_video_id, :order_factor)
   end
 
+  def auth_alert
+    flash[:alert] = I18n.t('errors.edit_error')
+  end
 end

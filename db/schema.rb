@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_29_174739) do
+ActiveRecord::Schema.define(version: 2022_03_24_080053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "courses", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.string "name"
     t.string "description"
     t.integer "level"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_174739) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.integer "youtube_video_id"
+    t.text "youtube_video_id"
     t.text "content"
     t.bigint "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 2022_01_29_174739) do
     t.string "title"
     t.integer "order_factor"
     t.index ["course_id"], name: "index_lessons_on_course_id"
-    t.index ["order_factor"], name: "index_lessons_on_order_factor", unique: true
   end
 
   create_table "users", force: :cascade do |t|
