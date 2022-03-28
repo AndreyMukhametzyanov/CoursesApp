@@ -53,5 +53,3 @@ en:
     create_error: 'You cannot create a lesson - you are not the author'
     edit_error: 'You cannot edit the lesson - you are not the author'
     access_error: 'Access to lessons denied'
-
-

@@ -15,7 +15,6 @@ ru:
     destroy_acc: 'Удалить аккаунт'
     warning: 'Вы уверены?'
 
-
   simple_form:
     "yes": 'Да'
     "no": 'Нет'
@@ -33,7 +32,6 @@ ru:
       user:
         username: 'Имя пользователя для входа в систему'
         password: 'Пароль не должен содержать специальных символов'
-        
 
     error_notification:
       default_message: "Пожалуйста исправьте следующую ошибку:"

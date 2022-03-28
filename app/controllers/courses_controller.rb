@@ -22,8 +22,7 @@ class CoursesController < ApplicationController
     @course = Course.find_by(id: params[:id])
     return if @course.owner?(current_user)
 
-    edit_error
-    redirect_to courses_path
+    redirect_with_alert
   end
 
   def update
@@ -35,8 +34,7 @@ class CoursesController < ApplicationController
         render :edit
       end
     else
-      edit_error
-      redirect_to courses_path
+      redirect_with_alert
     end
   end
 
@@ -61,7 +59,8 @@ class CoursesController < ApplicationController
     params.require(:course).permit(:name, :level, :description, :video_link)
   end
 
-  def edit_error
+  def redirect_with_alert
     flash[:alert] = I18n.t('errors.edit_error')
+    redirect_to courses_path
   end
 end

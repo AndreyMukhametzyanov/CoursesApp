@@ -9,14 +9,33 @@ RSpec.describe LessonsController, type: :controller do
   before { sign_in user }
 
   describe '#new' do
-    let!(:course) { create :course, user: user }
+    context 'when user not owner of lesson' do
+      let!(:course) { create :course, user: user }
+      let(:alert_message) { I18n.t('errors.create_error') }
+      let(:new_user) { create :user }
 
-    before { get :new, params: { course_id: course.id } }
+      before do
+        sign_in new_user
+        get :new, params: { course_id: course.id }
+      end
 
-    it 'should be correct render form ' do
-      expect(response).to have_http_status(200)
-      expect(response).to render_template('new')
+      it 'should return alert and correct redirect' do
+        expect(flash[:alert]).to eq(alert_message)
+        expect(response).to redirect_to promo_course_path(@course)
+      end
     end
+
+    context 'when user is owner of lesson' do
+      let!(:course) { create :course, user: user }
+
+      before { get :new, params: { course_id: course.id } }
+
+      it 'should be correct render form' do
+        expect(response).to have_http_status(200)
+        expect(response).to render_template('new')
+      end
+    end
+
   end
 
   describe '#create' do

@@ -28,7 +28,7 @@ RSpec.describe CoursesController, type: :controller do
       let(:course) { Course.last }
 
       it 'should render correct page' do
-        post :create, params: { course: { user: user, name: 'Course', video_link: '',
+        post :create, params: { course: { name: 'Course', video_link: '',
                                           description: 'test',
                                           level: 1 } }
 
@@ -42,11 +42,11 @@ RSpec.describe CoursesController, type: :controller do
 
     context 'when new course is not valid' do
       it 'should render new form' do
-        post :create, params: { course: { user: user, name: 'Course', video_link: 'asdsa',
+        post :create, params: { course: { name: 'Course', video_link: 'asdsa',
                                           description: 'test',
                                           level: 1 } }
 
-        expect(Course.last).not_to be_a_new(Course)
+        expect(Course.count).to eq(0)
         expect(response).to have_http_status(200)
         expect(response).to render_template('new')
       end
@@ -65,16 +65,48 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#update' do
-    let(:new_name) { 'new name' }
-    let!(:course) { create :course, user: user }
+    context 'when the data is correct' do
+      let(:new_name) { 'new name' }
+      let!(:course) { create :course, user: user }
 
-    before { patch :update, params: { id: course.id, course: { name: new_name } } }
+      before { patch :update, params: { id: course.id, course: { name: new_name } } }
 
-    it 'should update course and check redirect to root' do
-      expect(course.reload.name).to eq(new_name)
-      expect(response).to have_http_status(302)
-      expect(response).to redirect_to(courses_path)
+      it 'should update course and check redirect to root' do
+        expect(course.reload.name).to eq(new_name)
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(courses_path)
+      end
     end
+
+    context 'when user does not owner this course' do
+      let!(:course) { create :course, user: user }
+      let(:user2) { create :user }
+      let(:alert_message) { I18n.t('errors.edit_error') }
+
+      before do
+        sign_in user2
+        patch :update, params: { id: course.id }
+      end
+
+      it 'should return alert and correct redirect' do
+        expect(flash[:alert]).to eq(alert_message)
+        expect(response).to redirect_to courses_path
+      end
+    end
+
+    context 'when data is not correct' do
+      let(:new_name) { '' }
+      let!(:course) { create :course, user: user }
+
+      before { patch :update, params: { id: course.id, course: { name: new_name } } }
+
+      it 'should return errors' do
+        expect(Course.last.errors).not_to eq(0)
+        expect(response).to have_http_status(200)
+        expect(response).to render_template('edit')
+      end
+    end
+
   end
 
   describe '#promo' do
@@ -89,13 +121,27 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#start' do
-    let!(:course) { create :course, user: user }
-    let!(:lesson) { create :lesson, course: course }
-    before { get :start, params: { id: course.id } }
+    context 'when a lesson exists' do
+      let!(:course) { create :course, user: user }
+      let!(:lesson) { create :lesson, course: course }
+      before { get :start, params: { id: course.id } }
 
-    it 'should returns correct renders for #start' do
-      expect(response).to have_http_status(302)
-      expect(response).to redirect_to(course_lesson_path(course, lesson))
+      it 'should returns correct redirect to start lesson page' do
+        expect(response).to have_http_status(302)
+        expect(response).to redirect_to(course_lesson_path(course, lesson))
+      end
+    end
+
+    context 'when a lesson does not exists' do
+      let!(:course) { create :course, user: user }
+      let(:alert_message) { I18n.t('errors.access_error') }
+
+      before { get :start, params: { id: course.id } }
+
+      it 'should return alarm and correct redirect to promo page' do
+        expect(flash[:alert]).to eq(alert_message)
+        expect(response).to redirect_to promo_course_path
+      end
     end
   end
 end
