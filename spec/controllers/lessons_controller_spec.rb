@@ -56,8 +56,18 @@ RSpec.describe LessonsController, type: :controller do
         expect(response).to redirect_to(course_lesson_path(course, one_lesson))
       end
     end
+
     context 'when lesson is not valid' do
-      #необходимо ли тут проверять на не валидость лекцию?
+      it 'should return errors' do
+        post :create, params: { course_id: course.id, lesson: { title: '', youtube_video_id: '',
+                                                                content: '',
+                                                                order_factor: 1 } }
+
+        #Как проверить ошибки ? я падаю с ошибкой  method  for nil class
+        expect(course.lessons.last.errors).not_to eq(0)
+        expect(response).to have_http_status(200)
+        expect(response).to render_template('edit')
+      end
     end
   end
 
