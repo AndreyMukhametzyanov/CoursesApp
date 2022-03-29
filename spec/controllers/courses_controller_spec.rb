@@ -54,34 +54,68 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#edit' do
-    let!(:course) { create :course, user: user }
-    before { get :edit, params: { id: course.id } }
+    context 'when user is owner' do
+      let!(:course) { create :course, user: user }
+      before { get :edit, params: { id: course.id } }
 
-    it 'should returns correct renders for #edit' do
-      expect(assigns(:course)).to eq(course)
-      expect(response).to have_http_status(200)
-      expect(response).to render_template('edit')
+      it 'should returns correct renders for #edit' do
+        expect(assigns(:course)).to eq(course)
+        expect(response).to have_http_status(200)
+        expect(response).to render_template('edit')
+      end
     end
+
+    context 'when user is not owner' do
+      let!(:course) { create :course, user: user }
+      let(:user2) { create :user }
+      let(:alert_message) { I18n.t('errors.courses.change_error') }
+
+      before do
+        sign_in user2
+        get :edit, params: { id: course.id }
+      end
+
+      it 'should return alert and correct redirect' do
+        expect(flash[:alert]).to eq(alert_message)
+        expect(response).to redirect_to courses_path
+      end
+    end
+
   end
 
   describe '#update' do
-    context 'when the data is correct' do
-      let(:new_name) { 'new name' }
-      let!(:course) { create :course, user: user }
+    context 'when user is owner' do
+      context 'when data is correct' do
+        let(:new_name) { 'new name' }
+        let!(:course) { create :course, user: user }
 
-      before { patch :update, params: { id: course.id, course: { name: new_name } } }
+        before { patch :update, params: { id: course.id, course: { name: new_name } } }
 
-      it 'should update course and check redirect to root' do
-        expect(course.reload.name).to eq(new_name)
-        expect(response).to have_http_status(302)
-        expect(response).to redirect_to(courses_path)
+        it 'should update course and check redirect to root' do
+          expect(course.reload.name).to eq(new_name)
+          expect(response).to have_http_status(302)
+          expect(response).to redirect_to(courses_path)
+        end
+      end
+
+      context 'when data is not correct' do
+        let(:new_name) { '' }
+        let!(:course) { create :course, user: user }
+        let(:error_msg) { I18n.t('errors.courses.blank_error') }
+        before { patch :update, params: { id: course.id, course: { name: new_name } } }
+
+        it 'should return errors' do
+          expect((assigns(:course).errors)[:name].first).to eq(error_msg)
+          expect(response).to have_http_status(200)
+          expect(response).to render_template('edit')
+        end
       end
     end
 
     context 'when user does not owner this course' do
       let!(:course) { create :course, user: user }
       let(:user2) { create :user }
-      let(:alert_message) { I18n.t('errors.edit_error') }
+      let(:alert_message) { I18n.t('errors.courses.change_error') }
 
       before do
         sign_in user2
@@ -91,19 +125,6 @@ RSpec.describe CoursesController, type: :controller do
       it 'should return alert and correct redirect' do
         expect(flash[:alert]).to eq(alert_message)
         expect(response).to redirect_to courses_path
-      end
-    end
-
-    context 'when data is not correct' do
-      let(:new_name) { '' }
-      let!(:course) { create :course, user: user }
-
-      before { patch :update, params: { id: course.id, course: { name: new_name } } }
-
-      it 'should return errors' do
-        expect(Course.last.errors).not_to eq(0)
-        expect(response).to have_http_status(200)
-        expect(response).to render_template('edit')
       end
     end
 
@@ -134,7 +155,7 @@ RSpec.describe CoursesController, type: :controller do
 
     context 'when a lesson does not exists' do
       let!(:course) { create :course, user: user }
-      let(:alert_message) { I18n.t('errors.access_error') }
+      let(:alert_message) { I18n.t('errors.courses.access_error') }
 
       before { get :start, params: { id: course.id } }
 

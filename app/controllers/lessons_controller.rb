@@ -6,8 +6,7 @@ class LessonsController < ApplicationController
     if @course.owner?(current_user)
       @lesson = @course.lessons.build
     else
-      flash[:alert] = I18n.t('errors.create_error')
-      redirect_to promo_course_path(@course)
+      auth_alert
     end
   end
 
@@ -22,7 +21,6 @@ class LessonsController < ApplicationController
       end
     else
       auth_alert
-      redirect_to promo_course_path(@course)
     end
   end
 
@@ -37,7 +35,6 @@ class LessonsController < ApplicationController
       @lesson = @course.lessons.find(params[:id])
     else
       auth_alert
-      redirect_to promo_course_path(@course)
     end
   end
 
@@ -52,7 +49,6 @@ class LessonsController < ApplicationController
       end
     else
       auth_alert
-      redirect_to promo_course_path(@course)
     end
   end
 
@@ -65,6 +61,7 @@ class LessonsController < ApplicationController
   end
 
   def auth_alert
-    flash[:alert] = I18n.t('errors.edit_error')
+    flash[:alert] = I18n.t('errors.lessons.change_error')
+    redirect_to promo_course_path(@course)
   end
 end

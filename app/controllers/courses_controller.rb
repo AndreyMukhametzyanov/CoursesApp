@@ -48,7 +48,7 @@ class CoursesController < ApplicationController
     if @lesson
       redirect_to course_lesson_path(@course, @lesson)
     else
-      flash[:alert] = I18n.t('errors.access_error')
+      flash[:alert] = I18n.t('errors.courses.access_error')
       redirect_to promo_course_path
     end
   end
@@ -60,7 +60,7 @@ class CoursesController < ApplicationController
   end
 
   def redirect_with_alert
-    flash[:alert] = I18n.t('errors.edit_error')
+    flash[:alert] = I18n.t('errors.courses.change_error')
     redirect_to courses_path
   end
 end

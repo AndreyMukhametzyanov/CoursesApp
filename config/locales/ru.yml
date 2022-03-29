@@ -6,6 +6,7 @@ ru:
           attributes:
             video_link:
               is_not_youtube_link: 'не с youtube'
+
     attributes:
       course:
         name: 'Название'
@@ -49,6 +50,11 @@ ru:
     edit: 'Изменить'
     confirm: 'Подтвердить'
   errors:
-    create_error: 'Вы не можете создавать урок - вы не являетесь автором'
-    edit_error: 'Вы не можете редактировать урок - вы не являетесь автором'
-    access_error: 'Доступ к лекциям запрещен'
+    lessons:
+      change_error: 'Вы не можете создавать или редактировать урок - вы не являетесь автором'
+      access_error: 'Доступ к лекциям запрещен'
+      blank_error: 'не может быть пустым'
+    courses:
+      change_error: 'Вы не можете создавать или редактировать курс - вы не являетесь автором'
+      access_error: 'Доступ к курсу запрещен'
+      blank_error: 'не может быть пустым'

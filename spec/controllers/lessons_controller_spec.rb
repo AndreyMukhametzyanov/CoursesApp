@@ -9,9 +9,9 @@ RSpec.describe LessonsController, type: :controller do
   before { sign_in user }
 
   describe '#new' do
-    context 'when user not owner of lesson' do
+    context 'when user not owner of course' do
       let!(:course) { create :course, user: user }
-      let(:alert_message) { I18n.t('errors.create_error') }
+      let(:alert_message) { I18n.t('errors.lessons.change_error') }
       let(:new_user) { create :user }
 
       before do
@@ -21,11 +21,11 @@ RSpec.describe LessonsController, type: :controller do
 
       it 'should return alert and correct redirect' do
         expect(flash[:alert]).to eq(alert_message)
-        expect(response).to redirect_to promo_course_path(@course)
+        expect(response).to redirect_to promo_course_path(course)
       end
     end
 
-    context 'when user is owner of lesson' do
+    context 'when user is owner of course' do
       let!(:course) { create :course, user: user }
 
       before { get :new, params: { course_id: course.id } }
@@ -39,36 +39,40 @@ RSpec.describe LessonsController, type: :controller do
   end
 
   describe '#create' do
-    let!(:course) { create :course, user: user }
+    context 'when user is owner' do
+      let!(:course) { create :course, user: user }
 
-    context 'when lesson is valid' do
-      let!(:title) { 'Lesson' }
-      let!(:content) { 'test' }
-      let(:one_lesson) { course.lessons.last }
+      context 'when lesson is valid' do
+        let!(:title) { 'Lesson' }
+        let!(:content) { 'test' }
+        let(:one_lesson) { course.lessons.last }
 
-      it 'should render correct page' do
-        post :create, params: { course_id: course.id, lesson: { title: 'Lesson', youtube_video_id: '',
-                                                                content: 'test',
-                                                                order_factor: 1 } }
-        expect(one_lesson.title).to eq(title)
-        expect(one_lesson.content).to eq(content)
-        expect(response).to have_http_status(302)
-        expect(response).to redirect_to(course_lesson_path(course, one_lesson))
+        it 'should render correct page' do
+          post :create, params: { course_id: course.id, lesson: { title: 'Lesson', youtube_video_id: '',
+                                                                  content: 'test',
+                                                                  order_factor: 1 } }
+          expect(one_lesson.title).to eq(title)
+          expect(one_lesson.content).to eq(content)
+          expect(response).to have_http_status(302)
+          expect(response).to redirect_to(course_lesson_path(course, one_lesson))
+        end
       end
+
+      context 'when lesson is not valid' do
+
+        before { post :create, params: { course_id: course.id, lesson: { title: '' } } }
+
+        it 'should return errors' do
+          puts course.lessons
+
+          expect(Course.lessons.last.errors.count).not_to eq(0)
+          expect(response).to have_http_status(200)
+          expect(response).to render_template('edit')
+        end
+      end
+
     end
 
-    context 'when lesson is not valid' do
-      it 'should return errors' do
-        post :create, params: { course_id: course.id, lesson: { title: '', youtube_video_id: '',
-                                                                content: '',
-                                                                order_factor: 1 } }
-
-        #Как проверить ошибки ? я падаю с ошибкой  method  for nil class
-        expect(course.lessons.last.errors).not_to eq(0)
-        expect(response).to have_http_status(200)
-        expect(response).to render_template('edit')
-      end
-    end
   end
 
   describe '#show' do
@@ -79,35 +83,72 @@ RSpec.describe LessonsController, type: :controller do
 
     it 'should should returns correct render' do
       expect(assigns(:lesson)).to eq(lesson)
+      expect(assigns(:course)).to eq(course)
       expect(response).to have_http_status(200)
       expect(response).to render_template('show')
     end
   end
 
   describe '#edit' do
-    let!(:course) { create :course, user: user }
-    let!(:lesson) { create :lesson, course: course }
+    context 'when user is owner' do
+      let!(:course) { create :course, user: user }
+      let!(:lesson) { create :lesson, course: course }
 
-    before { get :edit, params: { course_id: course.id, id: lesson.id } }
+      before { get :edit, params: { course_id: course.id, id: lesson.id } }
 
-    it 'should be correct render form ' do
-      expect(assigns(:course)).to eq(course)
-      expect(response).to have_http_status(200)
-      expect(response).to render_template('edit')
+      it 'should be correct render form ' do
+        expect(assigns(:course)).to eq(course)
+        expect(response).to have_http_status(200)
+        expect(response).to render_template('edit')
+      end
     end
+
+    context 'when user is not owner' do
+      let!(:course) { create :course, user: user }
+      let!(:lesson) { create :lesson, course: course }
+      let(:alert_message) { I18n.t('errors.lessons.change_error') }
+      let(:new_user) { create :user }
+
+      before do
+        sign_in new_user
+        get :edit, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'should return alert and correct redirect' do
+        expect(flash[:alert]).to eq(alert_message)
+        expect(response).to redirect_to promo_course_path(course)
+      end
+    end
+
   end
 
   describe '#update' do
-    let(:new_title) { 'new lesson' }
-    let!(:course) { create :course, user: user }
-    let!(:lesson) { create :lesson, course: course }
+    context 'when user is owner' do
+      context 'when data is correct' do
+        let(:new_title) { 'new lesson' }
+        let!(:course) { create :course, user: user }
+        let!(:lesson) { create :lesson, course: course }
 
-    before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
+        before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
 
-    it 'should update course and check redirect to root' do
-      expect(lesson.reload.title).to eq(new_title)
-      expect(response).to have_http_status(302)
-      expect(response).to redirect_to(course_lesson_path(course, lesson))
+        it 'should update course and check redirect to root' do
+          expect(lesson.reload.title).to eq(new_title)
+          expect(response).to have_http_status(302)
+          expect(response).to redirect_to(course_lesson_path(course, lesson))
+        end
+      end
+
+      context 'when data does not correct' do
+        let(:new_title) { '' }
+        let!(:course) { create :course, user: user }
+        let!(:lesson) { create :lesson, course: course }
+
+        before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
+
+        it 'should correct render form and render error' do
+
+        end
+      end
     end
 
   end

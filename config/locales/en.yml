@@ -50,6 +50,11 @@ en:
     edit: 'Edit'
     confirm: 'Confirm'
   errors:
-    create_error: 'You cannot create a lesson - you are not the author'
-    edit_error: 'You cannot edit the lesson - you are not the author'
-    access_error: 'Access to lessons denied'
+    lessons:
+      change_error: 'You cannot edit or create the lesson - you are not the author'
+      access_error: 'Access to lessons denied'
+      blank_error: 'cant be blank'
+    courses:
+      change_error: 'You cannot edit or create the course - you are not the author'
+      access_error: 'Access to course denied'
+      blank_error: 'cant be blank'
