@@ -80,7 +80,6 @@ RSpec.describe CoursesController, type: :controller do
         expect(response).to redirect_to courses_path
       end
     end
-
   end
 
   describe '#update' do
@@ -102,6 +101,7 @@ RSpec.describe CoursesController, type: :controller do
         let(:new_name) { '' }
         let!(:course) { create :course, user: user }
         let(:error_msg) { I18n.t('errors.courses.blank_error') }
+
         before { patch :update, params: { id: course.id, course: { name: new_name } } }
 
         it 'should return errors' do
@@ -127,7 +127,6 @@ RSpec.describe CoursesController, type: :controller do
         expect(response).to redirect_to courses_path
       end
     end
-
   end
 
   describe '#promo' do

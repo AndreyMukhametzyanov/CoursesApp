@@ -35,7 +35,6 @@ RSpec.describe LessonsController, type: :controller do
         expect(response).to render_template('new')
       end
     end
-
   end
 
   describe '#create' do
@@ -47,10 +46,13 @@ RSpec.describe LessonsController, type: :controller do
         let!(:content) { 'test' }
         let(:one_lesson) { course.lessons.last }
 
-        it 'should render correct page' do
+        before do
           post :create, params: { course_id: course.id, lesson: { title: 'Lesson', youtube_video_id: '',
                                                                   content: 'test',
                                                                   order_factor: 1 } }
+        end
+
+        it 'should render correct page' do
           expect(one_lesson.title).to eq(title)
           expect(one_lesson.content).to eq(content)
           expect(response).to have_http_status(302)
@@ -59,20 +61,35 @@ RSpec.describe LessonsController, type: :controller do
       end
 
       context 'when lesson is not valid' do
+        let(:error_msg) { I18n.t('errors.lessons.blank_error') }
 
         before { post :create, params: { course_id: course.id, lesson: { title: '' } } }
 
         it 'should return errors' do
-          puts course.lessons
-
-          expect(Course.lessons.last.errors.count).not_to eq(0)
+          expect((assigns(:lesson).errors)[:title].first).to eq(error_msg)
           expect(response).to have_http_status(200)
-          expect(response).to render_template('edit')
+          expect(response).to render_template('new')
         end
       end
-
     end
 
+    context 'when user is not owner' do
+      let!(:course) { create :course, user: user }
+      let(:new_user) { create :user }
+      let(:alert_message) { I18n.t('errors.lessons.change_error') }
+
+      before do
+        sign_in new_user
+        post :create, params: { course_id: course.id, lesson: { title: 'Lesson', youtube_video_id: '',
+                                                                content: 'test',
+                                                                order_factor: 1 } }
+      end
+
+      it 'should return errors' do
+        expect(flash[:alert]).to eq(alert_message)
+        expect(response).to redirect_to promo_course_path(course)
+      end
+    end
   end
 
   describe '#show' do
@@ -119,7 +136,6 @@ RSpec.describe LessonsController, type: :controller do
         expect(response).to redirect_to promo_course_path(course)
       end
     end
-
   end
 
   describe '#update' do
@@ -142,15 +158,34 @@ RSpec.describe LessonsController, type: :controller do
         let(:new_title) { '' }
         let!(:course) { create :course, user: user }
         let!(:lesson) { create :lesson, course: course }
+        let(:error_msg) { I18n.t('errors.lessons.blank_error') }
 
         before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
 
-        it 'should correct render form and render error' do
+        it 'should return error' do
+          expect((assigns(:lesson).errors)[:title].first).to eq(error_msg)
+          expect(response).to have_http_status(200)
+          expect(response).to render_template('edit')
+        end
+      end
 
+      context 'when user is not owner' do
+        let!(:course) { create :course, user: user }
+        let!(:lesson) { create :lesson, course: course }
+        let(:new_user) { create :user }
+        let(:alert_message) { I18n.t('errors.lessons.change_error') }
+        let(:new_title) { '' }
+
+        before do
+          sign_in new_user
+          patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } }
+        end
+
+        it 'should return errors' do
+          expect(flash[:alert]).to eq(alert_message)
+          expect(response).to redirect_to promo_course_path(course)
         end
       end
     end
-
   end
 end
-
