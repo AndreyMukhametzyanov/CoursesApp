@@ -6,7 +6,7 @@ class LessonsController < ApplicationController
     if @course.owner?(current_user)
       @lesson = @course.lessons.build
     else
-      auth_alert
+      redirect_with_alert
     end
   end
 
@@ -20,7 +20,7 @@ class LessonsController < ApplicationController
         render :new
       end
     else
-      auth_alert
+      redirect_with_alert
     end
   end
 
@@ -34,7 +34,7 @@ class LessonsController < ApplicationController
     if @course.owner?(current_user)
       @lesson = @course.lessons.find(params[:id])
     else
-      auth_alert
+      redirect_with_alert
     end
   end
 
@@ -48,7 +48,7 @@ class LessonsController < ApplicationController
         render :edit
       end
     else
-      auth_alert
+      redirect_with_alert
     end
   end
 
@@ -60,7 +60,7 @@ class LessonsController < ApplicationController
     params.require(:lesson).permit(:title, :content, :youtube_video_id, :order_factor)
   end
 
-  def auth_alert
+  def redirect_with_alert
     flash[:alert] = I18n.t('errors.lessons.change_error')
     redirect_to promo_course_path(@course)
   end

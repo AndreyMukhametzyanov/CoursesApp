@@ -114,11 +114,11 @@ RSpec.describe CoursesController, type: :controller do
 
     context 'when user does not owner this course' do
       let!(:course) { create :course, user: user }
-      let(:user2) { create :user }
+      let(:another_user) { create :user }
       let(:alert_message) { I18n.t('errors.courses.change_error') }
 
       before do
-        sign_in user2
+        sign_in another_user
         patch :update, params: { id: course.id }
       end
 

@@ -6,7 +6,6 @@ ru:
           attributes:
             video_link:
               is_not_youtube_link: 'не с youtube'
-
     attributes:
       course:
         name: 'Название'
@@ -18,8 +17,6 @@ ru:
         content: 'Текст'
         order_factor: 'Очередность'
         youtube_video_id: 'Ссылка'
-
-
   menu:
     sign_in: 'Войти'
     sign_up: 'Зарегистрироваться'
