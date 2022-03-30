@@ -1,0 +1,7 @@
+<%= simple_form_for [@course, @lesson] do |f| %>
+  <%= f.input :title %>
+  <%= f.input :content %>
+  <%= f.input :youtube_video_id %>
+  <%= f.input :order_factor %>
+  <%= f.button :submit, (@lesson.new_record? ? t('buttons.create') : t('buttons.edit')), class: "btn btn-outline-primary mt-3" %>
+<% end %>

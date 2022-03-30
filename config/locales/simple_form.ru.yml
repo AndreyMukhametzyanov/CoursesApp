@@ -1,0 +1,62 @@
+ru:
+  buttons:
+    sign_in: 'Войти'
+    sign_up: 'Зарегистрироваться'
+    forgot_password: 'Забыли пароль?'
+    instructions: 'Не получили письмо с инструкциями?'
+    unlock: 'Не получили ссылку на подтверждение?'
+    min_pass_length: 'Минимальное количество знаков:'
+    back: 'Назад'
+  edit:
+    edit: 'Изменение данных пользователя'
+    no_change: 'оставьте поле пустым, если вы не хотите его менять'
+    confirm_change: 'введите текущий пароль для подтверждения  изменений'
+    update: 'Изменить'
+    destroy_acc: 'Удалить аккаунт'
+    warning: 'Вы уверены?'
+
+  simple_form:
+    "yes": 'Да'
+    "no": 'Нет'
+    required:
+      text: 'поле обязательное для заполнения '
+      mark: '*'
+    labels:
+      user:
+        username: 'Логин'
+        password: 'Пароль'
+        edit:
+          username: 'Изменить логин'
+          password: 'Изменить пароль'
+    hints:
+      user:
+        username: 'Имя пользователя для входа в систему'
+        password: 'Пароль не должен содержать специальных символов'
+
+    error_notification:
+      default_message: "Пожалуйста исправьте следующую ошибку:"
+    labels:
+      defaults:
+        first_name: 'Имя'
+        last_name: 'Фамилия'
+        date_of_birth: 'Дата рождения'
+        password: 'Пароль'
+        password_confirmation: 'Повторите пароль'
+      user:
+        new:
+          email: 'Ваша почта'
+        edit:
+          email: 'Почта'
+          current_password: 'Текущий пароль'
+          update: 'Подтвердить'
+    hints:
+      defaults:
+        username: 'Имя пользователя для входа в систему'
+        password: 'Пароль не должен содержать специальных символов'
+        
+    include_blanks:
+      defaults:
+        age: 'Лучше никому не говорить'
+    prompts:
+      defaults:
+        age: 'Выберите свой возраст'

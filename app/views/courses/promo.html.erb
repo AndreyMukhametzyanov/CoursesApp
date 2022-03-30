@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-sm-12">
+    <nav aria-label="breadcrumb" class="mt-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to t('courses.breadcrumb.home'), root_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @course.name %></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<h1><%= t('courses.promo.head') %> <%= @course.name %></h1>
+<% unless @course.youtube_video_id.nil? %>
+  <iframe width="640" height="420"
+          src="https://www.youtube.com/embed/<%= @course.youtube_video_id %>"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+  </iframe>
+<% end %>
+
+<p><strong><%= t('courses.promo.description') %></strong>   <%= @course.description %></p>
+<p><strong><%= t('courses.promo.level') %></strong>  <%= @course.level %></p>
+<p class="card-text mt-3">
+  <% if @course.owner?(current_user) %>
+    <% if @course.lessons.empty? %>
+      <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
+      <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
+    <% else %>
+      <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
+      <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
+      <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
+    <% end %>
+  <% else %>
+    <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
+  <% end %>
+</p>

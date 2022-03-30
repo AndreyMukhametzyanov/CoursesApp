@@ -26,9 +26,10 @@ module CoursesApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
+    config.i18n.available_locales = %i[en ru]
+    config.i18n.default_locale = :ru
+
     config.autoload_paths << Rails.root.join('lib')
-    config.autoload_paths += Dir.glob("#{config.root}/app/workers/*")
-    config.autoload_paths += Dir.glob("#{config.root}/app/interactions/*")
 
     config.autoload_paths << Rails.root.join('lib')
     config.generators.system_tests = nil

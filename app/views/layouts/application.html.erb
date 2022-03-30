@@ -9,8 +9,22 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
+
   <body>
-  
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <h5 class="my-0 mr-md-auto font-weight-normal" style="margin-right: auto;"><%= link_to 'IT', root_path %></h5>
+        <% if user_signed_in? %>
+            <%= link_to t('menu.sign_out'), destroy_user_session_path, method: :delete, class: 'btn btn-outline-primary my-1' %>
+            <%= link_to current_user.first_name, edit_user_registration_path, class: 'btn btn-outline-primary my-1 mx-2' %>
+            <%= link_to t('menu.create_course'),  new_course_path, class: 'btn btn-outline-primary my-1' %>
+        <% else %>
+            <div style="margin-left: 30px;"><%= link_to t('menu.sign_up'), new_user_registration_path, class: 'btn btn-outline-primary' %></div>
+            <div style="margin-left: 30px;"><%= link_to t('menu.sign_in'), new_user_session_path, class: 'btn btn-outline-primary' %></div>
+        <% end %> 
+      </div>
+    </div>
+
     <div class="container">
       <%= render partial: 'shared/messages' %>
 

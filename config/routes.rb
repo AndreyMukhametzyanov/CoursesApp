@@ -2,5 +2,14 @@
 
 Rails.application.routes.draw do
   devise_for :users
-  root 'pages#index'
+
+  root 'courses#index'
+
+  resources :courses do
+    resources :lessons, except: :index
+    member do
+      get 'promo'
+      get 'start'
+    end
+  end
 end

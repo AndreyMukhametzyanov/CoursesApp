@@ -1,33 +1,57 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        course:
+          attributes:
+            video_link:
+              is_not_youtube_link: 'is not youtube'
+    attributes:
+      course:
+        name: 'Name'
+        level: 'Level'
+        description: 'description'
+        video_link: 'Video link'
+      lesson:
+        title: 'Title'
+        content: 'Content'
+        order_factor: 'Order_factor'
+        youtube_video_id: 'Video link'
+  menu:
+    sign_in: 'Sign in'
+    sign_up: 'Sign up'
+    sign_out: 'Sign out'
+    create_course: 'Create course'
+  courses:
+    breadcrumb:
+      home: 'Home'
+      lessons: 'Lessons'
+    index:
+      head: 'Platform for online courses'
+      description: 'Description'
+      detailed: 'More detailed'
+    promo:
+      head: 'Promo video of the course: '
+      description: 'Description'
+      level: 'Level'
+      continue: 'Continue'
+      edit_course: 'Edit course'
+      create_course: 'Create new course'
+  lessons:
+    lesson_list: 'Available lessons'
+    lesson_num: 'Lesson '
+    lesson_edit: 'Edit lesson'
+    lesson_create: 'Create lesson'
+  buttons:
+    create: 'Create'
+    edit: 'Edit'
+    confirm: 'Confirm'
+  errors:
+    lessons:
+      change_error: 'You cannot edit or create the lesson - you are not the author'
+      access_error: 'Access to lessons denied'
+      blank_error: 'cant be blank'
+    courses:
+      change_error: 'You cannot edit or create the course - you are not the author'
+      access_error: 'Access to course denied'
+      blank_error: 'cant be blank'
