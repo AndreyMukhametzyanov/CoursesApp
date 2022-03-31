@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Course < ApplicationRecord
+  include Commentable
+
   belongs_to :user
   has_many :lessons
 
