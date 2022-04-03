@@ -1,0 +1,6 @@
+<h6 class="my-5"><%= t('comments.сomments') %></h6>
+
+<%= simple_form_for [resource, Comment.new] do |f| %>
+  <%= f.input :body %>
+  <%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary mt-3" %>
+<% end %>
