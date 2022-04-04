@@ -45,7 +45,8 @@ en:
     lesson_edit: 'Edit lesson'
     lesson_create: 'Create lesson'
   comments:
-    сomments: 'Comments'
+    all_comments: 'Comments'
+    add_comment: 'Add a comment'
     create:
       success: "Comment created"
       error: "Something wrong"

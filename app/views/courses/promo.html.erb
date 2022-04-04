@@ -34,12 +34,5 @@
     <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
   <% end %>
 </p>
-
-<h5 class="my-5"><%= t('comments.сomments') %></h5>
-
-<% @course.comments.each do |c| %>
-  <%= c.body %>
-<% end %>
-
-
-<%= render partial: 'comments/form', locals: { resource: @course } %>
+<%= render partial: 'comments/comments', locals: { resource: @course } %>
+<%= render partial: 'comments/form', locals: { resources: [@course] } %>

@@ -33,3 +33,5 @@
   <% end %>
 </p>
 
+<%= render partial: 'comments/comments', locals: { resource: @lesson } %>
+<%= render partial: 'comments/form', locals: { resources: [@course, @lesson] } %>
