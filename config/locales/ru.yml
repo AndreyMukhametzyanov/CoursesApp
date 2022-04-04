@@ -45,7 +45,8 @@ ru:
     lesson_edit: 'Редактировать лекцию'
     lesson_create: 'Создать лекцию'
   comments:
-    сomments: 'Комменатрии'
+    all_comments: 'Комментарии'
+    add_comment: 'Добавить комментарий'
     create:
       success: "Комментарий создан!"
       error: "Что-то не так"

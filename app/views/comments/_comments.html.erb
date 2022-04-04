@@ -1,0 +1,12 @@
+<h5 class="my-3"><%= t('comments.all_comments') %></h5>
+<% resource.comments.each do |c| %>
+  <div class="card mb-4" style="width: 40rem;">
+    <div class="card-header">
+      <%= c.user.first_name %>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= c.body %></p>
+<!--      <a href="#" class="btn btn-primary">Go somewhere</a>-->
+    </div>
+  </div>
+<% end %>
