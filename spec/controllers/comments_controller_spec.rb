@@ -15,6 +15,7 @@ RSpec.describe CommentsController, type: :controller do
       let(:new_comment) { 'test' }
       let(:comment) { course.comments.last }
       let(:notice) { I18n.t 'comments.create.success' }
+
       before { post :create, params: { course_id: course.id, comment: { body: new_comment } } }
 
       it 'should return success notice and redirect to correct page' do
@@ -44,7 +45,7 @@ RSpec.describe CommentsController, type: :controller do
     context 'when the comment for course is not valid' do
       let(:new_comment) { 't' }
       let(:comments) { course.comments }
-      let(:error) { I18n.t 'comments.create.error' }
+
       before { post :create, params: { course_id: course.id, comment: { body: new_comment } } }
 
       it 'should return success notice and redirect to correct page' do
