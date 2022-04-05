@@ -39,11 +39,11 @@ class CoursesController < ApplicationController
   end
 
   def promo
-    @course = Course.find_by_id(params[:id])
+    @course = Course.find_by(id: params[:id])
   end
 
   def start
-    @course = Course.find_by_id(params[:id])
+    @course = Course.find_by(id: params[:id])
     @lesson = @course.lessons.first
     if @lesson
       redirect_to course_lesson_path(@course, @lesson)

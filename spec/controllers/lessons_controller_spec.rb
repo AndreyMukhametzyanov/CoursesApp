@@ -19,7 +19,7 @@ RSpec.describe LessonsController, type: :controller do
         get :new, params: { course_id: course.id }
       end
 
-      it 'should return alert and correct redirect' do
+      it 'returns alert and correct redirect' do
         expect(flash[:alert]).to eq(alert_message)
         expect(response).to redirect_to promo_course_path(course)
       end
@@ -30,8 +30,8 @@ RSpec.describe LessonsController, type: :controller do
 
       before { get :new, params: { course_id: course.id } }
 
-      it 'should be correct render form' do
-        expect(response).to have_http_status(200)
+      it 'is correct render form' do
+        expect(response).to have_http_status(:ok)
         expect(response).to render_template('new')
       end
     end
@@ -52,10 +52,10 @@ RSpec.describe LessonsController, type: :controller do
                                                                   order_factor: 1 } }
         end
 
-        it 'should render correct page' do
+        it 'renders correct page' do
           expect(one_lesson.title).to eq(title)
           expect(one_lesson.content).to eq(content)
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(course_lesson_path(course, one_lesson))
         end
       end
@@ -65,9 +65,9 @@ RSpec.describe LessonsController, type: :controller do
 
         before { post :create, params: { course_id: course.id, lesson: { title: '' } } }
 
-        it 'should return errors' do
+        it 'returns errors' do
           expect((assigns(:lesson).errors)[:title].first).to eq(error_msg)
-          expect(response).to have_http_status(200)
+          expect(response).to have_http_status(:ok)
           expect(response).to render_template('new')
         end
       end
@@ -85,7 +85,7 @@ RSpec.describe LessonsController, type: :controller do
                                                                 order_factor: 1 } }
       end
 
-      it 'should return errors' do
+      it 'returns errors' do
         expect(flash[:alert]).to eq(alert_message)
         expect(response).to redirect_to promo_course_path(course)
       end
@@ -98,10 +98,10 @@ RSpec.describe LessonsController, type: :controller do
 
     before { get :show, params: { course_id: course.id, id: lesson.id } }
 
-    it 'should should returns correct render' do
+    it 'shoulds returns correct render' do
       expect(assigns(:lesson)).to eq(lesson)
       expect(assigns(:course)).to eq(course)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(response).to render_template('show')
     end
   end
@@ -113,9 +113,9 @@ RSpec.describe LessonsController, type: :controller do
 
       before { get :edit, params: { course_id: course.id, id: lesson.id } }
 
-      it 'should be correct render form ' do
+      it 'is correct render form' do
         expect(assigns(:course)).to eq(course)
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
         expect(response).to render_template('edit')
       end
     end
@@ -131,7 +131,7 @@ RSpec.describe LessonsController, type: :controller do
         get :edit, params: { course_id: course.id, id: lesson.id }
       end
 
-      it 'should return alert and correct redirect' do
+      it 'returns alert and correct redirect' do
         expect(flash[:alert]).to eq(alert_message)
         expect(response).to redirect_to promo_course_path(course)
       end
@@ -147,9 +147,9 @@ RSpec.describe LessonsController, type: :controller do
 
         before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
 
-        it 'should update course and check redirect to root' do
+        it 'updates course and check redirect to root' do
           expect(lesson.reload.title).to eq(new_title)
-          expect(response).to have_http_status(302)
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(course_lesson_path(course, lesson))
         end
       end
@@ -162,9 +162,9 @@ RSpec.describe LessonsController, type: :controller do
 
         before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
 
-        it 'should return error' do
+        it 'returns error' do
           expect((assigns(:lesson).errors)[:title].first).to eq(error_msg)
-          expect(response).to have_http_status(200)
+          expect(response).to have_http_status(:ok)
           expect(response).to render_template('edit')
         end
       end
@@ -181,7 +181,7 @@ RSpec.describe LessonsController, type: :controller do
           patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } }
         end
 
-        it 'should return errors' do
+        it 'returns errors' do
           expect(flash[:alert]).to eq(alert_message)
           expect(response).to redirect_to promo_course_path(course)
         end

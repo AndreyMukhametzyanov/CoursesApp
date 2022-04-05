@@ -18,9 +18,9 @@ RSpec.describe CommentsController, type: :controller do
 
       before { post :create, params: { course_id: course.id, comment: { body: new_comment } } }
 
-      it 'should return success notice and redirect to correct page' do
+      it 'returns success notice and redirect to correct page' do
         expect(comment.body).to eq(new_comment)
-        expect(response).to have_http_status(302)
+        expect(response).to have_http_status(:found)
         expect(flash[:notice]).to eq(notice)
         expect(response).to redirect_to(promo_course_path(id: course.id))
       end
@@ -34,9 +34,9 @@ RSpec.describe CommentsController, type: :controller do
 
       before { post :create, params: { course_id: course.id, lesson_id: lesson.id, comment: { body: new_body } } }
 
-      it 'should return success notice and redirect to correct page' do
+      it 'returns success notice and redirect to correct page' do
         expect(one_comment.body).to eq(new_body)
-        expect(response).to have_http_status(302)
+        expect(response).to have_http_status(:found)
         expect(flash[:notice]).to eq(notice)
         expect(response).to redirect_to(course_lesson_path(course_id: course.id, id: lesson.id))
       end
@@ -48,9 +48,9 @@ RSpec.describe CommentsController, type: :controller do
 
       before { post :create, params: { course_id: course.id, comment: { body: new_comment } } }
 
-      it 'should return success notice and redirect to correct page' do
+      it 'returns success notice and redirect to correct page' do
         expect(comments.count).to eq(0)
-        expect(response).to have_http_status(302)
+        expect(response).to have_http_status(:found)
         expect(flash[:alert]).not_to be_empty
         expect(response).to redirect_to(promo_course_path(id: course.id))
       end
@@ -63,9 +63,9 @@ RSpec.describe CommentsController, type: :controller do
 
       before { post :create, params: { course_id: course.id, lesson_id: lesson.id, comment: { body: new_body } } }
 
-      it 'should return success notice and redirect to correct page' do
+      it 'returns success notice and redirect to correct page' do
         expect(comments.count).to eq(0)
-        expect(response).to have_http_status(302)
+        expect(response).to have_http_status(:found)
         expect(flash[:alert]).not_to be_empty
         expect(response).to redirect_to(course_lesson_path(course_id: course.id, id: lesson.id))
       end

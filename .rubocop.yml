@@ -46,3 +46,11 @@ Metrics/AbcSize:
 
 Layout/EndOfLine:
   Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 100
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+RSpec/NestedGroups:
+  Max: 4

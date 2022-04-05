@@ -2,7 +2,7 @@
 
 class LessonsController < ApplicationController
   def new
-    @course = Course.find_by_id(params[:course_id])
+    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @lesson = @course.lessons.build
     else
@@ -11,7 +11,7 @@ class LessonsController < ApplicationController
   end
 
   def create
-    @course = Course.find_by_id(params[:course_id])
+    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @lesson = @course.lessons.build(lesson_params)
       if @lesson.save
@@ -25,12 +25,12 @@ class LessonsController < ApplicationController
   end
 
   def show
-    @course = Course.find_by_id(params[:course_id])
+    @course = Course.find_by(id: params[:course_id])
     @lesson = @course.lessons.find(params[:id])
   end
 
   def edit
-    @course = Course.find_by_id(params[:course_id])
+    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @lesson = @course.lessons.find(params[:id])
     else
@@ -39,7 +39,7 @@ class LessonsController < ApplicationController
   end
 
   def update
-    @course = Course.find_by_id(params[:course_id])
+    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @lesson = @course.lessons.find(params[:id])
       if @lesson.update(lesson_params)
