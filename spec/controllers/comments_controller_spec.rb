@@ -28,7 +28,7 @@ RSpec.describe CommentsController, type: :controller do
     context 'when the comment for lesson is valid' do
       let!(:lesson) { create :lesson, course: course }
       let(:new_body) { 'test' }
-      let(:one_comment) { course.lessons.last.comments.last }
+      let(:one_comment) {lesson.comments.last }
       let(:notice) { I18n.t 'comments.create.success' }
 
       before { post :create, params: { course_id: course.id, lesson_id: lesson.id, comment: { body: new_body } } }
@@ -58,7 +58,7 @@ RSpec.describe CommentsController, type: :controller do
     context 'when the comment for lesson is not valid' do
       let!(:lesson) { create :lesson, course: course }
       let(:new_body) { 't' }
-      let(:comments) { course.lessons.last.comments }
+      let(:comments) { lesson.comments }
       let(:error) { I18n.t 'comments.create.error' }
 
       before { post :create, params: { course_id: course.id, lesson_id: lesson.id, comment: { body: new_body } } }
