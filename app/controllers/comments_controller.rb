@@ -3,17 +3,8 @@
 class CommentsController < ApplicationController
   def create
     comment = commentable.comments.build(comment_params)
-    if comment.save
-      flash[:notice] = I18n.t('comments.create.success')
-      case commentable.class
-      when 'Course'
-        redirect_to promo_course_path
-      when 'Lesson'
-        redirect_to courses_lessons_path
-      end
-    else
-      flash[:notice] = I18n.t('comments.create.error')
-    end
+    comment.save ? flash[:notice] = I18n.t('comments.create.success') : flash[:alert] = I18n.t('comments.create.error')
+    redirect_case(commentable)
   end
 
   private
@@ -24,6 +15,15 @@ class CommentsController < ApplicationController
                      else
                        Lesson.find_by(id: params[:lesson_id])
                      end
+  end
+
+  def redirect_case(commentable)
+    case commentable
+    when Course
+      redirect_to promo_course_path(params[:course_id])
+    when Lesson
+      redirect_to course_lesson_path(params[:course_id], params[:lesson_id])
+    end
   end
 
   def comment_params
