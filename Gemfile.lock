@@ -204,6 +204,12 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.15.1)
       parser (>= 3.0.1.1)
+    rubocop-rails (2.13.2)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 1.7.0, < 2.0)
+    rubocop-rspec (2.8.0)
+      rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -255,6 +261,7 @@ GEM
     zeitwerk (2.5.3)
 
 PLATFORMS
+  arm64-darwin
   arm64-darwin-21
   x86_64-linux
 
@@ -278,6 +285,8 @@ DEPENDENCIES
   redis
   rspec-rails (~> 5.0.0)
   rubocop
+  rubocop-rails
+  rubocop-rspec
   sass-rails (>= 6)
   shoulda-matchers (~> 5.0)
   simple_form
