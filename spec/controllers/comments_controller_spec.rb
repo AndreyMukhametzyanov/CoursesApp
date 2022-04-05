@@ -50,7 +50,7 @@ RSpec.describe CommentsController, type: :controller do
       it 'should return success notice and redirect to correct page' do
         expect(comments.count).to eq(0)
         expect(response).to have_http_status(302)
-        expect(flash[:alert]).to eq(error)
+        expect(flash[:alert]).not_to be_empty
         expect(response).to redirect_to(promo_course_path(id: course.id))
       end
     end
@@ -59,14 +59,13 @@ RSpec.describe CommentsController, type: :controller do
       let!(:lesson) { create :lesson, course: course }
       let(:new_body) { 't' }
       let(:comments) { course.lessons.last.comments }
-      let(:error) { I18n.t 'comments.create.error' }
 
       before { post :create, params: { course_id: course.id, lesson_id: lesson.id, comment: { body: new_body } } }
 
       it 'should return success notice and redirect to correct page' do
         expect(comments.count).to eq(0)
         expect(response).to have_http_status(302)
-        expect(flash[:alert]).to eq(error)
+        expect(flash[:alert]).not_to be_empty
         expect(response).to redirect_to(course_lesson_path(course_id: course.id, id: lesson.id))
       end
     end
