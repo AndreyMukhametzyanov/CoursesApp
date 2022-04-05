@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class Course < ApplicationRecord
+  include Commentable
+
   belongs_to :user
-  has_many :lessons
+  has_many :lessons, dependent: :destroy
 
   attr_accessor :video_link
 
@@ -26,7 +28,7 @@ class Course < ApplicationRecord
 
   def check_url
     correct = 'https://www.youtube.com/watch?v'
-    return if video_link.nil? || video_link.empty?
+    return if video_link.blank?
 
     correct_link, id = video_link.split('=')
     correct_link == correct ? id : errors.add(:video_link, :is_not_youtube_link)

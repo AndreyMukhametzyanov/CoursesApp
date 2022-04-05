@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Lesson < ApplicationRecord
+  include Commentable
+
   belongs_to :course
   validates :title, presence: true
   validates :content, presence: true

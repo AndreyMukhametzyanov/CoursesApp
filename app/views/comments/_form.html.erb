@@ -1,0 +1,6 @@
+<h6 class="my-3"><%= t('comments.add_comment') %></h6>
+
+<%= simple_form_for resources.append(Comment.new) do |f| %>
+  <%= f.input :body, input_html: { style: "width: 641px" } %>
+  <%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary mt-3" %>
+<% end %>

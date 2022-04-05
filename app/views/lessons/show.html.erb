@@ -32,3 +32,6 @@
     <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course), class: 'btn btn-outline-primary' %>
   <% end %>
 </p>
+
+<%= render partial: 'comments/comments', locals: { resource: @lesson } %>
+<%= render partial: 'comments/form', locals: { resources: [@course, @lesson] } %>
