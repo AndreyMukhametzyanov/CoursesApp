@@ -6,7 +6,7 @@ class Course < ApplicationRecord
   belongs_to :author, class_name: 'User'
   has_many :lessons, dependent: :destroy
   has_many :orders, dependent: :destroy
-  has_many :students, class_name: 'User', through: :orders
+  has_many :students, class_name: 'User', through: :orders, source: 'user'
 
   attr_accessor :video_link
 
