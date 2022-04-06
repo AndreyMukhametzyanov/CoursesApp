@@ -3,8 +3,10 @@
 class Course < ApplicationRecord
   include Commentable
 
-  belongs_to :user
+  belongs_to :author, class_name: 'User'
   has_many :lessons, dependent: :destroy
+  has_many :orders, dependent: :destroy
+  has_many :students, class_name: 'User', through: :orders
 
   attr_accessor :video_link
 

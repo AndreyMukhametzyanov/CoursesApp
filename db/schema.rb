@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_05_163016) do
+ActiveRecord::Schema.define(version: 2022_04_06_082834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_04_05_163016) do
   end
 
   create_table "courses", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.string "name"
     t.string "description"
     t.integer "level"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2022_04_05_163016) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.integer "youtube_video_id"
+    t.text "youtube_video_id"
     t.text "content"
     t.bigint "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 2022_04_05_163016) do
     t.string "title"
     t.integer "order_factor"
     t.index ["course_id"], name: "index_lessons_on_course_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "course_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id"], name: "index_orders_on_course_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
