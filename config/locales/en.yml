@@ -39,6 +39,7 @@ en:
       continue: 'Continue'
       edit_course: 'Edit course'
       create_course: 'Create new course'
+      create_order: 'Buy course'
   lessons:
     lesson_list: 'Available lessons'
     lesson_num: 'Lesson '

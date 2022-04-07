@@ -39,6 +39,7 @@ ru:
       continue: 'Продолжить обучение'
       edit_course: 'Изменить курс'
       create_course: 'Создать новый курс'
+      create_order: 'Записаться на курс'
   lessons:
     lesson_list: 'Cписок лекций'
     lesson_num: 'Лекция '

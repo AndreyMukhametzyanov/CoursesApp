@@ -53,6 +53,16 @@ class CoursesController < ApplicationController
     end
   end
 
+  def order
+    @course = Course.find_by(id: params[:id])
+    @order = Order.create(user_id: current_user.id, course_id: @course.id)
+    if @order.save
+      redirect_to promo_course_path(@course)
+    else
+      redirect_to root_path
+    end
+  end
+
   private
 
   def course_params

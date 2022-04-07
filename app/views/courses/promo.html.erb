@@ -21,6 +21,8 @@
 <p><strong><%= t('courses.promo.description') %></strong>   <%= @course.description %></p>
 <p><strong><%= t('courses.promo.level') %></strong>  <%= @course.level %></p>
 <p class="card-text mt-3">
+
+  <%= link_to t('courses.promo.create_order'), order_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
   <% if @course.owner?(current_user) %>
     <% if @course.lessons.empty? %>
       <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
