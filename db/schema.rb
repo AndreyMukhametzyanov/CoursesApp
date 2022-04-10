@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2022_04_08_065834) do
     t.bigint "course_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index %w[course_id user_id], name: "index_orders_on_course_id_and_user_id", unique: true
+    t.index ["course_id", "user_id"], name: "index_orders_on_course_id_and_user_id", unique: true
     t.index ["course_id"], name: "index_orders_on_course_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end

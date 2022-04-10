@@ -14,7 +14,7 @@ RSpec.describe Course, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:author) }
   end
 
   describe 'custom validation' do
