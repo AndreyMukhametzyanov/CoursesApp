@@ -162,4 +162,35 @@ RSpec.describe CoursesController, type: :controller do
       end
     end
   end
+
+  describe '#order' do
+    context 'when order created' do
+      let!(:course) { create :course, author: user }
+      let(:success_message) { I18n.t 'orders.create_order.success' }
+
+      before { post :order, params: { id: course.id } }
+
+      it 'renders success message and correct render form' do
+        expect(response).to have_http_status(:found)
+        expect(flash[:notice]).to eq(success_message)
+        expect(response).to redirect_to promo_course_path(course.id)
+      end
+    end
+
+    context 'when order is not created' do
+      let!(:course) { create :course, author: user }
+      let(:error_message) { I18n.t 'orders.create_order.error' }
+
+      before do
+        Order.create(course_id: course.id, user_id: user.id)
+        post :order, params: { id: course.id }
+      end
+
+      it 'renders error message and redirect to root' do
+        expect(flash[:alert]).to eq(error_message)
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end

@@ -50,7 +50,11 @@ ru:
     add_comment: 'Добавить комментарий'
     create:
       success: "Комментарий создан!"
-      error: "Что-то не так"
+      error: "Что-то пошло не так"
+  orders:
+    create_order:
+      success: "Доброе пожаловать на курс!"
+      error: "Что-то пошло не так"
   buttons:
     create: 'Создать'
     edit: 'Изменить'

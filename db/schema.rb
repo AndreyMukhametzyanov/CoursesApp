@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_04_08_065834) do
   end
 
   create_table "courses", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.string "name"
     t.string "description"
     t.integer "level"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2022_04_08_065834) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.text "youtube_video_id"
+    t.integer "youtube_video_id"
     t.text "content"
     t.bigint "course_id", null: false
     t.datetime "created_at", precision: 6, null: false

@@ -22,6 +22,10 @@ class Course < ApplicationRecord
     self.author == author
   end
 
+  def enrolled_in_course?(user)
+    students.find_by(id: user.id).nil?
+  end
+
   private
 
   def take_video_id

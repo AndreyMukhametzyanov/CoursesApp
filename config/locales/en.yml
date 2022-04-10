@@ -50,7 +50,11 @@ en:
     add_comment: 'Add a comment'
     create:
       success: "Comment created"
-      error: "Something wrong"
+      error: "Something was wrong"
+  orders:
+    create_order:
+      success: "Welcome to the course!"
+      error: "Something was wrong"
   buttons:
     create: 'Create'
     edit: 'Edit'

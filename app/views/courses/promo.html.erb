@@ -21,7 +21,7 @@
 <p><strong><%= t('courses.promo.description') %></strong>   <%= @course.description %></p>
 <p><strong><%= t('courses.promo.level') %></strong>  <%= @course.level %></p>
 <p class="card-text mt-3">
-  <% if @course.students.empty? %>
+  <% if @course.enrolled_in_course?(current_user) %>
     <%= link_to t('courses.promo.create_order'), order_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
   <% else %>
     <% if @course.owner?(current_user) %>
