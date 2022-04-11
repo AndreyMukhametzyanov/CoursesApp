@@ -106,5 +106,19 @@ RSpec.describe Course, type: :model do
         expect(my_course.youtube_video_id).to eq(nil)
       end
     end
+
+    context 'when user owner or not' do
+      let(:second_user) { build(:user) }
+      let(:course) { create :course, author: my_user }
+
+      it 'is owner' do
+        expect(course.author).to eq(my_user)
+      end
+
+      it 'is not owner' do
+        expect(course.author).to_not eq(second_user)
+      end
+
+    end
   end
 end
