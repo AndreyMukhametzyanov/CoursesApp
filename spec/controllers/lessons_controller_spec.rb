@@ -96,13 +96,33 @@ RSpec.describe LessonsController, type: :controller do
     let!(:course) { create :course, author: user }
     let!(:lesson) { create :lesson, course: course }
 
-    before { get :show, params: { course_id: course.id, id: lesson.id } }
+    context 'when user is enrolled in course' do
+      before do
+        create :order, user: user, course: course
+        get :show, params: { course_id: course.id, id: lesson.id }
+      end
 
-    it 'shoulds returns correct render' do
-      expect(assigns(:lesson)).to eq(lesson)
-      expect(assigns(:course)).to eq(course)
-      expect(response).to have_http_status(:ok)
-      expect(response).to render_template('show')
+      it 'return correct render' do
+        expect(assigns(:lesson)).to eq(lesson)
+        expect(assigns(:course)).to eq(course)
+        expect(response).to have_http_status(:ok)
+        expect(response).to render_template('show')
+      end
+    end
+
+    context 'when user is not enrolled in course' do
+      let(:new_user) { create :user }
+      let(:error_msg) { I18n.t 'errors.lessons.access_error' }
+
+      before do
+        sign_in new_user
+        get :show, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'return correct render' do
+        expect(flash[:alert]).to eq(error_msg)
+        expect(response).to redirect_to promo_course_path(course)
+      end
     end
   end
 
