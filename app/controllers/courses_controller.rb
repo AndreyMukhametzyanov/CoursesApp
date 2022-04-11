@@ -54,11 +54,10 @@ class CoursesController < ApplicationController
   end
 
   def order
-    @course = Course.find_by(id: params[:id])
-    @order = Order.create(user_id: current_user.id, course_id: @course.id)
+    @order = Order.create(user_id: current_user.id, course_id: params[:id])
     if @order.save
       flash[:notice] = I18n.t 'orders.create_order.success'
-      redirect_to promo_course_path(@course)
+      redirect_to promo_course_path(params[:id])
     else
       flash[:alert] = I18n.t 'orders.create_order.error'
       redirect_to root_path

@@ -182,7 +182,7 @@ RSpec.describe CoursesController, type: :controller do
       let(:error_message) { I18n.t 'orders.create_order.error' }
 
       before do
-        Order.create(course_id: course.id, user_id: user.id)
+        create :order, user: user, course: course
         post :order, params: { id: course.id }
       end
 

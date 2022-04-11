@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :order do
-    user_id { 1 }
-    course_id { 1 }
+    user
+    course
   end
 end
