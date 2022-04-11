@@ -32,6 +32,7 @@ ru:
       head: 'Платформа для онлайн курсов'
       description: 'Описание'
       detailed: 'Подробнее'
+      author: 'Автор'
     promo:
       head: 'Промо ролик курса'
       description: 'Краткое описание курса:'

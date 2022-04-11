@@ -32,6 +32,7 @@ en:
       head: 'Platform for online courses'
       description: 'Description'
       detailed: 'More detailed'
+      author: 'Author'
     promo:
       head: 'Promo video of the course: '
       description: 'Description'
