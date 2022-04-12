@@ -114,11 +114,6 @@ RSpec.describe Course, type: :model do
       it 'is owner' do
         expect(course.author).to eq(my_user)
       end
-
-      it 'is not owner' do
-        expect(course.author).to_not eq(second_user)
-      end
-
     end
   end
 end
