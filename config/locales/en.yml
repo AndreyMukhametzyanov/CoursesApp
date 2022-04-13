@@ -69,3 +69,5 @@ en:
       change_error: 'You cannot edit or create the course - you are not the author'
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
+      enrolled_error: 'You not enrolled in course'
+

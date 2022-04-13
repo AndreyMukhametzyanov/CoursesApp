@@ -138,27 +138,48 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#start' do
-    context 'when a lesson exists' do
+    context 'when user is not enrolled in course' do
       let!(:course) { create :course, author: user }
-      let!(:lesson) { create :lesson, course: course }
-
-      before { get :start, params: { id: course.id } }
-
-      it 'returnses correct redirect to start lesson page' do
-        expect(response).to have_http_status(:found)
-        expect(response).to redirect_to(course_lesson_path(course, lesson))
-      end
-    end
-
-    context 'when a lesson does not exists' do
-      let!(:course) { create :course, author: user }
-      let(:alert_message) { I18n.t('errors.courses.access_error') }
+      let(:student) { course.students.find_by(id: user.id) }
+      let(:alert_message) { I18n.t('errors.courses.enrolled_error') }
 
       before { get :start, params: { id: course.id } }
 
       it 'returns alarm and correct redirect to promo page' do
         expect(flash[:alert]).to eq(alert_message)
         expect(response).to redirect_to promo_course_path
+      end
+    end
+
+    context 'when user is enrolled in course' do
+      context 'when a lesson exists' do
+        let!(:course) { create :course }
+        let!(:lesson) { create :lesson, course: course }
+
+        before do
+          create :order, user: user, course: course
+          get :start, params: { id: course.id }
+        end
+
+        it 'returns correct redirect to start lesson page' do
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to(course_lesson_path(course, lesson))
+        end
+      end
+
+      context 'when a lesson does not exists' do
+        let!(:course) { create :course, author: user }
+        let(:alert_message) { I18n.t('errors.lessons.access_error') }
+
+        before do
+          create :order, user: user, course: course
+          get :start, params: { id: course.id }
+        end
+
+        it 'returns alarm and correct redirect to promo page' do
+          expect(flash[:alert]).to eq(alert_message)
+          expect(response).to redirect_to promo_course_path
+        end
       end
     end
   end

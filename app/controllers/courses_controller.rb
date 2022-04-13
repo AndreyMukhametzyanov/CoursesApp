@@ -45,11 +45,12 @@ class CoursesController < ApplicationController
   def start
     @course = Course.find_by(id: params[:id])
     @lesson = @course.lessons.first
-    if @lesson
+    if @course.not_enrolled_in_course?(current_user)
+      redirect_to_promo_with_alert(I18n.t('errors.courses.enrolled_error'))
+    elsif @lesson
       redirect_to course_lesson_path(@course, @lesson)
     else
-      flash[:alert] = I18n.t('errors.courses.access_error')
-      redirect_to promo_course_path
+      redirect_to_promo_with_alert(I18n.t('errors.lessons.access_error'))
     end
   end
 
@@ -73,5 +74,10 @@ class CoursesController < ApplicationController
   def redirect_with_alert
     flash[:alert] = I18n.t('errors.courses.change_error')
     redirect_to courses_path
+  end
+
+  def redirect_to_promo_with_alert(message)
+    flash[:alert] = message
+    redirect_to promo_course_path
   end
 end

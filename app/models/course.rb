@@ -19,7 +19,7 @@ class Course < ApplicationRecord
   validates :name, uniqueness: { case_sensitive: false }
 
   def owner?(user)
-    self.author == user
+    author == user
   end
 
   def not_enrolled_in_course?(user)
