@@ -111,7 +111,7 @@ RSpec.describe Course, type: :model do
       let(:course) { create :course, author: my_user }
 
       it 'is owner' do
-        expect(course.owner?(my_user)).to be_truthy
+        expect(course).to be_owner(my_user)
       end
     end
   end
