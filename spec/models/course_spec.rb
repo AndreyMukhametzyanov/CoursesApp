@@ -14,7 +14,7 @@ RSpec.describe Course, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:author) }
   end
 
   describe 'custom validation' do
@@ -104,6 +104,14 @@ RSpec.describe Course, type: :model do
 
       it 'is valid' do
         expect(my_course.youtube_video_id).to eq(nil)
+      end
+    end
+
+    context 'when user is owner' do
+      let(:course) { create :course, author: my_user }
+
+      it 'is owner' do
+        expect(course).to be_owner(my_user)
       end
     end
   end

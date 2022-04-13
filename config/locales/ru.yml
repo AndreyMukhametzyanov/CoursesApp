@@ -32,6 +32,7 @@ ru:
       head: 'Платформа для онлайн курсов'
       description: 'Описание'
       detailed: 'Подробнее'
+      author: 'Автор'
     promo:
       head: 'Промо ролик курса'
       description: 'Краткое описание курса:'
@@ -39,6 +40,7 @@ ru:
       continue: 'Продолжить обучение'
       edit_course: 'Изменить курс'
       create_course: 'Создать новый курс'
+      create_order: 'Записаться на курс'
   lessons:
     lesson_list: 'Cписок лекций'
     lesson_num: 'Лекция '
@@ -49,7 +51,11 @@ ru:
     add_comment: 'Добавить комментарий'
     create:
       success: "Комментарий создан!"
-      error: "Что-то не так"
+      error: "Что-то пошло не так"
+  orders:
+    create_order:
+      success: "Доброе пожаловать на курс!"
+      error: "Что-то пошло не так"
   buttons:
     create: 'Создать'
     edit: 'Изменить'
@@ -63,3 +69,4 @@ ru:
       change_error: 'Вы не можете создавать или редактировать курс - вы не являетесь автором'
       access_error: 'Доступ к курсу запрещен'
       blank_error: 'не может быть пустым'
+      enrolled_error: 'Вы не записаны на курс'

@@ -26,7 +26,12 @@ class LessonsController < ApplicationController
 
   def show
     @course = Course.find_by(id: params[:course_id])
-    @lesson = @course.lessons.find(params[:id])
+    if @course.not_enrolled_in_course?(current_user)
+      flash[:alert] = I18n.t 'errors.lessons.access_error'
+      redirect_to promo_course_path(@course)
+    else
+      @lesson = @course.lessons.find(params[:id])
+    end
   end
 
   def edit

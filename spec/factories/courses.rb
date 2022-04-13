@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :course do
-    user
+    author { create :user }
     sequence(:name) { |i| "Name#{i}" }
     video_link { '' }
     description { 'MyString' }

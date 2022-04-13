@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     member do
       get 'promo'
       get 'start'
+      post 'order'
     end
   end
 end

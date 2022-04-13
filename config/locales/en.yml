@@ -32,6 +32,7 @@ en:
       head: 'Platform for online courses'
       description: 'Description'
       detailed: 'More detailed'
+      author: 'Author'
     promo:
       head: 'Promo video of the course: '
       description: 'Description'
@@ -39,6 +40,7 @@ en:
       continue: 'Continue'
       edit_course: 'Edit course'
       create_course: 'Create new course'
+      create_order: 'Buy course'
   lessons:
     lesson_list: 'Available lessons'
     lesson_num: 'Lesson '
@@ -49,7 +51,11 @@ en:
     add_comment: 'Add a comment'
     create:
       success: "Comment created"
-      error: "Something wrong"
+      error: "Something was wrong"
+  orders:
+    create_order:
+      success: "Welcome to the course!"
+      error: "Something was wrong"
   buttons:
     create: 'Create'
     edit: 'Edit'
@@ -63,3 +69,5 @@ en:
       change_error: 'You cannot edit or create the course - you are not the author'
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
+      enrolled_error: 'You not enrolled in course'
+

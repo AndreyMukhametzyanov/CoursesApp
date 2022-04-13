@@ -21,17 +21,21 @@
 <p><strong><%= t('courses.promo.description') %></strong>   <%= @course.description %></p>
 <p><strong><%= t('courses.promo.level') %></strong>  <%= @course.level %></p>
 <p class="card-text mt-3">
-  <% if @course.owner?(current_user) %>
-    <% if @course.lessons.empty? %>
-      <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
-      <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
+  <% if @course.not_enrolled_in_course?(current_user) %>
+    <%= link_to t('courses.promo.create_order'), order_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+  <% else %>
+    <% if @course.owner?(current_user) %>
+      <% if @course.lessons.empty? %>
+        <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
+        <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
+      <% else %>
+        <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
+        <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
+        <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
+      <% end %>
     <% else %>
-      <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
-      <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
       <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
     <% end %>
-  <% else %>
-    <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
   <% end %>
 </p>
 <%= render partial: 'comments/comments', locals: { resource: @course } %>

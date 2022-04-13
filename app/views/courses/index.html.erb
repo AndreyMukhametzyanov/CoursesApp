@@ -11,6 +11,7 @@
                   <%= course.name %>
                 </h5>
                 <h6 class="card-title my-2"><%= t('courses.index.description') %>:</h6> <%= course.description %>
+                <h6 class="card-title my-2"><%= t('courses.index.author')%>:</h6> <%= course.author.first_name %>
                 <p class="card-text mt-3">
                   <%= link_to t('courses.index.detailed'), promo_course_path(course.id), class: 'btn btn-outline-primary' %>
                 </p>

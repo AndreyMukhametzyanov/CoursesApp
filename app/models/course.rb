@@ -3,8 +3,10 @@
 class Course < ApplicationRecord
   include Commentable
 
-  belongs_to :user
+  belongs_to :author, class_name: 'User', foreign_key: 'user_id', inverse_of: :developed_courses
   has_many :lessons, dependent: :destroy
+  has_many :orders, dependent: :destroy
+  has_many :students, class_name: 'User', through: :orders, source: 'user'
 
   attr_accessor :video_link
 
@@ -17,7 +19,11 @@ class Course < ApplicationRecord
   validates :name, uniqueness: { case_sensitive: false }
 
   def owner?(user)
-    self.user == user
+    author == user
+  end
+
+  def not_enrolled_in_course?(user)
+    students.find_by(id: user.id).nil?
   end
 
   private

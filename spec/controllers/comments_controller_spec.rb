@@ -9,7 +9,7 @@ RSpec.describe CommentsController, type: :controller do
   before { sign_in user }
 
   describe '#create' do
-    let!(:course) { create :course, user: user }
+    let!(:course) { create :course, author: user }
 
     context 'when the comment for course is valid' do
       let(:new_comment) { 'test' }

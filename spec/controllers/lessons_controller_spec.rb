@@ -10,7 +10,7 @@ RSpec.describe LessonsController, type: :controller do
 
   describe '#new' do
     context 'when user not owner of course' do
-      let!(:course) { create :course, user: user }
+      let!(:course) { create :course, author: user }
       let(:alert_message) { I18n.t('errors.lessons.change_error') }
       let(:new_user) { create :user }
 
@@ -26,7 +26,7 @@ RSpec.describe LessonsController, type: :controller do
     end
 
     context 'when user is owner of course' do
-      let!(:course) { create :course, user: user }
+      let!(:course) { create :course, author: user }
 
       before { get :new, params: { course_id: course.id } }
 
@@ -39,7 +39,7 @@ RSpec.describe LessonsController, type: :controller do
 
   describe '#create' do
     context 'when user is owner' do
-      let!(:course) { create :course, user: user }
+      let!(:course) { create :course, author: user }
 
       context 'when lesson is valid' do
         let!(:title) { 'Lesson' }
@@ -74,7 +74,7 @@ RSpec.describe LessonsController, type: :controller do
     end
 
     context 'when user is not owner' do
-      let!(:course) { create :course, user: user }
+      let!(:course) { create :course, author: user }
       let(:new_user) { create :user }
       let(:alert_message) { I18n.t('errors.lessons.change_error') }
 
@@ -93,22 +93,42 @@ RSpec.describe LessonsController, type: :controller do
   end
 
   describe '#show' do
-    let!(:course) { create :course, user: user }
+    let!(:course) { create :course, author: user }
     let!(:lesson) { create :lesson, course: course }
 
-    before { get :show, params: { course_id: course.id, id: lesson.id } }
+    context 'when user is enrolled in course' do
+      before do
+        create :order, user: user, course: course
+        get :show, params: { course_id: course.id, id: lesson.id }
+      end
 
-    it 'shoulds returns correct render' do
-      expect(assigns(:lesson)).to eq(lesson)
-      expect(assigns(:course)).to eq(course)
-      expect(response).to have_http_status(:ok)
-      expect(response).to render_template('show')
+      it 'return correct render' do
+        expect(assigns(:lesson)).to eq(lesson)
+        expect(assigns(:course)).to eq(course)
+        expect(response).to have_http_status(:ok)
+        expect(response).to render_template('show')
+      end
+    end
+
+    context 'when user is not enrolled in course' do
+      let(:new_user) { create :user }
+      let(:error_msg) { I18n.t 'errors.lessons.access_error' }
+
+      before do
+        sign_in new_user
+        get :show, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'return correct render' do
+        expect(flash[:alert]).to eq(error_msg)
+        expect(response).to redirect_to promo_course_path(course)
+      end
     end
   end
 
   describe '#edit' do
     context 'when user is owner' do
-      let!(:course) { create :course, user: user }
+      let!(:course) { create :course, author: user }
       let!(:lesson) { create :lesson, course: course }
 
       before { get :edit, params: { course_id: course.id, id: lesson.id } }
@@ -121,7 +141,7 @@ RSpec.describe LessonsController, type: :controller do
     end
 
     context 'when user is not owner' do
-      let!(:course) { create :course, user: user }
+      let!(:course) { create :course, author: user }
       let!(:lesson) { create :lesson, course: course }
       let(:alert_message) { I18n.t('errors.lessons.change_error') }
       let(:new_user) { create :user }
@@ -142,7 +162,7 @@ RSpec.describe LessonsController, type: :controller do
     context 'when user is owner' do
       context 'when data is correct' do
         let(:new_title) { 'new lesson' }
-        let!(:course) { create :course, user: user }
+        let!(:course) { create :course, author: user }
         let!(:lesson) { create :lesson, course: course }
 
         before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
@@ -156,7 +176,7 @@ RSpec.describe LessonsController, type: :controller do
 
       context 'when data does not correct' do
         let(:new_title) { '' }
-        let!(:course) { create :course, user: user }
+        let!(:course) { create :course, author: user }
         let!(:lesson) { create :lesson, course: course }
         let(:error_msg) { I18n.t('errors.lessons.blank_error') }
 
@@ -170,7 +190,7 @@ RSpec.describe LessonsController, type: :controller do
       end
 
       context 'when user is not owner' do
-        let!(:course) { create :course, user: user }
+        let!(:course) { create :course, author: user }
         let!(:lesson) { create :lesson, course: course }
         let(:new_user) { create :user }
         let(:alert_message) { I18n.t('errors.lessons.change_error') }
