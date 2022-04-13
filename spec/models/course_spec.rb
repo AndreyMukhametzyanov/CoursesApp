@@ -107,12 +107,11 @@ RSpec.describe Course, type: :model do
       end
     end
 
-    context 'when user owner or not' do
-      let(:second_user) { build(:user) }
+    context 'when user is owner' do
       let(:course) { create :course, author: my_user }
 
       it 'is owner' do
-        expect(course.author).to eq(my_user)
+        expect(course.owner?(my_user)).to be_truthy
       end
     end
   end
