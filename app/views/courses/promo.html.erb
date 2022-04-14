@@ -10,6 +10,9 @@
 </div>
 
 <h1><%= t('courses.promo.head') %> <%= @course.name %></h1>
+<% if @course.cover_picture.attached? %>
+  <%= image_tag rails_storage_proxy_path(@course.cover_picture), height: 100, width: 100 %>
+<% end %>
 <% unless @course.youtube_video_id.nil? %>
   <iframe width="640" height="420"
           src="https://www.youtube.com/embed/<%= @course.youtube_video_id %>"
@@ -21,19 +24,19 @@
 <p><strong><%= t('courses.promo.description') %></strong>   <%= @course.description %></p>
 <p><strong><%= t('courses.promo.level') %></strong>  <%= @course.level %></p>
 <p class="card-text mt-3">
-  <%= image_tag rails_storage_proxy_path(@course.cover_picture) %>
-  <% if @course.not_enrolled_in_course?(current_user) %>
-    <%= link_to t('courses.promo.create_order'), order_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+
+  <% if @course.owner?(current_user) %>
+    <% if @course.lessons.empty? %>
+      <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
+      <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
+    <% else %>
+      <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
+      <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
+      <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
+    <% end %>
   <% else %>
-    <% if @course.owner?(current_user) %>
-      <% if @course.lessons.empty? %>
-        <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
-        <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
-      <% else %>
-        <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
-        <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
-        <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
-      <% end %>
+    <% if @course.not_enrolled_in_course?(current_user) %>
+      <%= link_to t('courses.promo.create_order'), order_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
     <% else %>
       <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
     <% end %>

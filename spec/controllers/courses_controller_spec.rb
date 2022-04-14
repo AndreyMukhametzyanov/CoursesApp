@@ -26,11 +26,16 @@ RSpec.describe CoursesController, type: :controller do
       let(:description) { 'test' }
       let(:level) { 1 }
       let(:course) { Course.last }
+      let(:picture) { Rack::Test::UploadedFile.new(Rails.root.join('/spec/fixtures/files/course_cover_picture.png')) }
 
-      before { post :create, params: { course: { name: 'Course', video_link: '', description: 'test', level: 1 } } }
+      before do
+        post :create, params: { course: { name: 'Course', video_link: '',
+                                          description: 'test', level: 1, cover_picture: picture } }
+      end
 
       it 'renders correct page' do
         expect(course.name).to eq(name)
+        expect(course.cover_picture).to be_attached
         expect(course.description).to eq(description)
         expect(course.level).to eq(level)
         expect(response).to have_http_status(:found)
