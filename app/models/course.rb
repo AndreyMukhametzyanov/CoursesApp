@@ -7,6 +7,7 @@ class Course < ApplicationRecord
   has_many :lessons, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :students, class_name: 'User', through: :orders, source: 'user'
+  has_one_attached :cover_picture
 
   attr_accessor :video_link
 

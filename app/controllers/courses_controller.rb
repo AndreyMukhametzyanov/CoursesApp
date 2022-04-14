@@ -68,7 +68,7 @@ class CoursesController < ApplicationController
   private
 
   def course_params
-    params.require(:course).permit(:name, :level, :description, :video_link)
+    params.require(:course).permit(:name, :level, :description, :video_link, :cover_picture)
   end
 
   def redirect_with_alert
