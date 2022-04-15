@@ -45,7 +45,7 @@ class Course < ApplicationRecord
   def correct_picture_type
     image_types = %w[image/gif image/jpeg image/pjpeg image/png image/svg+xml
                      image/tiff image/vnd.microsoft.icon image/vnd.wap.wbmp image/webp]
-    if cover_picture.content_type.in?(image_types)
+errors.add(:cover_picture, :is_not_picture_type) unless cover_picture.content_type.in?(image_types)
       nil
     else
       errors.add(:cover_picture, :is_not_picture_type)
