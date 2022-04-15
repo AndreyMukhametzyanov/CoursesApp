@@ -7,5 +7,6 @@ FactoryBot.define do
     video_link { '' }
     description { 'MyString' }
     level { 1 }
+    cover_picture { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
   end
 end
