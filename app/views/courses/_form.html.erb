@@ -3,6 +3,6 @@
   <%= f.input :video_link %>
   <%= f.input :level, collection: 1..5 %>
   <%= f.input :description %>
-  <%= f.input :cover_picture, as: :file, label: 'IMAGE', class: "my-3" %>
+  <%= f.input :cover_picture, as: :file, class: "my-3" %>
   <%= f.button :submit, (@course.new_record? ? t('buttons.create') : t('buttons.edit')), class: "btn btn-outline-primary mt-3" %>
 <% end %>

@@ -26,7 +26,7 @@ RSpec.describe CoursesController, type: :controller do
       let(:description) { 'test' }
       let(:level) { 1 }
       let(:course) { Course.last }
-      let(:picture) { Rack::Test::UploadedFile.new(Rails.root.join('/spec/fixtures/files/course_cover_picture.png')) }
+      let(:picture) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
 
       before do
         post :create, params: { course: { name: 'Course', video_link: '',

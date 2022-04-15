@@ -6,12 +6,15 @@ en:
           attributes:
             video_link:
               is_not_youtube_link: 'is not youtube'
+            cover_picture:
+              is_not_picture_type: ' is not picture type'
     attributes:
       course:
         name: 'Name'
         level: 'Level'
         description: 'description'
         video_link: 'Video link'
+        cover_picture: 'File '
       lesson:
         title: 'Title'
         content: 'Content'
