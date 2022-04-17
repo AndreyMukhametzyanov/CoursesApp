@@ -3,6 +3,8 @@
   <%= f.input :video_link %>
   <%= f.input :level, collection: 1..5 %>
   <%= f.input :description %>
-  <%= f.input :cover_picture, as: :file, accept: "image/*", class: "my-3" %>
+  <h6><%= I18n.t('courses.label.label_name') %></h6>
+  <%= f.file_field :cover_picture, accept: "image/*", label: I18n.t('courses.label.label_name'), class: "my-3" %>
+  <p></p>
   <%= f.button :submit, (@course.new_record? ? t('buttons.create') : t('buttons.edit')), class: "btn btn-outline-primary mt-3" %>
 <% end %>

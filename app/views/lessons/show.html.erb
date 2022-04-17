@@ -26,6 +26,24 @@
   </div>
 </div>
 
+<% if @lesson.files.attached? %>
+  <h6> <%= I18n.t('lessons.label.label_name') %> </h6>
+  <% @lesson.files.each do |file| %>
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+          <%= link_to file.filename, rails_blob_path(file, disposition: :attachment), class: '' %>
+        </div>
+        <div class="col">
+          <% if @course.owner?(current_user) %>
+            <%= link_to "#{I18n.t 'attachment.remove'}", attachment_path(file.id), method: :delete, data: { confirm: I18n.t('attentions.really_delete') } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
 <p class="card-text mt-3">
   <% if @course.owner?(current_user) %>
     <%= link_to t('lessons.lesson_edit'), edit_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>

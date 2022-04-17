@@ -35,10 +35,10 @@
       <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
     <% end %>
   <% else %>
-    <% if @course.not_enrolled_in_course?(current_user) %>
-      <%= link_to t('courses.promo.create_order'), order_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
-    <% else %>
+    <% if @course.enrolled_in_course?(current_user) %>
       <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
+    <% else %>
+      <%= link_to t('courses.promo.create_order'), order_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
     <% end %>
   <% end %>
 </p>

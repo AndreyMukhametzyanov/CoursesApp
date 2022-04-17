@@ -24,8 +24,8 @@ class Course < ApplicationRecord
     author == user
   end
 
-  def not_enrolled_in_course?(user)
-    students.find_by(id: user.id).nil?
+  def enrolled_in_course?(user)
+    students.find_by(id: user.id).present?
   end
 
   private

@@ -44,10 +44,11 @@ class CoursesController < ApplicationController
 
   def start
     @course = Course.find_by(id: params[:id])
+    unless @course.enrolled_in_course?(current_user)
+      return redirect_to_promo_with_alert(I18n.t('errors.courses.enrolled_error'))
+    end
     @lesson = @course.lessons.first
-    if @course.not_enrolled_in_course?(current_user)
-      redirect_to_promo_with_alert(I18n.t('errors.courses.enrolled_error'))
-    elsif @lesson
+    if @lesson
       redirect_to course_lesson_path(@course, @lesson)
     else
       redirect_to_promo_with_alert(I18n.t('errors.lessons.access_error'))

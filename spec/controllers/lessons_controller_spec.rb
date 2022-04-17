@@ -208,4 +208,18 @@ RSpec.describe LessonsController, type: :controller do
       end
     end
   end
+
+  # describe '#delete_file' do
+  #   let!(:course) { create :course, author: user }
+  #   let!(:lesson) { create :lesson, course: course }
+  #   let!(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
+  #   let!(:attachment) { lesson.files.attach(file) }
+  #
+  #   before { delete :delete_file, params: { course_id: course.id, id: lesson.id } }
+  #
+  #   it 'is delete attachment' do
+  #     puts lesson.files.attached?
+  #     expect(lesson.files.attached?).to be_falsey
+  #   end
+  # end
 end

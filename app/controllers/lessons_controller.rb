@@ -26,11 +26,11 @@ class LessonsController < ApplicationController
 
   def show
     @course = Course.find_by(id: params[:course_id])
-    if @course.not_enrolled_in_course?(current_user)
+    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
+      @lesson = @course.lessons.find(params[:id])
+    else
       flash[:alert] = I18n.t 'errors.lessons.access_error'
       redirect_to promo_course_path(@course)
-    else
-      @lesson = @course.lessons.find(params[:id])
     end
   end
 
@@ -61,12 +61,12 @@ class LessonsController < ApplicationController
 
   private
 
-  def lesson_params
-    params.require(:lesson).permit(:title, :content, :youtube_video_id, :order_factor)
-  end
+    def lesson_params
+      params.require(:lesson).permit(:title, :content, :youtube_video_id, :order_factor, files: [])
+    end
 
-  def redirect_with_alert
-    flash[:alert] = I18n.t('errors.lessons.change_error')
-    redirect_to promo_course_path(@course)
-  end
+    def redirect_with_alert
+      flash[:alert] = I18n.t('errors.lessons.change_error')
+      redirect_to promo_course_path(@course)
+    end
 end
