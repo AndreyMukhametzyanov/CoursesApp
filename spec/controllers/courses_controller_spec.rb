@@ -13,7 +13,7 @@ RSpec.describe CoursesController, type: :controller do
 
     before { get :index }
 
-    it 'returnses correct renders for #index' do
+    it 'returns correct renders for #index' do
       expect(response).to have_http_status(:ok)
       expect(assigns(:courses)).to eq(courses)
       expect(response).to render_template('index')

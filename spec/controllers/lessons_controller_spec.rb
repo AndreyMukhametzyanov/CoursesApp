@@ -45,16 +45,18 @@ RSpec.describe LessonsController, type: :controller do
         let!(:title) { 'Lesson' }
         let!(:content) { 'test' }
         let(:one_lesson) { course.lessons.last }
+        let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
+        let(:another_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
 
         before do
           post :create, params: { course_id: course.id, lesson: { title: 'Lesson', youtube_video_id: '',
-                                                                  content: 'test',
-                                                                  order_factor: 1 } }
+                                                                  content: 'test', order_factor: 1, files: [file, another_file] } }
         end
 
         it 'renders correct page' do
           expect(one_lesson.title).to eq(title)
           expect(one_lesson.content).to eq(content)
+          expect(one_lesson.files).to be_attached
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(course_lesson_path(course, one_lesson))
         end
@@ -208,18 +210,4 @@ RSpec.describe LessonsController, type: :controller do
       end
     end
   end
-
-  # describe '#delete_file' do
-  #   let!(:course) { create :course, author: user }
-  #   let!(:lesson) { create :lesson, course: course }
-  #   let!(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
-  #   let!(:attachment) { lesson.files.attach(file) }
-  #
-  #   before { delete :delete_file, params: { course_id: course.id, id: lesson.id } }
-  #
-  #   it 'is delete attachment' do
-  #     puts lesson.files.attached?
-  #     expect(lesson.files.attached?).to be_falsey
-  #   end
-  # end
 end
