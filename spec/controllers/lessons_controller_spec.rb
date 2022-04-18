@@ -46,11 +46,14 @@ RSpec.describe LessonsController, type: :controller do
         let!(:content) { 'test' }
         let(:one_lesson) { course.lessons.last }
         let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
-        let(:another_file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
+        let(:another_file) do
+          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png'))
+        end
 
         before do
           post :create, params: { course_id: course.id, lesson: { title: 'Lesson', youtube_video_id: '',
-                                                                  content: 'test', order_factor: 1, files: [file, another_file] } }
+                                                                  content: 'test', order_factor: 1,
+                                                                  files: [file, another_file] } }
         end
 
         it 'renders correct page' do

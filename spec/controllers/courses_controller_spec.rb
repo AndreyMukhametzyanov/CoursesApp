@@ -15,7 +15,7 @@ RSpec.describe CoursesController, type: :controller do
 
     it 'returns correct renders for #index' do
       expect(response).to have_http_status(:ok)
-      expect(assigns(:courses)).to eq(courses)
+      expect(assigns(:courses)).to match_array(courses)
       expect(response).to render_template('index')
     end
   end

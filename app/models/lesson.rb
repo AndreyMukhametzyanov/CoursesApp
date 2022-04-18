@@ -12,6 +12,6 @@ class Lesson < ApplicationRecord
   scope :order_by_factor, -> { order(:order_factor) }
 
   def owner?(user)
-    self.course.author == user
+    course.author == user
   end
 end

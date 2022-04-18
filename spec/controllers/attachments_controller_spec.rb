@@ -22,7 +22,7 @@ RSpec.describe AttachmentsController, type: :controller do
       end
 
       it 'redirect to root and return alert' do
-        expect(lesson.files.attached?).to be_truthy
+        expect(lesson.files).to be_attached
         expect(flash[:alert]).to eq(alert)
         expect(response).to redirect_to(root_path)
       end
@@ -34,25 +34,31 @@ RSpec.describe AttachmentsController, type: :controller do
       let!(:lesson) { create :lesson, course: course, files: [file] }
       let(:notice) { I18n.t('attachment.delete') }
 
-      before { delete :destroy, params: { id: lesson.files.first.id } }
+      before do
+        delete :destroy, params: { id: lesson.files.first.id }
+        lesson.reload
+      end
 
       it 'delete file, return notice and redirect to lesson page' do
-        # expect(lesson.files.first).to be_nil пока не разобрался почему не удаляет
+        expect(lesson.files).not_to be_attached
         expect(flash[:notice]).to eq(notice)
         expect(response).to redirect_to(course_lesson_path(course, lesson))
       end
     end
-    #ошибка в другом контроллере возникает
+
     context 'when user is owner and course has attachment' do
       let(:picture) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
-      let(:course) { create :course, author: user, cover_picture: picture}
+      let(:course) { create :course, author: user, cover_picture: picture }
       let(:notice) { I18n.t('attachment.delete') }
 
-      before { delete :destroy, params: { id: course.cover_picture.id } }
+      before do
+        delete :destroy, params: { id: course.cover_picture.id }
+        course.reload
+      end
 
       it 'delete picture, return notice and redirect to course promo' do
         puts course.cover_picture.id
-        expect(course.cover_picture.attached?).to be_falsey
+        expect(course.cover_picture).not_to be_attached
         expect(flash[:notice]).to eq(notice)
         expect(response).to redirect_to(promo_course_path(course))
       end

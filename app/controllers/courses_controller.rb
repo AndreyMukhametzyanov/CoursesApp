@@ -47,6 +47,7 @@ class CoursesController < ApplicationController
     unless @course.enrolled_in_course?(current_user)
       return redirect_to_promo_with_alert(I18n.t('errors.courses.enrolled_error'))
     end
+
     @lesson = @course.lessons.first
     if @lesson
       redirect_to course_lesson_path(@course, @lesson)

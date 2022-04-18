@@ -23,6 +23,5 @@ RSpec.describe Lesson, type: :model do
     it 'is owner' do
       expect(lesson).to be_owner(user)
     end
-
   end
 end
