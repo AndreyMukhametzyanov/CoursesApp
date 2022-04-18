@@ -11,7 +11,18 @@
 
 <h1><%= t('courses.promo.head') %> <%= @course.name %></h1>
 <% if @course.cover_picture.attached? %>
-  <%= image_tag rails_storage_proxy_path(@course.cover_picture), height: 100, width: 100 %>
+  <div class="container">
+    <div class="row">
+      <div class="col-2">
+        <%= image_tag rails_storage_proxy_path(@course.cover_picture), height: 100, width: 100 %>
+      </div>
+      <div class="col">
+        <% if @course.owner?(current_user) %>
+          <%= link_to "#{I18n.t 'attachment.remove'}", attachment_path(@course.cover_picture.id), method: :delete, data: { confirm: I18n.t('attentions.really_delete') } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end %>
 <% unless @course.youtube_video_id.nil? %>
   <iframe width="640" height="420"
