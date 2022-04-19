@@ -54,7 +54,6 @@ RSpec.describe AttachmentsController, type: :controller do
       end
 
       it 'delete picture, return notice and redirect to course promo' do
-        puts course.cover_picture.id
         expect(course.cover_picture).not_to be_attached
         expect(flash[:notice]).to eq(notice)
         expect(response).to redirect_to(promo_course_path(course))

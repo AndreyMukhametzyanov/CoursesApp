@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!, exept: %i[index show]
 
+  protected
+
   def redirect_with_alert(path, msg)
     redirect_by_kind(path, :alert, msg)
   end
@@ -21,8 +23,6 @@ class ApplicationController < ActionController::Base
   def permit_params(model, *filters)
     params.require(model).permit(filters)
   end
-
-  protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |u|
