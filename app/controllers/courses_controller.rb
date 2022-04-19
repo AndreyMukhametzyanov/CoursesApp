@@ -10,7 +10,8 @@ class CoursesController < ApplicationController
   end
 
   def create
-    @course = current_user.developed_courses.build(course_params)
+    @course = current_user.developed_courses.build(permit_params(:course, :name, :level, :description,
+                                                                 :video_link, :cover_picture))
     if @course.save
       redirect_to courses_path
     else
@@ -22,19 +23,19 @@ class CoursesController < ApplicationController
     @course = Course.find_by(id: params[:id])
     return if @course.owner?(current_user)
 
-    redirect_with_alert
+    redirect_with_alert(courses_path, I18n.t('errors.courses.change_error'))
   end
 
   def update
     @course = Course.find_by(id: params[:id])
     if @course.owner?(current_user)
-      if @course.update(course_params)
+      if @course.update(permit_params(:course, :name, :level, :description, :video_link, :cover_picture))
         redirect_to courses_path
       else
         render :edit
       end
     else
-      redirect_with_alert
+      redirect_with_alert(courses_path, I18n.t('errors.courses.change_error'))
     end
   end
 
@@ -45,41 +46,23 @@ class CoursesController < ApplicationController
   def start
     @course = Course.find_by(id: params[:id])
     unless @course.enrolled_in_course?(current_user)
-      return redirect_to_promo_with_alert(I18n.t('errors.courses.enrolled_error'))
+      return redirect_with_alert(promo_course_path, I18n.t('errors.courses.enrolled_error'))
     end
 
     @lesson = @course.lessons.first
     if @lesson
       redirect_to course_lesson_path(@course, @lesson)
     else
-      redirect_to_promo_with_alert(I18n.t('errors.lessons.access_error'))
+      redirect_with_alert(promo_course_path, I18n.t('errors.lessons.access_error'))
     end
   end
 
   def order
     @order = Order.create(user_id: current_user.id, course_id: params[:id])
     if @order.save
-      flash[:notice] = I18n.t 'orders.create_order.success'
-      redirect_to promo_course_path(params[:id])
+      redirect_with_notice(promo_course_path(params[:id]), I18n.t('orders.create_order.success'))
     else
-      flash[:alert] = I18n.t 'orders.create_order.error'
-      redirect_to root_path
+      redirect_with_alert(root_path, I18n.t('orders.create_order.error'))
     end
-  end
-
-  private
-
-  def course_params
-    params.require(:course).permit(:name, :level, :description, :video_link, :cover_picture)
-  end
-
-  def redirect_with_alert
-    flash[:alert] = I18n.t('errors.courses.change_error')
-    redirect_to courses_path
-  end
-
-  def redirect_to_promo_with_alert(message)
-    flash[:alert] = message
-    redirect_to promo_course_path
   end
 end

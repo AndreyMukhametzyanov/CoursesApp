@@ -5,6 +5,23 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!, exept: %i[index show]
 
+  def redirect_with_alert(path, msg)
+    redirect_by_kind(path, :alert, msg)
+  end
+
+  def redirect_with_notice(path, msg)
+    redirect_by_kind(path, :notice, msg)
+  end
+
+  def redirect_by_kind(path, kind, msg)
+    flash[kind] = msg
+    redirect_to path
+  end
+
+  def permit_params(model, *filters)
+    params.require(model).permit(filters)
+  end
+
   protected
 
   def configure_permitted_parameters

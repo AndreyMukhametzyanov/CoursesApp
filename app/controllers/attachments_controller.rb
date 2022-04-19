@@ -30,17 +30,4 @@ class AttachmentsController < ApplicationController
   def owned_by_user!(resource)
     resource.respond_to?(:owner?) && resource.owner?(current_user)
   end
-
-  def redirect_with_alert(path, msg)
-    redirect_by_kind(path, :alert, msg)
-  end
-
-  def redirect_with_notice(path, msg)
-    redirect_by_kind(path, :notice, msg)
-  end
-
-  def redirect_by_kind(path, kind, msg)
-    flash[kind] = msg
-    redirect_to path
-  end
 end

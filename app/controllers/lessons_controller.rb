@@ -6,21 +6,22 @@ class LessonsController < ApplicationController
     if @course.owner?(current_user)
       @lesson = @course.lessons.build
     else
-      redirect_with_alert
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.change_error'))
     end
   end
 
   def create
     @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
-      @lesson = @course.lessons.build(lesson_params)
+      @lesson = @course.lessons.build(permit_params(:lesson, :title, :content, :youtube_video_id,
+                                                    :order_factor, files: []))
       if @lesson.save
         redirect_to course_lesson_path(@course, @lesson)
       else
         render :new
       end
     else
-      redirect_with_alert
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.change_error'))
     end
   end
 
@@ -29,8 +30,7 @@ class LessonsController < ApplicationController
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       @lesson = @course.lessons.find(params[:id])
     else
-      flash[:alert] = I18n.t 'errors.lessons.access_error'
-      redirect_to promo_course_path(@course)
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.access_error'))
     end
   end
 
@@ -39,7 +39,7 @@ class LessonsController < ApplicationController
     if @course.owner?(current_user)
       @lesson = @course.lessons.find(params[:id])
     else
-      redirect_with_alert
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.change_error'))
     end
   end
 
@@ -47,26 +47,16 @@ class LessonsController < ApplicationController
     @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @lesson = @course.lessons.find(params[:id])
-      if @lesson.update(lesson_params)
+      if @lesson.update(permit_params(:lesson, :title, :content, :youtube_video_id,
+                                      :order_factor, files: []))
         redirect_to course_lesson_path(@course, @lesson)
       else
         render :edit
       end
     else
-      redirect_with_alert
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.change_error'))
     end
   end
 
   def destroy; end
-
-  private
-
-  def lesson_params
-    params.require(:lesson).permit(:title, :content, :youtube_video_id, :order_factor, files: [])
-  end
-
-  def redirect_with_alert
-    flash[:alert] = I18n.t('errors.lessons.change_error')
-    redirect_to promo_course_path(@course)
-  end
 end

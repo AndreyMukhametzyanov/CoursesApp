@@ -43,10 +43,8 @@ class Course < ApplicationRecord
   end
 
   def correct_picture_type
-    image_types = %w[image/gif image/jpeg image/pjpeg image/png image/svg+xml
-                     image/tiff image/vnd.microsoft.icon image/vnd.wap.wbmp image/webp]
     return unless cover_picture.attached?
 
-    errors.add(:cover_picture, :is_not_picture_type) unless cover_picture.content_type.in?(image_types)
+    errors.add(:cover_picture, :is_not_picture_type) unless cover_picture.content_type.in?(IMAGE_TYPE)
   end
 end

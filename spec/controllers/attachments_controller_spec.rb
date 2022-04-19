@@ -9,11 +9,13 @@ RSpec.describe AttachmentsController, type: :controller do
   before { sign_in user }
 
   describe '#destroy' do
+    let(:picture) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
+    let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
+    let!(:course) { create :course, author: user, cover_picture: picture }
+    let!(:lesson) { create :lesson, course: course, files: [file] }
+
     context 'when user is not owner' do
       let(:another_user) { create :user }
-      let!(:course) { create :course, author: user }
-      let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
-      let!(:lesson) { create :lesson, course: course, files: [file] }
       let(:alert) { I18n.t('attachment.error') }
 
       before do
@@ -29,9 +31,6 @@ RSpec.describe AttachmentsController, type: :controller do
     end
 
     context 'when user is owner and lesson has attachment' do
-      let!(:course) { create :course, author: user }
-      let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
-      let!(:lesson) { create :lesson, course: course, files: [file] }
       let(:notice) { I18n.t('attachment.delete') }
 
       before do
@@ -47,8 +46,6 @@ RSpec.describe AttachmentsController, type: :controller do
     end
 
     context 'when user is owner and course has attachment' do
-      let(:picture) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
-      let(:course) { create :course, author: user, cover_picture: picture }
       let(:notice) { I18n.t('attachment.delete') }
 
       before do

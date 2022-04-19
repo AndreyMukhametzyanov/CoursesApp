@@ -16,12 +16,11 @@ RSpec.describe Lesson, type: :model do
   end
 
   describe 'owned by user' do
-    let(:user) { build(:user) }
-    let!(:course) { create :course, author: user }
+    let!(:course) { create :course }
     let!(:lesson) { create :lesson, course: course }
 
     it 'is owner' do
-      expect(lesson).to be_owner(user)
+      expect(lesson).to be_owner(course.author)
     end
   end
 end
