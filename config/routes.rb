@@ -17,4 +17,5 @@ Rails.application.routes.draw do
       post 'order'
     end
   end
+  resources :attachments, only: :destroy
 end

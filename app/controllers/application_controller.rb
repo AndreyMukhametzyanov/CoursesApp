@@ -7,6 +7,23 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def redirect_with_alert(path, msg)
+    redirect_by_kind(path, :alert, msg)
+  end
+
+  def redirect_with_notice(path, msg)
+    redirect_by_kind(path, :notice, msg)
+  end
+
+  def redirect_by_kind(path, kind, msg)
+    flash[kind] = msg
+    redirect_to path
+  end
+
+  def permit_params(model, *filters)
+    params.require(model).permit(filters)
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |u|
       u.permit(:first_name, :last_name, :date_of_birth, :email, :password)

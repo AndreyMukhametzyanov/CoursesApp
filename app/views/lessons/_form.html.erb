@@ -3,5 +3,6 @@
   <%= f.input :content %>
   <%= f.input :youtube_video_id %>
   <%= f.input :order_factor %>
+  <%= f.file_field :files, multiple: true, class: "my-3" %>
   <%= f.button :submit, (@lesson.new_record? ? t('buttons.create') : t('buttons.edit')), class: "btn btn-outline-primary mt-3" %>
 <% end %>

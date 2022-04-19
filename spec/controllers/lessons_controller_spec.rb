@@ -45,16 +45,21 @@ RSpec.describe LessonsController, type: :controller do
         let!(:title) { 'Lesson' }
         let!(:content) { 'test' }
         let(:one_lesson) { course.lessons.last }
+        let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
+        let(:another_file) do
+          Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png'))
+        end
 
         before do
           post :create, params: { course_id: course.id, lesson: { title: 'Lesson', youtube_video_id: '',
-                                                                  content: 'test',
-                                                                  order_factor: 1 } }
+                                                                  content: 'test', order_factor: 1,
+                                                                  files: [file, another_file] } }
         end
 
         it 'renders correct page' do
           expect(one_lesson.title).to eq(title)
           expect(one_lesson.content).to eq(content)
+          expect(one_lesson.files).to be_attached
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(course_lesson_path(course, one_lesson))
         end

@@ -15,9 +15,10 @@ RSpec.describe Course, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:author) }
+    it { is_expected.to have_one_attached(:cover_picture) }
   end
 
-  describe 'custom validation' do
+  describe 'custom validation for youtube' do
     context 'when link is not youtube hosting' do
       let(:error_message) { I18n.t('activerecord.errors.models.course.attributes.video_link.is_not_youtube_link') }
 
@@ -49,6 +50,30 @@ RSpec.describe Course, type: :model do
       before { course.video_link = nil }
 
       it 'is valid for nil link' do
+        expect(course).to be_valid
+      end
+    end
+  end
+
+  describe 'custom validation for image type' do
+    context 'when file is not a picture' do
+      let(:error_message) { I18n.t('activerecord.errors.models.course.attributes.cover_picture.is_not_picture_type') }
+      let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
+
+      before { course.cover_picture.attach(file) }
+
+      it 'is not valid' do
+        expect(course).not_to be_valid
+        expect(course.errors.messages[:cover_picture].to_sentence).to eq(error_message)
+      end
+    end
+
+    context 'when file is a picture' do
+      let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
+
+      before { course.cover_picture.attach(file) }
+
+      it 'is not valid' do
         expect(course).to be_valid
       end
     end

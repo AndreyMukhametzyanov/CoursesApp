@@ -6,12 +6,15 @@ en:
           attributes:
             video_link:
               is_not_youtube_link: 'is not youtube'
+            cover_picture:
+              is_not_picture_type: ' is not picture type'
     attributes:
       course:
         name: 'Name'
         level: 'Level'
         description: 'description'
         video_link: 'Video link'
+        cover_picture: 'File '
       lesson:
         title: 'Title'
         content: 'Content'
@@ -24,6 +27,10 @@ en:
     sign_up: 'Sign up'
     sign_out: 'Sign out'
     create_course: 'Create course'
+  attachment:
+    delete: 'Attachment was deleted'
+    remove: 'Remove'
+    error: 'Something was wrong'
   courses:
     breadcrumb:
       home: 'Home'
@@ -41,11 +48,15 @@ en:
       edit_course: 'Edit course'
       create_course: 'Create new course'
       create_order: 'Buy course'
+    label:
+      label_name: 'Cover image'
   lessons:
     lesson_list: 'Available lessons'
     lesson_num: 'Lesson '
     lesson_edit: 'Edit lesson'
     lesson_create: 'Create lesson'
+    label:
+      label_name: 'Attachments'
   comments:
     all_comments: 'Comments'
     add_comment: 'Add a comment'
@@ -60,6 +71,8 @@ en:
     create: 'Create'
     edit: 'Edit'
     confirm: 'Confirm'
+  attentions:
+    really_delete: 'Are you sure?'
   errors:
     lessons:
       change_error: 'You cannot edit or create the lesson - you are not the author'

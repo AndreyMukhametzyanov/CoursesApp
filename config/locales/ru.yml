@@ -6,12 +6,15 @@ ru:
           attributes:
             video_link:
               is_not_youtube_link: 'не с youtube'
+            cover_picture:
+              is_not_picture_type: ' не является картинкой'
     attributes:
       course:
         name: 'Название'
         level: 'Сложность'
         description: 'Описание'
         video_link: 'Ссылка'
+        cover_picture: 'Файл'
       lesson:
         title: 'Название'
         content: 'Текст'
@@ -24,6 +27,10 @@ ru:
     sign_up: 'Зарегистрироваться'
     sign_out: 'Выйти'
     create_course: 'Создать курс'
+  attachment:
+    delete: 'Вложение удалено'
+    remove: 'Удалить'
+    error: 'Что-то пошло не так'
   courses:
     breadcrumb:
       home: 'Главная'
@@ -41,11 +48,15 @@ ru:
       edit_course: 'Изменить курс'
       create_course: 'Создать новый курс'
       create_order: 'Записаться на курс'
+    label:
+      label_name: 'Изображение для обложки'
   lessons:
     lesson_list: 'Cписок лекций'
     lesson_num: 'Лекция '
     lesson_edit: 'Редактировать лекцию'
     lesson_create: 'Создать лекцию'
+    label:
+      label_name: 'Прикрепленные файлы'
   comments:
     all_comments: 'Комментарии'
     add_comment: 'Добавить комментарий'
@@ -60,6 +71,8 @@ ru:
     create: 'Создать'
     edit: 'Изменить'
     confirm: 'Подтвердить'
+  attentions:
+    really_delete: 'Вы уверены?'
   errors:
     lessons:
       change_error: 'Вы не можете создавать или редактировать урок - вы не являетесь автором'

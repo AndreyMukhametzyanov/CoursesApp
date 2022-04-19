@@ -12,5 +12,15 @@ RSpec.describe Lesson, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:course) }
+    it { is_expected.to have_many_attached(:files) }
+  end
+
+  describe 'owned by user' do
+    let!(:course) { create :course }
+    let!(:lesson) { create :lesson, course: course }
+
+    it 'is owner' do
+      expect(lesson).to be_owner(course.author)
+    end
   end
 end
