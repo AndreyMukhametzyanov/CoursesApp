@@ -14,7 +14,8 @@ class LessonsController < ApplicationController
     @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @lesson = @course.lessons.build(permit_params(:lesson, :title, :content, :youtube_video_id,
-                                                    :order_factor, files: []))
+                                                    :order_factor, files: [],
+                                                                   links_attributes: %i[id address _destroy]))
       if @lesson.save
         redirect_to course_lesson_path(@course, @lesson)
       else
@@ -48,7 +49,7 @@ class LessonsController < ApplicationController
     if @course.owner?(current_user)
       @lesson = @course.lessons.find(params[:id])
       if @lesson.update(permit_params(:lesson, :title, :content, :youtube_video_id,
-                                      :order_factor, files: []))
+                                      :order_factor, files: [], links_attributes: %i[id address _destroy]))
         redirect_to course_lesson_path(@course, @lesson)
       else
         render :edit

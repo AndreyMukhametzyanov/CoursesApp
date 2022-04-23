@@ -8,6 +8,10 @@ en:
               is_not_youtube_link: 'is not youtube'
             cover_picture:
               is_not_picture_type: ' is not picture type'
+        link:
+          attributes:
+            address:
+              is_not_uri: 'is not url'
     attributes:
       course:
         name: 'Name'
@@ -22,6 +26,8 @@ en:
         youtube_video_id: 'Video link'
       comment:
         body: 'Text'
+      link:
+        address: 'Address'
   menu:
     sign_in: 'Sign in'
     sign_up: 'Sign up'
@@ -57,6 +63,10 @@ en:
     lesson_create: 'Create lesson'
     label:
       label_name: 'Attachments'
+  links:
+    head: 'Links'
+    remove: 'Remove link'
+    add: 'Add link'
   comments:
     all_comments: 'Comments'
     add_comment: 'Add a comment'

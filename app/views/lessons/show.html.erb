@@ -44,6 +44,16 @@
   <% end %>
 <% end %>
 
+<div class="mt-3">
+  <% unless @lesson.links.empty? %>
+    <h6><%= I18n.t('links.head') %></h6>
+    <% @lesson.links.each do |link| %>
+      <%= link_to link.address, link.address, target: :_blank %>
+      <p></p>
+    <% end %>
+  <% end %>
+</div>
+
 <p class="card-text mt-3">
   <% if @course.owner?(current_user) %>
     <%= link_to t('lessons.lesson_edit'), edit_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>

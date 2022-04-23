@@ -8,6 +8,10 @@ ru:
               is_not_youtube_link: 'не с youtube'
             cover_picture:
               is_not_picture_type: ' не является картинкой'
+        link:
+          attributes:
+            address:
+              is_not_uri: 'которую вы пытаетесь вставть, не является ссылкой'
     attributes:
       course:
         name: 'Название'
@@ -22,6 +26,8 @@ ru:
         youtube_video_id: 'Ссылка'
       comment:
         body: 'Текст'
+      link:
+        address: 'Ссылка'
   menu:
     sign_in: 'Войти'
     sign_up: 'Зарегистрироваться'
@@ -57,6 +63,10 @@ ru:
     lesson_create: 'Создать лекцию'
     label:
       label_name: 'Прикрепленные файлы'
+  links:
+    head: 'Ссылки'
+    remove: 'Удалить ссылку'
+    add: 'Добавить ссылку'
   comments:
     all_comments: 'Комментарии'
     add_comment: 'Добавить комментарий'

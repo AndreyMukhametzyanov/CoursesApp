@@ -2,6 +2,7 @@
   "name": "courses-app",
   "private": true,
   "dependencies": {
+    "@nathanvda/cocoon": "^1.2.14",
     "@popperjs/core": "^2.11.0",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",

@@ -4,5 +4,14 @@
   <%= f.input :youtube_video_id %>
   <%= f.input :order_factor %>
   <%= f.file_field :files, multiple: true, class: "my-3" %>
+  <h3><%= I18n.t('links.head') %></h3>
+  <div id='links'>
+    <%= f.simple_fields_for :links do |link| %>
+      <%= render 'link_fields', :f => link %>
+    <% end %>
+    <div class='links'>
+      <%= link_to_add_association "#{I18n.t('links.add')}", f, :links %>
+    </div>
+  </div>
   <%= f.button :submit, (@lesson.new_record? ? t('buttons.create') : t('buttons.edit')), class: "btn btn-outline-primary mt-3" %>
 <% end %>

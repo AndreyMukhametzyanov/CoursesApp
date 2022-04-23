@@ -50,13 +50,17 @@ RSpec.describe LessonsController, type: :controller do
           Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png'))
         end
 
+        let(:links) { [{ address: 'https://www.google.com/' }, { address: 'https://www.ya.ru/' }] }
+
         before do
           post :create, params: { course_id: course.id, lesson: { title: 'Lesson', youtube_video_id: '',
                                                                   content: 'test', order_factor: 1,
                                                                   files: [file, another_file] } }
+          one_lesson.update(links_attributes: links)
         end
 
         it 'renders correct page' do
+          expect(one_lesson.links.count).to eq(links.count)
           expect(one_lesson.title).to eq(title)
           expect(one_lesson.content).to eq(content)
           expect(one_lesson.files).to be_attached

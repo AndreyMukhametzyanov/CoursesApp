@@ -7,6 +7,7 @@ ruby '3.0.2'
 
 gem 'active_interaction', '~> 4.1'
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'cocoon'
 gem 'devise'
 gem 'foreman'
 gem 'jbuilder', '~> 2.7'
