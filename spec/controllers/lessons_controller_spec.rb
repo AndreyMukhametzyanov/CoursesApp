@@ -55,8 +55,8 @@ RSpec.describe LessonsController, type: :controller do
         before do
           post :create, params: { course_id: course.id, lesson: { title: 'Lesson', youtube_video_id: '',
                                                                   content: 'test', order_factor: 1,
-                                                                  files: [file, another_file] } }
-          one_lesson.update(links_attributes: links)
+                                                                  files: [file, another_file],
+                                                                  links_attributes: links } }
         end
 
         it 'renders correct page' do
