@@ -28,6 +28,15 @@ ru:
         body: 'Текст'
       link:
         address: 'Ссылка'
+      exam:
+        title: 'Название'
+        description: 'Описание'
+        attempts_number: 'Количество попыток сдачи экзамена'
+        attempts_time: 'Время на прохождение курса в сек'
+      question:
+        title: 'Название'
+      answer:
+        body: 'Ответ'
   menu:
     sign_in: 'Войти'
     sign_up: 'Зарегистрироваться'
@@ -77,6 +86,20 @@ ru:
     create_order:
       success: "Доброе пожаловать на курс!"
       error: "Что-то пошло не так"
+  exam:
+    head_create: 'Создать экзамен к курсу '
+    head_edit: 'Редактировать экзамен к курсу '
+    create_button: 'Создать экзамен'
+    edit_button: 'Редактировать экзамен'
+    pass_exam: 'Сдать экзамен'
+  question:
+    head: 'Вопросы'
+    remove: 'Удалить вопрос'
+    add: 'Добавить вопрос'
+  answer:
+    head: 'Ответы'
+    remove: 'Удалить ответ'
+    add: 'Добавить ответ'
   buttons:
     create: 'Создать'
     edit: 'Изменить'
@@ -93,3 +116,6 @@ ru:
       access_error: 'Доступ к курсу запрещен'
       blank_error: 'не может быть пустым'
       enrolled_error: 'Вы не записаны на курс'
+    exam:
+      change_error: 'Вы не можете создавать или редактировать экзамен - вы не являетесь автором'
+      access_error: 'Доступ к экзамену запрещен'

@@ -28,6 +28,15 @@ en:
         body: 'Text'
       link:
         address: 'Address'
+      exam:
+        title: 'Title'
+        description: 'Description'
+        attempts_number: 'Number of exam attempts'
+        attempts_time: 'Time to take the exam (sec)'
+      question:
+        title: 'Title'
+      answer:
+        body: 'Body'
   menu:
     sign_in: 'Sign in'
     sign_up: 'Sign up'
@@ -77,6 +86,20 @@ en:
     create_order:
       success: "Welcome to the course!"
       error: "Something was wrong"
+  exam:
+    head_create: 'Create exam for '
+    head_edit: 'Edit exam for '
+    create_button: 'Create exam'
+    edit_button: 'Edit exam'
+    pass_exam: 'Pass exam'
+  question:
+    head: 'Questions'
+    remove: 'Remove question'
+    add: 'Add question'
+  answer:
+    head: 'Answers'
+    remove: 'Remove answer'
+    add: 'Add answer'
   buttons:
     create: 'Create'
     edit: 'Edit'
@@ -93,4 +116,7 @@ en:
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
       enrolled_error: 'You not enrolled in course'
+    exam:
+      change_error: 'You cannot edit or create the exam - you are not the author'
+      access_error: 'Access to exam denied'
 

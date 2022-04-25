@@ -4,6 +4,7 @@ class Course < ApplicationRecord
   include Commentable
 
   belongs_to :author, class_name: 'User', foreign_key: 'user_id', inverse_of: :developed_courses
+  has_one :exam, dependent: :destroy
   has_many :lessons, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :students, class_name: 'User', through: :orders, source: 'user'
