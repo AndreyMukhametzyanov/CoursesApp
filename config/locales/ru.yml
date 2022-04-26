@@ -100,10 +100,13 @@ ru:
     head: 'Ответы'
     remove: 'Удалить ответ'
     add: 'Добавить ответ'
+    сorrect: 'Верный ответ?'
   buttons:
     create: 'Создать'
     edit: 'Изменить'
     confirm: 'Подтвердить'
+    yes: 'Да'
+    no: 'Нет'
   attentions:
     really_delete: 'Вы уверены?'
   errors:

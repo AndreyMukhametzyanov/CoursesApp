@@ -100,10 +100,13 @@ en:
     head: 'Answers'
     remove: 'Remove answer'
     add: 'Add answer'
+    сorrect: 'Correct answer?'
   buttons:
     create: 'Create'
     edit: 'Edit'
     confirm: 'Confirm'
+    yes: 'Yes'
+    no: 'No'
   attentions:
     really_delete: 'Are you sure?'
   errors:

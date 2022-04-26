@@ -1,4 +1,8 @@
 <div class='nested-fields'>
   <%= f.input :body %>
+  <div>
+    <h7>Правильный ответ?</h7>
+    <%= f.collection_radio_buttons :correct_answer, [[true, 'Yes'], [false, 'No']], :first, :last %>
+  </div>
   <%= link_to_remove_association "#{I18n.t('answer.remove')}", f %>
 </div>

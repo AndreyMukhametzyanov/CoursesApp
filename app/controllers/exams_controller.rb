@@ -13,7 +13,7 @@ class ExamsController < ApplicationController
     @exam = @course.create_exam(permit_params(:exam, :title, :description, :attempts_number,
                                               :attempts_time,
                                               questions_attributes: [:id,:title,:_destroy,
-                                              answers_attributes: %i[id body _destroy]]))
+                                              answers_attributes: %i[id body correct_answer _destroy]]))
     if @exam.save
       redirect_to promo_course_path(@course)
     else
@@ -28,7 +28,7 @@ class ExamsController < ApplicationController
       if @exam.update(permit_params(:exam, :title, :description, :attempts_number,
                                     :attempts_time,
                                     questions_attributes: [:id,:title,:_destroy,
-                                    answers_attributes: %i[id body _destroy]]))
+                                    answers_attributes: %i[id body correct_answer _destroy]]))
         redirect_to promo_course_path(@course)
       else
         render :edit
