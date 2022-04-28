@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :question do
-    title { "MyString" }
-    exam { nil }
+    exam
+    title { 'MyString' }
   end
 end

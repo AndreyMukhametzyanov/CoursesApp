@@ -92,6 +92,8 @@ en:
     create_button: 'Create exam'
     edit_button: 'Edit exam'
     pass_exam: 'Pass exam'
+    create: 'Exam created'
+    update: 'Exam updated'
   question:
     head: 'Questions'
     remove: 'Remove question'
