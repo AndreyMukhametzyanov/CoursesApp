@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_24_124508) do
+ActiveRecord::Schema.define(version: 2022_05_06_072912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2022_04_24_124508) do
   end
 
   create_table "courses", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.string "name"
     t.string "description"
     t.integer "level"
@@ -73,6 +73,21 @@ ActiveRecord::Schema.define(version: 2022_04_24_124508) do
     t.text "youtube_video_id"
     t.index ["name"], name: "index_courses_on_name", unique: true
     t.index ["user_id"], name: "index_courses_on_user_id"
+  end
+
+  create_table "examinations", force: :cascade do |t|
+    t.integer "passage_time"
+    t.boolean "pass_exam"
+    t.integer "correct_answers"
+    t.integer "percentage_passing"
+    t.bigint "exam_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "question_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["exam_id"], name: "index_examinations_on_exam_id"
+    t.index ["question_id"], name: "index_examinations_on_question_id"
+    t.index ["user_id"], name: "index_examinations_on_user_id"
   end
 
   create_table "exams", force: :cascade do |t|
@@ -87,7 +102,7 @@ ActiveRecord::Schema.define(version: 2022_04_24_124508) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.integer "youtube_video_id"
+    t.text "youtube_video_id"
     t.text "content"
     t.bigint "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -146,6 +161,9 @@ ActiveRecord::Schema.define(version: 2022_04_24_124508) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "comments", "users"
+  add_foreign_key "examinations", "exams"
+  add_foreign_key "examinations", "questions"
+  add_foreign_key "examinations", "users"
   add_foreign_key "exams", "courses"
   add_foreign_key "lessons", "courses"
   add_foreign_key "questions", "exams"

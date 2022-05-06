@@ -68,4 +68,19 @@ class ExamsController < ApplicationController
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.access_error'))
     end
   end
+
+  def start
+    @course = Course.find_by(id: params[:course_id])
+    unless @course.enrolled_in_course?(current_user)
+      return redirect_with_alert(promo_course_path, I18n.t('errors.courses.enrolled_error'))
+    end
+
+    @exam = @course.exam
+    if @exam
+      redirect_to examination_path(@exam)
+    else
+      redirect_with_alert(promo_course_path, I18n.t('errors.lessons.access_error'))
+    end
+  end
+
 end

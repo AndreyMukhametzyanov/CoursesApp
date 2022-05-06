@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-sm-12">
+    <nav aria-label="breadcrumb" class="mt-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to t('courses.breadcrumb.home'), root_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{@course.name}", promo_course_path(@course) %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{t('courses.breadcrumb.lessons')}", course_lesson_path(@course, @course.lessons.last.id) %></li>
+        <li class="breadcrumb-item active" aria-current="page">exam</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<h1><%= "Welcome to the course exam #{@course.name}" %></h1>
+<div><%= "#{t('exam.description')} #{@course.exam.description}: " %></div>
+<div><%= "#{t('exam.attempts_number')} #{@course.exam.attempts_number}: " %> </div>
+<div><%= "#{t('exam.attempts_time')} #{@course.exam.attempts_time}: " %> </div>
+
+<div class="mt-3">
+  <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+</div>

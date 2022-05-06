@@ -94,6 +94,11 @@ en:
     pass_exam: 'Pass exam'
     create: 'Exam created'
     update: 'Exam updated'
+    start: 'Start the exam'
+    title: 'Title'
+    description: 'Description'
+    attempts_number: 'Number of exam attempts'
+    attempts_time: 'Time to take the exam (sec)'
   question:
     head: 'Questions'
     remove: 'Remove question'

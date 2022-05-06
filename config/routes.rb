@@ -10,13 +10,23 @@ Rails.application.routes.draw do
   root 'courses#index'
 
   resources :courses, concerns: :commentable do
-    resource :exam
     resources :lessons, except: :index, concerns: :commentable
     member do
       get 'promo'
       get 'start'
       post 'order'
     end
+    resource :exam do
+      member do
+        post 'start'
+      end
+    end
   end
   resources :attachments, only: :destroy
+  resources :examinations, only: :show do
+    member do
+      post 'check_answer'
+      get 'result'
+    end
+  end
 end
