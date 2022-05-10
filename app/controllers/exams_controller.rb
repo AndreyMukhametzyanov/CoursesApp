@@ -75,12 +75,14 @@ class ExamsController < ApplicationController
       return redirect_with_alert(promo_course_path, I18n.t('errors.courses.enrolled_error'))
     end
 
-    @exam = @course.exam
-    if @exam
-      redirect_to examination_path(@exam)
+    if @course.exam
+      @examination = Examination.create(user: current_user, exam: @course.exam,
+                                        current_question: @course.exam.questions.first, pass_exam: false,
+                                        next_question: @course.exam.questions.second, passage_time: 0,
+                                        correct_answers: 0, percentage_passing: 0)
+      redirect_to examination_path(@examination)
     else
       redirect_with_alert(promo_course_path, I18n.t('errors.lessons.access_error'))
     end
   end
-
 end

@@ -2,7 +2,14 @@
 
 class ExaminationsController < ApplicationController
   def show
-    render '  examinations/show'
+    @examination = Examination.find(params[:id])
+
+    if @examination.pass_exam
+      redirect_to result
+    else
+      @current_question = @examination.current_question
+    end
+
   end
 
   def check_answer

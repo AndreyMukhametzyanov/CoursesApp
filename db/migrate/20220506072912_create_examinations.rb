@@ -7,7 +7,8 @@ class CreateExaminations < ActiveRecord::Migration[6.1]
       t.integer :percentage_passing
       t.belongs_to :exam, null: false, foreign_key: true
       t.belongs_to :user, null: false, foreign_key: true
-      t.belongs_to :question, null: false, foreign_key: true
+      t.belongs_to :next_question, foreign_key: { to_table: :questions }
+      t.belongs_to :current_question, foreign_key: { to_table: :questions }
 
       t.timestamps
     end

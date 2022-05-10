@@ -82,11 +82,13 @@ ActiveRecord::Schema.define(version: 2022_05_06_072912) do
     t.integer "percentage_passing"
     t.bigint "exam_id", null: false
     t.bigint "user_id", null: false
-    t.bigint "question_id", null: false
+    t.bigint "next_question_id"
+    t.bigint "current_question_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["current_question_id"], name: "index_examinations_on_current_question_id"
     t.index ["exam_id"], name: "index_examinations_on_exam_id"
-    t.index ["question_id"], name: "index_examinations_on_question_id"
+    t.index ["next_question_id"], name: "index_examinations_on_next_question_id"
     t.index ["user_id"], name: "index_examinations_on_user_id"
   end
 
@@ -162,7 +164,8 @@ ActiveRecord::Schema.define(version: 2022_05_06_072912) do
   add_foreign_key "answers", "questions"
   add_foreign_key "comments", "users"
   add_foreign_key "examinations", "exams"
-  add_foreign_key "examinations", "questions"
+  add_foreign_key "examinations", "questions", column: "current_question_id"
+  add_foreign_key "examinations", "questions", column: "next_question_id"
   add_foreign_key "examinations", "users"
   add_foreign_key "exams", "courses"
   add_foreign_key "lessons", "courses"
