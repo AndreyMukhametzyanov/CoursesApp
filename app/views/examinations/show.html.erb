@@ -2,7 +2,7 @@
 <div class="progress mb-3">
   <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
 </div>
-
+ <h4> <%=@current_question.title %> </h4>
 <%= simple_form_for :user_answers, :url => check_answer_examination_path(@examination) do |f| %>
   <%= f.collection_check_boxes(:current_question, @current_question.answers, :id, :body, include_hidden: false) do |b| %>
     <p><%= b.label(:"data-value" => b.value) { b.check_box + b.text } %></p>

@@ -78,7 +78,8 @@ class ExamsController < ApplicationController
     if @course.exam
       @examination = Examination.create(user: current_user, exam: @course.exam,
                                         current_question: @course.exam.questions.first, pass_exam: false,
-                                        next_question: @course.exam.questions.second, passage_time: 0,
+                                        next_question: @course.exam.questions.second,
+                                        passage_time: @course.exam.attempts_time,
                                         correct_answers: 0, percentage_passing: 0)
       redirect_to examination_path(@examination)
     else
