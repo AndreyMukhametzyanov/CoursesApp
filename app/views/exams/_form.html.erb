@@ -4,14 +4,14 @@
       <div class="col-5">
         <%= f.input :title %>
         <%= f.input :description %>
-        <%= f.input :attempts_number %>
-        <%= f.input :attempts_time %>
+        <%= f.input :attempts_count %>
+        <%= f.input :attempt_time %>
       </div>
       <div class="col">
         <h3> <%= I18n.t('question.head') %></h3>
         <div id='questions'>
           <%= f.simple_fields_for :questions do |question| %>
-            <%= render 'question_fields', :f => question %>
+            <%= render 'question_fields', f: question %>
           <% end %>
           <div class='links'>
             <%= link_to_add_association "#{I18n.t('question.add')}", f, :questions %>

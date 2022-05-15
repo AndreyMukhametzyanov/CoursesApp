@@ -95,8 +95,8 @@ ActiveRecord::Schema.define(version: 2022_05_06_072912) do
   create_table "exams", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.integer "attempts_number"
-    t.integer "attempts_time"
+    t.integer "attempts_count"
+    t.integer "attempt_time"
     t.bigint "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -36,8 +36,8 @@ class ExamsController < ApplicationController
     @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @exam = @course.exam
-      if @exam.update(permit_params(:exam, :title, :description, :attempts_number,
-                                    :attempts_time,
+      if @exam.update(permit_params(:exam, :title, :description, :attempts_count,
+                                    :attempt_time,
                                     questions_attributes: [:id, :title, :_destroy,
                                                            { answers_attributes:
                                                                %i[id body correct_answer _destroy] }]))
@@ -79,7 +79,7 @@ class ExamsController < ApplicationController
       @examination = Examination.create(user: current_user, exam: @course.exam,
                                         current_question: @course.exam.questions.first, pass_exam: false,
                                         next_question: @course.exam.questions.second,
-                                        passage_time: @course.exam.attempts_time,
+                                        passage_time: @course.exam.attempt_time,
                                         correct_answers: 0, percentage_passing: 0)
       redirect_to examination_path(@examination)
     else

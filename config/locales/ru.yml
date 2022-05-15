@@ -97,7 +97,7 @@ ru:
     start: 'Начать экзамен'
     title: 'Название'
     description: 'Описание'
-    attempts_number: 'Количество попыток сдачи экзамена'
+    attempts_number: 'Количество попыток для сдачи экзамена'
     attempts_time: 'Время на прохождение курса в сек'
   question:
     head: 'Вопросы'

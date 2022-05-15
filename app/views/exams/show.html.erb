@@ -12,9 +12,9 @@
 </div>
 
 <h1><%= "Welcome to the course exam #{@course.name}" %></h1>
-<div><%= "#{t('exam.description')} #{@course.exam.description}: " %></div>
-<div><%= "#{t('exam.attempts_number')} #{@course.exam.attempts_number}: " %> </div>
-<div><%= "#{t('exam.attempts_time')} #{@course.exam.attempts_time}: " %> </div>
+<div><%= "#{t('exam.description')}: #{@course.exam.description} " %></div>
+<div><%= "#{t('exam.attempts_number')}: #{@course.exam.attempts_count}" %> </div>
+<div><%= "#{t('exam.attempts_time')}: #{@course.exam.attempt_time}" %> </div>
 
 <div class="mt-3">
   <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
