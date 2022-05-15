@@ -14,8 +14,7 @@ class ExaminationsController < ApplicationController
 
   def check_answer
     examination = Examination.find(params[:id])
-    answers = examination.current_question.answers.where('correct_answer=true').map { |answer| answer.id }
-
+    answers = examination.current_question.answers.where(correct_answer: true).pluck(:id)
     user_answers = params[:user_answers].nil? ? [] : params[:user_answers]['current_question'].map { |answer| answer.to_i }
 
     puts answers.inspect
@@ -36,7 +35,7 @@ class ExaminationsController < ApplicationController
       end
 
       current_question = examination.next_question
-      next_question = examination.exam.questions.where("id > #{current_question.id}").first
+      next_question = examination.exam.questions.where('id > ?', current_question.id).first
 
       examination.update(current_question: current_question,
                          next_question: next_question,
