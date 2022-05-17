@@ -19,3 +19,32 @@
 <div class="mt-3">
   <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
 </div>
+
+<table class="table table-bordered mt-4">
+  <thead>
+  <tr>
+    <th scope="col">Attempt #</th>
+    <th scope="col">Username</th>
+    <th scope="col">Date of exam</th>
+    <th scope="col">Passage time</th>
+    <th scope="col">Correct answers</th>
+    <th scope="col">Number of questions</th>
+    <th scope="col">Percentage passing</th>
+    <th scope="col">Result</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @examinations.each_with_index do |examination, i| %>
+    <tr>
+      <th scope="row"><%= i + 1 %></th>
+      <td><%= current_user.first_name %></td>
+      <td><%= examination.created_at.strftime("%Y-%m-%d") %></td>
+      <td><%= examination.passage_time / 60 %> min</td>
+      <td><%= examination.correct_answers %></td>
+      <td><%= examination.number_of_questions %></td>
+      <td><%= examination.percentage_passing %>%</td>
+      <td><%= examination.passed_exam ? "passed" : "not passed" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

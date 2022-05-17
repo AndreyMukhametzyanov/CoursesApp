@@ -2,7 +2,7 @@
 
 <div class="progress mb-2">
   <div class="progress-bar" role="progressbar" style="width: <%=@percent%>%" aria-valuemin="0" aria-valuemax="100">
-    <%=@percent %> %
+    <%= @percent %> %
   </div>
 </div>
 <h4> <%= @current_question.title %> </h4>
@@ -12,3 +12,4 @@
   <% end %>
   <%= f.button :submit, class: "btn btn-outline-primary mt-3" %>
 <% end %>
+

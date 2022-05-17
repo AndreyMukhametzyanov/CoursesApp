@@ -76,10 +76,12 @@ ActiveRecord::Schema.define(version: 2022_05_06_072912) do
   end
 
   create_table "examinations", force: :cascade do |t|
-    t.integer "passage_time"
-    t.boolean "pass_exam"
-    t.integer "correct_answers"
-    t.integer "percentage_passing"
+    t.integer "passage_time", default: 0
+    t.boolean "passed_exam", default: false
+    t.boolean "finished_exam", default: false
+    t.integer "number_of_questions", default: 0
+    t.integer "correct_answers", default: 0
+    t.integer "percentage_passing", default: 0
     t.bigint "exam_id", null: false
     t.bigint "user_id", null: false
     t.bigint "next_question_id"

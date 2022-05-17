@@ -17,8 +17,8 @@ class ExamsController < ApplicationController
   def create
     @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
-      @exam = @course.create_exam(permit_params(:exam, :title, :description, :attempts_number,
-                                                :attempts_time,
+      @exam = @course.create_exam(permit_params(:exam, :title, :description, :attempts_count,
+                                                :attempt_time,
                                                 questions_attributes: [:id, :title, :_destroy,
                                                                        { answers_attributes:
                                                                            %i[id body correct_answer _destroy] }]))
@@ -64,6 +64,7 @@ class ExamsController < ApplicationController
     @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       @exam = @course.exam
+      @examinations = Examination.where(user: current_user, exam: @exam)
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.access_error'))
     end
@@ -76,11 +77,10 @@ class ExamsController < ApplicationController
     end
 
     if @course.exam
-      @examination = Examination.create(user: current_user, exam: @course.exam,
-                                        current_question: @course.exam.questions.first, pass_exam: false,
-                                        next_question: @course.exam.questions.second,
-                                        passage_time: @course.exam.attempt_time,
-                                        correct_answers: 0, percentage_passing: 0)
+      @examination = Examination.create(user: current_user, exam: @course.exam, passage_time: @course.exam.attempt_time,
+                                        number_of_questions: @course.exam.questions.count,
+                                        current_question: @course.exam.questions.first,
+                                        next_question: @course.exam.questions.second)
       redirect_to examination_path(@examination)
     else
       redirect_with_alert(promo_course_path, I18n.t('errors.lessons.access_error'))

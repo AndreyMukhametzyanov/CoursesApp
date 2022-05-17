@@ -4,12 +4,13 @@ class ExaminationsController < ApplicationController
   def show
     @examination = Examination.find(params[:id])
     @percent = answers_percentage(@examination)
-    if @examination.pass_exam
+    if @examination.finished_exam
+      redirect_to course_exam_path(@examination.exam.course)
+    elsif success_passed_exam?(@examination.percentage_passing)
       redirect_to result_examination_path(@examination)
     else
       @current_question = @examination.current_question
     end
-
   end
 
   def check_answer
@@ -22,7 +23,7 @@ class ExaminationsController < ApplicationController
     if examination.next_question.nil?
       examination.update(correct_answers: correct_answer,
                          percentage_passing: percent_count(correct_answer, examination.exam.questions.count),
-                         pass_exam: true)
+                         finished_exam: true, passed_exam: success_passed_exam?(examination.percentage_passing))
     else
       current_question = examination.next_question
       next_question = examination.exam.questions.where('id > ?', current_question.id).first
@@ -44,7 +45,11 @@ class ExaminationsController < ApplicationController
   end
 
   def answers_percentage(model)
-    (model.exam.questions.where('id < ?', model.current_question.id).count.to_f / model.exam.questions.count) * 100
+    ((model.exam.questions.where('id < ?',
+                                 model.current_question.id).count.to_f / model.exam.questions.count) * 100).round(1)
   end
 
+  def success_passed_exam?(percentage_passing)
+    true if percentage_passing >= 80
+  end
 end
