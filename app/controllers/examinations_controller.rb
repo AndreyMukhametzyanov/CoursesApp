@@ -19,11 +19,18 @@ class ExaminationsController < ApplicationController
     user_answers = params[:user_answers].nil? ? [] : params[:user_answers]['current_question'].map(&:to_i)
     correct_answer = examination.correct_answers
 
+    puts answers.inspect
+    puts user_answers.inspect
+
     correct_answer += 1 if (answers - user_answers).empty?
     if examination.next_question.nil?
       examination.update(correct_answers: correct_answer,
                          percentage_passing: percent_count(correct_answer, examination.exam.questions.count),
-                         finished_exam: true, passed_exam: success_passed_exam?(examination.percentage_passing))
+                         finished_exam: true)
+      puts examination.percentage_passing
+      if success_passed_exam?(examination.percentage_passing)
+        examination.update(passed_exam: true)
+      end
     else
       current_question = examination.next_question
       next_question = examination.exam.questions.where('id > ?', current_question.id).first

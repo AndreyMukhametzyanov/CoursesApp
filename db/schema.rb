@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2022_05_06_072912) do
   end
 
   create_table "courses", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.string "name"
     t.string "description"
     t.integer "level"
@@ -97,8 +97,8 @@ ActiveRecord::Schema.define(version: 2022_05_06_072912) do
   create_table "exams", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.integer "attempts_count"
-    t.integer "attempt_time"
+    t.integer "attempts_number"
+    t.integer "attempts_time"
     t.bigint "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 2022_05_06_072912) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.text "youtube_video_id"
+    t.integer "youtube_video_id"
     t.text "content"
     t.bigint "course_id", null: false
     t.datetime "created_at", precision: 6, null: false

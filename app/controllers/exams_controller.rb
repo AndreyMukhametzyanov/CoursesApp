@@ -64,7 +64,7 @@ class ExamsController < ApplicationController
     @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       @exam = @course.exam
-      @examinations = Examination.where(user: current_user, exam: @exam)
+      @examinations = Examination.where(user: current_user, exam: @exam).order(:created_at)
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.access_error'))
     end
