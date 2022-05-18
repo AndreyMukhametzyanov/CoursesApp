@@ -17,10 +17,10 @@
 <div><%= "#{t('exam.attempts_time')}: #{@course.exam.attempt_time}" %> </div>
 
 <div class="my-3">
-  <% if @examinations.last.finished_exam %>
-    <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+  <% if @not_finished_exam %>
+    <%= link_to "#{t('exam.continue')}", examination_path(@not_finished_exam), class: 'btn btn-outline-primary' %>
   <% else %>
-    <%= link_to "#{t('exam.continue')}", examination_path(@examinations.last), class: 'btn btn-outline-primary' %>
+    <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
   <% end %>
 </div>
 
@@ -44,7 +44,7 @@
       <tr>
         <th scope="row"><%= i + 1 %></th>
         <td><%= current_user.first_name %></td>
-        <td><%= examination.created_at.strftime("%Y-%m-%d %T") %></td>
+        <td><%= examination.created_at.strftime("%d.%m.%Y %T") %></td>
         <td><%= examination.passage_time / 60 %> min</td>
         <td><%= examination.correct_answers %></td>
         <td><%= examination.number_of_questions %></td>
