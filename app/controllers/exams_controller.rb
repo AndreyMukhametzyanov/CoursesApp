@@ -76,6 +76,10 @@ class ExamsController < ApplicationController
       return redirect_with_alert(promo_course_path, I18n.t('errors.courses.enrolled_error'))
     end
 
+    if Examination.where(user: current_user, exam: @course.exam, finished_exam: false).any?
+      raise ActionController::BadRequest
+    end
+
     if @course.exam
       @examination = Examination.create(user: current_user, exam: @course.exam, passage_time: @course.exam.attempt_time,
                                         number_of_questions: @course.exam.questions.count,

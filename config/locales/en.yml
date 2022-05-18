@@ -95,6 +95,7 @@ en:
     create: 'Exam created'
     update: 'Exam updated'
     start: 'Start the exam'
+    continue: 'Continue the exam'
     title: 'Title'
     description: 'Description'
     attempts_number: 'Number of exam attempts'
