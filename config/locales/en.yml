@@ -31,8 +31,8 @@ en:
       exam:
         title: 'Title'
         description: 'Description'
-        attempts_number: 'Number of exam attempts'
-        attempts_time: 'Time to take the exam (sec)'
+        attempts_count: 'Number of exam attempts'
+        attempt_time: 'Time to take the exam (min)'
       question:
         title: 'Title'
       answer:
@@ -130,4 +130,7 @@ en:
     exam:
       change_error: 'You cannot edit or create the exam - you are not the author'
       access_error: 'Access to exam denied'
+      not_create: 'The exam for the course has not been created yet'
+      attempt_error: 'The number of exam attempts has been increased'
+
 

@@ -66,6 +66,8 @@ class ExamsController < ApplicationController
       @exam = @course.exam
       @examinations = Examination.where(user: current_user, exam: @exam).order(:created_at)
       @not_finished_exam = Examination.where(user: current_user, exam: @exam, finished_exam: false).first
+      @user_attempts = Examination.where(user: current_user, exam: @exam).count
+      @attempts_of_exam = Exam.where(course: @course).first.attempts_count
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.access_error'))
     end
@@ -81,14 +83,18 @@ class ExamsController < ApplicationController
       raise ActionController::BadRequest
     end
 
-    if @course.exam
-      @examination = Examination.create(user: current_user, exam: @course.exam, passage_time: @course.exam.attempt_time,
-                                        number_of_questions: @course.exam.questions.count,
-                                        current_question: @course.exam.questions.first,
-                                        next_question: @course.exam.questions.second)
-      redirect_to examination_path(@examination)
+    if Examination.where(user: current_user, exam: @course.exam).count >= Exam.where(course: @course).first.attempts_count
+      redirect_with_alert(course_exam_path(@course.exam), I18n.t('errors.exam.attempt_error'))
     else
-      redirect_with_alert(promo_course_path, I18n.t('errors.lessons.access_error'))
+      if @course.exam
+        @examination = Examination.create(user: current_user, exam: @course.exam, passage_time: @course.exam.attempt_time,
+                                          number_of_questions: @course.exam.questions.count,
+                                          current_question: @course.exam.questions.first,
+                                          next_question: @course.exam.questions.second)
+        redirect_to examination_path(@examination)
+      else
+        redirect_with_alert(promo_course_path, I18n.t('errors.exam.not_create'))
+      end
     end
   end
 end

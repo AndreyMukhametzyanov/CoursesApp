@@ -12,15 +12,17 @@
 </div>
 
 <h1><%= "Welcome to the course exam #{@course.name}" %></h1>
-<div><%= "#{t('exam.description')}: #{@course.exam.description} " %></div>
+<div><%= "#{t('exam.description')}: #{@course.exam.description}" %></div>
 <div><%= "#{t('exam.attempts_number')}: #{@course.exam.attempts_count}" %> </div>
 <div><%= "#{t('exam.attempts_time')}: #{@course.exam.attempt_time}" %> </div>
 
 <div class="my-3">
-  <% if @not_finished_exam %>
-    <%= link_to "#{t('exam.continue')}", examination_path(@not_finished_exam), class: 'btn btn-outline-primary' %>
-  <% else %>
-    <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+  <% if @user_attempts < @attempts_of_exam %>
+    <% if @not_finished_exam %>
+      <%= link_to "#{t('exam.continue')}", examination_path(@not_finished_exam), class: 'btn btn-outline-primary' %>
+    <% else %>
+      <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+    <% end %>
   <% end %>
 </div>
 
