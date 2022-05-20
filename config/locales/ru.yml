@@ -32,7 +32,7 @@ ru:
         title: 'Название'
         description: 'Описание'
         attempts_count: 'Количество попыток сдачи экзамена'
-        attempt_time: 'Время на прохождение курса в мин'
+        attempt_time: 'Время на прохождение курса в сек'
       question:
         title: 'Название'
       answer:
@@ -100,6 +100,19 @@ ru:
     description: 'Описание'
     attempts_number: 'Количество попыток для сдачи экзамена'
     attempts_time: 'Время на прохождение курса в сек'
+    welcome: 'Добро пожаловать на экзамен по курсу '
+    table:
+      head: 'Ваши попытки'
+      attempt: 'Попытка '
+      username: 'Имя пользователя'
+      date_exam: 'Дата прохождения экзамена'
+      passage_time: 'Время прохождения, мин'
+      correct_answers: 'Правильные ответы'
+      number_of_questions: 'Количество вопросов в экзамене'
+      percentage_passing: 'Процент правильных ответов '
+      result: 'Результат'
+      passed: 'Зачтено'
+      not_passed: 'Не зачтено'
   question:
     head: 'Вопросы'
     remove: 'Удалить вопрос'
@@ -108,13 +121,14 @@ ru:
     head: 'Ответы'
     remove: 'Удалить ответ'
     add: 'Добавить ответ'
-    сorrect: 'Верный ответ?'
+    correct: 'Верный ответ?'
   buttons:
     create: 'Создать'
     edit: 'Изменить'
     confirm: 'Подтвердить'
     yes: 'Да'
     no: 'Нет'
+    continue: 'Продолжить'
   attentions:
     really_delete: 'Вы уверены?'
   errors:
@@ -132,3 +146,4 @@ ru:
       access_error: 'Доступ к экзамену запрещен'
       not_create: 'Экзамен для курса еще не создан'
       attempt_error: 'Привышено количество попыток сдачи экзамена'
+      end_time: 'Время сдачи экзамена истекло'

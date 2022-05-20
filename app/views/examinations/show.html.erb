@@ -10,6 +10,6 @@
   <%= f.collection_check_boxes(:current_question, @current_question.answers, :id, :body, include_hidden: false) do |b| %>
     <p><%= b.label(:"data-value" => b.value) { b.check_box + b.text } %></p>
   <% end %>
-  <%= f.button :submit, class: "btn btn-outline-primary mt-3" %>
+  <%= f.button :submit, "#{t('buttons.continue')}", class: "btn btn-outline-primary mt-3" %>
 <% end %>
 

@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<h1><%= "Welcome to the course exam #{@course.name}" %></h1>
+<h1><%= "#{t('exam.welcome')} #{@course.name}" %></h1>
 <div><%= "#{t('exam.description')}: #{@course.exam.description}" %></div>
 <div><%= "#{t('exam.attempts_number')}: #{@course.exam.attempts_count}" %> </div>
 <div><%= "#{t('exam.attempts_time')}: #{@course.exam.attempt_time}" %> </div>
@@ -27,18 +27,18 @@
 </div>
 
 <% if @examinations.any? %>
-  <h4>Ваши попытки</h4>
+  <h4><%= I18n.t('exam.table.head') %></h4>
   <table class="table table-bordered mt-4">
     <thead>
     <tr>
-      <th scope="col">Attempt #</th>
-      <th scope="col">Username</th>
-      <th scope="col">Date of exam</th>
-      <th scope="col">Passage time</th>
-      <th scope="col">Correct answers</th>
-      <th scope="col">Number of questions</th>
-      <th scope="col">Percentage passing</th>
-      <th scope="col">Result</th>
+      <th scope="col"><%= I18n.t('exam.table.attempt') %></th>
+      <th scope="col"><%= I18n.t('exam.table.username') %></th>
+      <th scope="col"><%= I18n.t('exam.table.date_exam') %></th>
+      <th scope="col"><%= I18n.t('exam.table.passage_time') %></th>
+      <th scope="col"><%= I18n.t('exam.table.correct_answers') %></th>
+      <th scope="col"><%= I18n.t('exam.table.number_of_questions') %></th>
+      <th scope="col"><%= I18n.t('exam.table.percentage_passing') %></th>
+      <th scope="col"><%= I18n.t('exam.table.result') %></th>
     </tr>
     </thead>
     <tbody>
@@ -47,11 +47,11 @@
         <th scope="row"><%= i + 1 %></th>
         <td><%= current_user.first_name %></td>
         <td><%= examination.created_at.strftime("%d.%m.%Y %T") %></td>
-        <td><%= examination.passage_time / 60 %> min</td>
+        <td><%= examination.passage_time / 60 %></td>
         <td><%= examination.correct_answers %></td>
         <td><%= examination.number_of_questions %></td>
         <td><%= examination.percentage_passing %>%</td>
-        <td><%= examination.passed_exam ? "passed" : "not passed" %></td>
+        <td><%= examination.passed_exam ? "#{t('exam.table.passed')}" : "#{t('exam.table.not_passed')}" %></td>
       </tr>
     <% end %>
     </tbody>

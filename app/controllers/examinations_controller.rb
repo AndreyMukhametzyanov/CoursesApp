@@ -4,6 +4,7 @@ class ExaminationsController < ApplicationController
   def show
     @examination = Examination.find(params[:id])
     @percent = answers_percentage(@examination)
+
     if @examination.finished_exam
       redirect_to course_exam_path(@examination.exam.course)
     elsif success_passed_exam?(@examination.percentage_passing)
@@ -11,6 +12,7 @@ class ExaminationsController < ApplicationController
     else
       @current_question = @examination.current_question
     end
+
   end
 
   def check_answer
@@ -18,24 +20,29 @@ class ExaminationsController < ApplicationController
     answers = examination.current_question.answers.where(correct_answer: true).pluck(:id)
     user_answers = params[:user_answers].nil? ? [] : params[:user_answers]['current_question'].map(&:to_i)
     correct_answer = examination.correct_answers
-    puts examination.current_question.created_at
-    correct_answer += 1 if (answers - user_answers).empty?
-
-    if examination.next_question.nil?
-      examination.update(correct_answers: correct_answer,
-                         percentage_passing: percent_count(correct_answer, examination.exam.questions.count),
-                         finished_exam: true)
-      if success_passed_exam?(examination.percentage_passing)
-        examination.update(passed_exam: true)
-      end
+    if end_pass_time?(Time.zone.now, examination.created_at, examination.exam.attempt_time)
+      puts 'ture'
+      redirect_with_alert(course_exam_path(examination.exam.course), I18n.t('errors.exam.end_time'))
     else
-      current_question = examination.next_question
-      next_question = examination.exam.questions.where('id > ?', current_question.id).first
-      examination.update(current_question: current_question,
-                         next_question: next_question,
-                         correct_answers: correct_answer)
+      puts 'esdad'
+      correct_answer += 1 if (answers - user_answers).empty?
+
+      if examination.next_question.nil?
+        examination.update(correct_answers: correct_answer,
+                           percentage_passing: percent_count(correct_answer, examination.exam.questions.count),
+                           finished_exam: true)
+        if success_passed_exam?(examination.percentage_passing)
+          examination.update(passed_exam: true)
+        end
+      else
+        current_question = examination.next_question
+        next_question = examination.exam.questions.where('id > ?', current_question.id).first
+        examination.update(current_question: current_question,
+                           next_question: next_question,
+                           correct_answers: correct_answer)
+      end
+      redirect_to examination_path(examination.id)
     end
-    redirect_to examination_path(examination.id)
   end
 
   def result
@@ -57,8 +64,8 @@ class ExaminationsController < ApplicationController
     true if percentage_passing >= 80
   end
 
-  def end_pass_time?(current_time, end_of_exam_time)
+  def end_pass_time?(current_time, examination_create_time, exam_attempt_time)
     #answer_time=>Time.now #end_of_exam_time => examination.exam.created_at + examination.exam.attempt_time
-    true if current_time > end_of_exam_time
+    true if current_time > examination_create_time + exam_attempt_time
   end
 end
