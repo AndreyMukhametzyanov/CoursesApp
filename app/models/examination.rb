@@ -9,4 +9,8 @@ class Examination < ApplicationRecord
            number_of_questions: 0, correct_answers: 0, percentage_passing: 0,
            passed_exam: false, finished_exam: false)
   end
+
+  def time_remaining
+    (created_at + exam.attempt_time) - Time.zone.now
+  end
 end
