@@ -83,18 +83,17 @@ class ExamsController < ApplicationController
       raise ActionController::BadRequest
     end
 
-    if Examination.where(user: current_user, exam: @course.exam).count >= Exam.where(course: @course).first.attempts_count
+    if Examination.where(user: current_user,
+                         exam: @course.exam).count >= Exam.where(course: @course).first.attempts_count
       redirect_with_alert(course_exam_path(@course.exam), I18n.t('errors.exam.attempt_error'))
+    elsif @course.exam
+      @examination = Examination.create(user: current_user, exam: @course.exam, passage_time: @course.exam.attempt_time,
+                                        number_of_questions: @course.exam.questions.count,
+                                        current_question: @course.exam.questions.first,
+                                        next_question: @course.exam.questions.second)
+      redirect_to examination_path(@examination)
     else
-      if @course.exam
-        @examination = Examination.create(user: current_user, exam: @course.exam, passage_time: @course.exam.attempt_time,
-                                          number_of_questions: @course.exam.questions.count,
-                                          current_question: @course.exam.questions.first,
-                                          next_question: @course.exam.questions.second)
-        redirect_to examination_path(@examination)
-      else
-        redirect_with_alert(promo_course_path, I18n.t('errors.exam.not_create'))
-      end
+      redirect_with_alert(promo_course_path, I18n.t('errors.exam.not_create'))
     end
   end
 end

@@ -43,8 +43,8 @@ RSpec.describe ExamsController, type: :controller do
       context 'when new exam is valid' do
         let(:title) { 'MyExam' }
         let(:description) { 'Text' }
-        let(:attempts_number) { 1 }
-        let(:attempts_time) { 120 }
+        let(:attempts_count) { 1 }
+        let(:attempt_time) { 120 }
         let(:answers) { [{ body: 'yes', correct_answer: true }, { body: 'no', correct_answer: false }] }
         let(:another_answers) { [{ body: 'yes', correct_answer: false }, { body: 'no', correct_answer: true }] }
         let(:questions) do
@@ -55,7 +55,7 @@ RSpec.describe ExamsController, type: :controller do
 
         before do
           post :create, params: { course_id: course.id, exam: { title: 'MyExam', description: 'Text',
-                                                                attempts_number: 1, attempts_time: 120,
+                                                                attempts_count: 1, attempt_time: 120,
                                                                 questions_attributes: questions } }
         end
 
@@ -63,8 +63,8 @@ RSpec.describe ExamsController, type: :controller do
           expect(course.exam).to be_valid
           expect(course.exam.title).to eq(title)
           expect(course.exam.description).to eq(description)
-          expect(course.exam.attempts_number).to eq(1)
-          expect(course.exam.attempts_time).to eq(120)
+          expect(course.exam.attempts_count).to eq(1)
+          expect(course.exam.attempt_time).to eq(120)
           expect(course.exam.questions.count).to eq(2)
           expect(course.exam.questions.first.title).to eq(questions.first[:title])
           expect(course.exam.questions.first.answers.first.body).to eq(answers.first[:body])

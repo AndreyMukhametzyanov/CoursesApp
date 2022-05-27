@@ -15,7 +15,7 @@ class LessonsController < ApplicationController
     if @course.owner?(current_user)
       @lesson = @course.lessons.build(permit_params(:lesson, :title, :content, :youtube_video_id,
                                                     :order_factor, files: [],
-                                                    links_attributes: %i[id address _destroy]))
+                                                                   links_attributes: %i[id address _destroy]))
       if @lesson.save
         redirect_to course_lesson_path(@course, @lesson)
       else

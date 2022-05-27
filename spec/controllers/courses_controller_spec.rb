@@ -145,10 +145,14 @@ RSpec.describe CoursesController, type: :controller do
   describe '#start' do
     context 'when user is not enrolled in course' do
       let!(:course) { create :course, author: user }
-      let(:student) { course.students.find_by(id: user.id) }
+      let(:another_user) { create :user }
+      let(:student) { course.students.find_by(id: another_user.id) }
       let(:alert_message) { I18n.t('errors.courses.enrolled_error') }
 
-      before { get :start, params: { id: course.id } }
+      before do
+        sign_in another_user
+        get :start, params: { id: course.id }
+      end
 
       it 'returns alarm and correct redirect to promo page' do
         expect(flash[:alert]).to eq(alert_message)

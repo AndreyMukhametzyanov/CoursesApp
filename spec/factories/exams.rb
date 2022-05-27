@@ -5,7 +5,7 @@ FactoryBot.define do
     course
     title { 'MyString' }
     description { 'MyString' }
-    attempts_number { 1 }
-    attempts_time { 120 }
+    attempts_count { 1 }
+    attempt_time { 120 }
   end
 end
