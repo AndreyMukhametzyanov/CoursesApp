@@ -16,6 +16,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+  config.include ActiveSupport::Testing::TimeHelpers
   config.fixture_path = "#{::Rails.root}/spec/fixtures/files"
   config.include FactoryBot::Syntax::Methods
   config.use_transactional_fixtures = true

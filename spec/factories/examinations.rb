@@ -2,9 +2,15 @@
 
 FactoryBot.define do
   factory :examination do
-    passage_time { 1 }
-    pass_exam { false }
+    user
+    exam
+    current_question {create exam.questions.first }
+    next_question {create exam.questions.second }
+    passage_time { 0 }
+    passed_exam { false }
+    finished_exam { false }
+    number_of_questions { 4 }
     correct_answers { 1 }
-    percentage_passing { 1 }
+    percentage_passing { 25 }
   end
 end
