@@ -7,5 +7,9 @@ FactoryBot.define do
     description { 'MyString' }
     attempts_count { 1 }
     attempt_time { 120 }
+
+    trait :with_questions do
+      questions { build_list :questions, 5, :with_answers }
+    end
   end
 end

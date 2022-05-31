@@ -3,6 +3,15 @@
 FactoryBot.define do
   factory :question do
     exam
-    title { 'MyString' }
+    sequence(:title) { |i| "Question #{i}" }
+
+    trait :with_answers do
+      answers do
+        [
+          build(:answer, :true_answer),
+          build(:answer)
+        ]
+      end
+    end
   end
 end

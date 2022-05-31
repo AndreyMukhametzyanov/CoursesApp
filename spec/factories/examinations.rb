@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :examination do
     user
+    course
     exam
     current_question {create exam.questions.first }
     next_question {create exam.questions.second }

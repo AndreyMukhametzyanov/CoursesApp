@@ -3,6 +3,10 @@
 FactoryBot.define do
   factory :answer do
     question
-    body { 'MyString' }
+    sequence(:body) { |i| "Answer #{i}" }
+
+    trait :true_answer do
+      correct_answer { true }
+    end
   end
 end
