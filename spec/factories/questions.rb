@@ -22,14 +22,15 @@ FactoryBot.define do
   factory :question do
     exam
     sequence(:title) { |i| "Question #{i}" }
+    answers do
+      [
+        build(:answer, :true_answer),
+        build(:answer)
+      ]
+    end
 
-    trait :with_answers do
-      answers do
-        [
-          build(:answer, :true_answer),
-          build(:answer)
-        ]
-      end
+    trait :without_answers do
+      answers { [] }
     end
   end
 end

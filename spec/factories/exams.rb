@@ -28,9 +28,10 @@ FactoryBot.define do
     description { 'MyString' }
     attempts_count { 1 }
     attempt_time { 120 }
+    questions { build_list :question, 5 }
 
-    trait :with_questions do
-      questions { build_list :questions, 5, :with_answers }
+    trait :without_questions do
+      questions { build_list [], 3, :without_answers }
     end
   end
 end

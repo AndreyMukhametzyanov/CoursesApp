@@ -20,8 +20,8 @@
 #
 FactoryBot.define do
   factory :course do
-    author { create :user }
-    sequence(:name) { |i| "Name#{i}" }
+    author factory: :user
+    name { "Course #{SecureRandom.alphanumeric(20)}" }
     video_link { '' }
     description { 'MyString' }
     level { 1 }
