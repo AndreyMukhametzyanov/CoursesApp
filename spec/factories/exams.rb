@@ -21,6 +21,9 @@
 #
 #  fk_rails_...  (course_id => courses.id)
 #
+#
+#
+#
 FactoryBot.define do
   factory :exam do
     course
