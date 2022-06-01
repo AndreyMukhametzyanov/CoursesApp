@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.2'
+ruby '3.1.2'
 
 gem 'active_interaction', '~> 4.1'
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -22,6 +22,7 @@ gem 'sass-rails', '>= 6'
 gem 'simple_form'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 5.0'
+gem 'net-smtp', require: false
 
 group :development, :test do
   gem 'brakeman'
@@ -35,6 +36,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'annotate'
   gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'spring'

@@ -63,6 +63,9 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
     ast (2.4.2)
     bcrypt (3.1.16)
     bindex (0.8.1)
@@ -81,6 +84,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
+    digest (3.1.0)
     erubi (1.10.0)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
@@ -113,8 +117,16 @@ GEM
     mini_mime (1.1.2)
     minitest (5.15.0)
     msgpack (1.4.2)
+    net-protocol (0.1.3)
+      timeout
+    net-smtp (0.3.1)
+      digest
+      net-protocol
+      timeout
     nio4r (2.5.8)
     nokogiri (1.13.0-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.13.0-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.0-x86_64-linux)
       racc (~> 1.4)
@@ -238,6 +250,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (1.2.1)
     tilt (2.0.10)
+    timeout (0.3.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -264,10 +277,12 @@ GEM
 PLATFORMS
   arm64-darwin
   arm64-darwin-21
+  x86_64-darwin-20
   x86_64-linux
 
 DEPENDENCIES
   active_interaction (~> 4.1)
+  annotate
   bootsnap (>= 1.4.4)
   brakeman
   byebug
@@ -278,6 +293,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   jquery-rails
   listen (~> 3.3)
+  net-smtp
   pg (~> 1.1)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
@@ -299,7 +315,7 @@ DEPENDENCIES
   webpacker (~> 5.0)
 
 RUBY VERSION
-   ruby 3.0.2p107
+   ruby 3.1.2p20
 
 BUNDLED WITH
    2.2.22
