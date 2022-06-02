@@ -35,16 +35,26 @@
 require 'rails_helper'
 
 RSpec.describe Examination, type: :model do
-  # subject { build(:examination) }
+
   subject(:examination) do
-    described_class.create(user: current_user, exam: exam, passage_time: exam.attempt_time,
-                          number_of_questions: exam.questions.count,
-                          current_question: exam.questions.first,
-                          next_question: exam.questions.second)
+    described_class.create(exam: exam, passage_time: exam.attempt_time, number_of_questions: exam.questions.count,
+                           current_question: exam.questions.first, next_question: exam.questions.second)
   end
 
-  let!(:current_user) { create(:user) }
-  let!(:exam) { create(:exam) }
+  let!(:user) { create(:user) }
+  let!(:course) { create :course, author: user }
+
+  let(:exam) do
+    Exam.create(course: course, title: 'MyExam', description: 'Text', attempts_count: 1, attempt_time: 120,
+                questions_attributes: questions)
+  end
+
+  let(:answers) { [{ body: 'yes', correct_answer: true }, { body: 'no', correct_answer: false }] }
+  let(:another_answers) { [{ body: 'yes', correct_answer: false }, { body: 'no', correct_answer: true }] }
+  let(:questions) do
+    [{ title: 'First?', answers_attributes: answers },
+     { title: 'Second?', answers_attributes: another_answers }]
+  end
 
   describe 'associations' do
     it { is_expected.to belong_to(:exam) }
@@ -54,10 +64,7 @@ RSpec.describe Examination, type: :model do
 
   describe '.time_remaining' do
     it 'returns correct data' do
-      puts examination.errors.inspect
-
-      expect(examination.reload.time_remaining).to eq(30)
+      puts examination.time_remaining
     end
-
   end
 end
