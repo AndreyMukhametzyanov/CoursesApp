@@ -75,8 +75,9 @@ class ExamsController < ApplicationController
 
   def start
     @course = Course.find_by(id: params[:course_id])
-    unless @course.enrolled_in_course?(current_user)
-      return redirect_with_alert(promo_course_path, I18n.t('errors.courses.enrolled_error'))
+
+    unless @course.enrolled_in_course?(current_user) || @course.owner?(current_user)
+      return redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
     end
 
     if Examination.where(user: current_user, exam: @course.exam, finished_exam: false).any?
