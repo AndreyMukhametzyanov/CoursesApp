@@ -21,7 +21,6 @@
 #
 FactoryBot.define do
   factory :answer do
-    question
     sequence(:body) { |i| "Answer #{i}" }
 
     trait :true_answer do
