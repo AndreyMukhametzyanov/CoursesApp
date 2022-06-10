@@ -34,7 +34,7 @@ FactoryBot.define do
     questions { build_list :question, 5 }
 
     trait :without_questions do
-      questions { build_list [], 3, :without_answers }
+      questions {[]}
     end
   end
 end
