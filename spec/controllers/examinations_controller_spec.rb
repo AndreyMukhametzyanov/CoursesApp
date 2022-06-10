@@ -67,4 +67,18 @@ RSpec.describe ExaminationsController, type: :controller do
 
   end
 
+  describe '#check_answer' do
+
+    context 'when the student answered correctly and time is over' do
+      let(:correct_answer) { exam.questions.first.answers.where(correct_answer: true).ids }
+
+      before do
+        post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }
+      end
+
+      it 'return' do
+        puts examination.reload.inspect
+      end
+    end
+  end
 end
