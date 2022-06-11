@@ -136,7 +136,7 @@ RSpec.describe Course, type: :model do
       end
 
       it 'is valid' do
-        expect(my_course.youtube_video_id).to eq(nil)
+        expect(my_course.youtube_video_id).to be_nil
       end
     end
 
@@ -147,7 +147,7 @@ RSpec.describe Course, type: :model do
       end
 
       it 'is valid' do
-        expect(my_course.youtube_video_id).to eq(nil)
+        expect(my_course.youtube_video_id).to be_nil
       end
     end
 

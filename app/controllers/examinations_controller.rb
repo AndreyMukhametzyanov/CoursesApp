@@ -5,10 +5,8 @@ class ExaminationsController < ApplicationController
     @examination = Examination.find(params[:id])
     @percent = answers_percentage(@examination)
 
-    if @examination.finished_exam
+    if @examination.finished_exam || success_passed_exam?(@examination.percentage_passing)
       redirect_to course_exam_path(@examination.exam.course)
-    elsif success_passed_exam?(@examination.percentage_passing)
-      redirect_to result_examination_path(@examination)
     else
       @current_question = @examination.current_question
     end
@@ -21,8 +19,7 @@ class ExaminationsController < ApplicationController
     correct_answer = examination.correct_answers
     correct_answer += 1 if (answers - user_answers).empty?
     if examination.time_remaining <= 0
-      examination.update(correct_answers: correct_answer,
-                         percentage_passing: percent_count(correct_answer, examination.exam.questions.count),
+      examination.update(percentage_passing: percent_count(correct_answer, examination.exam.questions.count),
                          finished_exam: true)
 
       redirect_with_alert(course_exam_path(examination.exam.course), I18n.t('errors.exam.end_time'))
@@ -42,10 +39,6 @@ class ExaminationsController < ApplicationController
       end
       redirect_to examination_path(examination.id)
     end
-  end
-
-  def result
-    @examination = Examination.find(params[:id])
   end
 
   private

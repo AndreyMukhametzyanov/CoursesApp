@@ -20,7 +20,6 @@
 #
 FactoryBot.define do
   factory :question do
-
     sequence(:title) { |i| "Question #{i}" }
     answers do
       [

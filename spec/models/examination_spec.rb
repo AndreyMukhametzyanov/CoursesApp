@@ -35,10 +35,10 @@
 require 'rails_helper'
 
 RSpec.describe Examination, type: :model do
-
   subject(:examination) do
-    described_class.create(user: user, exam: exam, passage_time: exam.attempt_time, number_of_questions: exam.questions.count,
-                           current_question: exam.questions.first, next_question: exam.questions.second)
+    described_class.create(user: user, exam: exam, passage_time: exam.attempt_time,
+                           number_of_questions: exam.questions.count, current_question: exam.questions.first,
+                           next_question: exam.questions.second)
   end
 
   let!(:user) { create(:user) }
@@ -81,5 +81,4 @@ RSpec.describe Examination, type: :model do
       expect(another_examination.number_of_questions).to eq(0)
     end
   end
-
 end

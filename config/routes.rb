@@ -26,7 +26,6 @@ Rails.application.routes.draw do
   resources :examinations, only: :show do
     member do
       post 'check_answer'
-      get 'result'
     end
   end
 end
