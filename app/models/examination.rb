@@ -54,7 +54,7 @@ class Examination < ApplicationRecord
     time_remaining <= 0
   end
 
-  def success_passed_exam?(percentage_passing)
+  def success_passed_exam?
     percentage_passing >= 80
   end
 

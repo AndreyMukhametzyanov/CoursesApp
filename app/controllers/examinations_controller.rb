@@ -7,7 +7,7 @@ class ExaminationsController < ApplicationController
 
     @percent = @examination.answers_percentage
 
-    if @examination.finished_exam || @examination.success_passed_exam?(@examination.percentage_passing)
+    if @examination.finished_exam || @examination.success_passed_exam?
       redirect_to course_exam_path(@examination.exam.course)
     else
       @current_question = @examination.current_question
@@ -19,22 +19,17 @@ class ExaminationsController < ApplicationController
     correct_answer = @examination.correct_answers
     correct_answer += 1 if (answers - current_user_answer).empty?
     if @examination.time_is_over?
-      puts 'VETKA1'
       @examination.update(percentage_passing: @examination.percent_count(correct_answer, @examination.exam.questions.count),
                           finished_exam: true)
 
       redirect_with_alert(course_exam_path(@examination.exam.course), I18n.t('errors.exam.end_time'))
     else
       if @examination.next_question.nil?
-        puts 'VETKA3'
-        puts @examination.percentage_passing
         @examination.update(correct_answers: correct_answer,
                             percentage_passing: @examination.percent_count(correct_answer, @examination.exam.questions.count),
-                            finished_exam: true,
-                            passed_exam: @examination.success_passed_exam?(@examination.percentage_passing))
-
+                            finished_exam: true)
+        @examination.update(passed_exam: true) if @examination.success_passed_exam?
       else
-        puts 'VETKA4'
         @examination.update(current_question: @examination.next_question, correct_answers: correct_answer,
                             next_question: @examination.exam.questions.where('id > ?',
                                                                              @examination.next_question.id).first)

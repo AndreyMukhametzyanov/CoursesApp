@@ -68,7 +68,6 @@ RSpec.describe ExaminationsController, type: :controller do
 
     context 'when the student student answers more then 80 % questions and next question nil' do
       let!(:examination) { create :examination, exam: exam, correct_answers: exam.questions.count - 1,
-                                  percentage_passing: examination.percent_count,
                                   current_question: exam.questions.last, next_question: nil }
       let(:correct_answer) { examination.exam.questions.last.answers.where(correct_answer: true).ids }
 
@@ -77,23 +76,16 @@ RSpec.describe ExaminationsController, type: :controller do
       end
 
       it 'returns true for finished and pass exam and and correct redirect to examination start page' do
-        puts examination.reload.inspect
-        puts examination.reload.exam.questions.last.answers.inspect
-        puts correct_answer.inspect
-
-        # expect(examination.reload.finished_exam).to be_truthy
+        expect(examination.reload.finished_exam).to be_truthy
         expect(examination.reload.passed_exam).to be_truthy
-        # expect(response).to redirect_to examination_path(examination.id)
+        expect(response).to redirect_to examination_path(examination.id)
       end
     end
 
     context 'when the student answers less then 80 % and next question nil' do
-      let!(:examination) do
-        Examination.create(user: user, exam: exam, passage_time: exam.attempt_time,
-                           number_of_questions: exam.questions.count, current_question: exam.questions.first,
-                           next_question: nil)
-      end
-      let(:correct_answer) { exam.questions.first.answers.where(correct_answer: true).ids }
+      let!(:examination) { create :examination, exam: exam, correct_answers: 0,
+                                  current_question: exam.questions.last, next_question: nil }
+      let(:correct_answer) { examination.exam.questions.last.answers.where(correct_answer: true).ids }
 
       before do
         post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }
