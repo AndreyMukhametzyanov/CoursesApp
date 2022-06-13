@@ -67,8 +67,10 @@ RSpec.describe ExaminationsController, type: :controller do
     end
 
     context 'when the student student answers more then 80 % questions and next question nil' do
-      let!(:examination) { create :examination, exam: exam, correct_answers: exam.questions.count - 1,
-                                  current_question: exam.questions.last, next_question: nil }
+      let!(:examination) do
+        create :examination, exam: exam, correct_answers: exam.questions.count - 1,
+                             current_question: exam.questions.last, next_question: nil
+      end
       let(:correct_answer) { examination.exam.questions.last.answers.where(correct_answer: true).ids }
 
       before do
@@ -83,8 +85,10 @@ RSpec.describe ExaminationsController, type: :controller do
     end
 
     context 'when the student answers less then 80 % and next question nil' do
-      let!(:examination) { create :examination, exam: exam, correct_answers: 0,
-                                  current_question: exam.questions.last, next_question: nil }
+      let!(:examination) do
+        create :examination, exam: exam, correct_answers: 0,
+                             current_question: exam.questions.last, next_question: nil
+      end
       let(:correct_answer) { examination.exam.questions.last.answers.where(correct_answer: true).ids }
 
       before do
