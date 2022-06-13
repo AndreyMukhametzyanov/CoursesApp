@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class ExamsController < ApplicationController
+  before_action :set_course
+
   def new
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       if @course.exam.nil?
         @exam = @course.build_exam
@@ -15,7 +16,6 @@ class ExamsController < ApplicationController
   end
 
   def create
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @exam = @course.create_exam(permit_params(:exam, :title, :description, :attempts_count,
                                                 :attempt_time,
@@ -33,7 +33,6 @@ class ExamsController < ApplicationController
   end
 
   def update
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @exam = @course.exam
       if @exam.update(permit_params(:exam, :title, :description, :attempts_count,
@@ -52,7 +51,6 @@ class ExamsController < ApplicationController
   end
 
   def edit
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @exam = @course.exam
     else
@@ -61,21 +59,18 @@ class ExamsController < ApplicationController
   end
 
   def show
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       @exam = @course.exam
       @examinations = Examination.where(user: current_user, exam: @exam).order(:created_at)
       @not_finished_exam = Examination.where(user: current_user, exam: @exam, finished_exam: false).first
       @user_attempts = Examination.where(user: current_user, exam: @exam).count
-      @attempts_of_exam = Exam.where(course: @course).first.attempts_count
+      @attempts_of_exam = @exam.attempts_count
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.access_error'))
     end
   end
 
   def start
-    @course = Course.find_by(id: params[:course_id])
-
     unless @course.enrolled_in_course?(current_user) || @course.owner?(current_user)
       return redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
     end
@@ -96,5 +91,11 @@ class ExamsController < ApplicationController
     else
       redirect_with_alert(promo_course_path, I18n.t('errors.exam.not_create'))
     end
+  end
+
+  private
+
+  def set_course
+    @course = Course.find_by(id: params[:course_id])
   end
 end

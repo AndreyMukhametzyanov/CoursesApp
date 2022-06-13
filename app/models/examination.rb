@@ -38,6 +38,8 @@ class Examination < ApplicationRecord
   belongs_to :current_question, class_name: 'Question'
   belongs_to :next_question, class_name: 'Question', optional: true
 
+  SUCCESS_PERCENT = 80
+
   def self.create_default(user:, exam:, current_question:, next_question:)
     create(user: user, exam: exam, current_question: current_question, next_question: next_question, passage_time: 0,
            number_of_questions: 0, correct_answers: 0, percentage_passing: 0,
@@ -45,6 +47,26 @@ class Examination < ApplicationRecord
   end
 
   def time_remaining
-    (created_at + exam.attempt_time) - Time.zone.now
+    ((created_at + exam.attempt_time) - Time.zone.now)
+  end
+
+  def time_is_over?
+    time_remaining <= 0
+  end
+
+  def success_passed_exam?(percentage_passing)
+    percentage_passing >= 80
+  end
+
+  def answers_percentage
+    ((exam.questions.where('id < ?', current_question.id).count.to_f / exam.questions.count) * 100).round(1)
+  end
+
+  def current_correct_answers_ids
+    current_question.answers.where(correct_answer: true).pluck(:id)
+  end
+
+  def percent_count(correct_answers, number_of_questions)
+    (correct_answers * 100) / number_of_questions
   end
 end

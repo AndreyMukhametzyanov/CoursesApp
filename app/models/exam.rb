@@ -31,7 +31,7 @@ class Exam < ApplicationRecord
 
   accepts_nested_attributes_for :questions, allow_destroy: true
 
-  def passed?(user)
+  def passed_by_user?(user)
     Examination.where(user: user, exam: self, finished_exam: true).any?
   end
 end

@@ -1,14 +1,14 @@
 document.addEventListener("turbolinks:load", function (event) {
-    const timer = document.getElementById("timer");
+    const timer = document.getElementById("timer")
     const form = document.getElementById("question-form")
-    let seconds = parseInt(timer.dataset.time);
+    let seconds = parseInt(timer.dataset.time)
     timer.innerHTML = secToTimeString(seconds)
     setInterval(function () {
         if (seconds <= 0) {
-            form.submit();
+            form.submit()
             return
         }
-        seconds--;
+        seconds--
         timer.innerHTML = secToTimeString(seconds)
     }, 1000)
 })
@@ -17,10 +17,10 @@ document.addEventListener("turbolinks:load", function (event) {
 function secToTimeString(sec) {
     const addZero = function (n) {
         return n < 10 ? "0" + n : n
-    };
+    }
     return [
         addZero(Math.floor(sec / 3600)),
         addZero(Math.floor(sec % 3600 / 60)),
         addZero(Math.floor(sec % 60))
-    ].join(":");
+    ].join(":")
 }

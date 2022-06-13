@@ -42,7 +42,7 @@ FactoryBot.define do
     passed_exam { false }
     finished_exam { false }
     number_of_questions { instance.exam.questions.count }
-    correct_answers { 1 }
-    percentage_passing { 25 }
+    correct_answers { 0 }
+    percentage_passing { 0 }
   end
 end

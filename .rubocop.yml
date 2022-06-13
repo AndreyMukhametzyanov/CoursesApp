@@ -42,7 +42,7 @@ Bundler/GemComment:
   Enabled: false
 
 Metrics/AbcSize:
-  Max: 40
+  Max: 60
 
 Layout/EndOfLine:
   Enabled: false
