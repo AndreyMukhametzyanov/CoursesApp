@@ -12,9 +12,7 @@ RSpec.describe ExaminationsController, type: :controller do
   before { sign_in user }
 
   describe '#show' do
-    before do
-      get :show, params: { id: examination.id }
-    end
+    before { get :show, params: { id: examination.id } }
 
     context 'when examination still in progress' do
       it 'return correct examination form with questions and answers' do
@@ -60,18 +58,19 @@ RSpec.describe ExaminationsController, type: :controller do
       it 'correct redirect to start examination page and increase correct answers' do
         travel_to(1.day.from_now) do
           post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }
+
           expect(flash[:alert]).to eq(alert_message)
           expect(response).to redirect_to course_exam_path(examination.exam.course)
         end
       end
     end
 
-    context 'when the student student answers more then 80 % questions and next question nil' do
+    context 'when the student answers more then 80 % questions and next question nil' do
+      let(:correct_answer) { exam.questions.last.answers.where(correct_answer: true).ids }
       let!(:examination) do
         create :examination, exam: exam, correct_answers: exam.questions.count - 1,
                              current_question: exam.questions.last, next_question: nil
       end
-      let(:correct_answer) { examination.exam.questions.last.answers.where(correct_answer: true).ids }
 
       before do
         post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }

@@ -65,8 +65,4 @@ class Examination < ApplicationRecord
   def current_correct_answers_ids
     current_question.answers.where(correct_answer: true).pluck(:id)
   end
-
-  def percent_count(correct_answers, number_of_questions)
-    (correct_answers * 100) / number_of_questions
-  end
 end

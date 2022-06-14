@@ -14,27 +14,26 @@ class ExaminationsController < ApplicationController
   end
 
   def check_answer
-    answers = @examination.current_correct_answers_ids
-    correct_answer = @examination.correct_answers
-    correct_answer += 1 if (answers - current_user_answer).empty?
+    @examination.correct_answers += 1 if (current_correct_answers - current_user_answer).empty?
+
     if @examination.time_is_over?
-      @examination.update(percentage_passing: @examination.percent_count(correct_answer,
-                                                                         @examination.exam.questions.count),
-                          finished_exam: true)
+      @examination.update(
+        percentage_passing: calc_percent_count,
+        finished_exam: true
+      )
 
       redirect_with_alert(course_exam_path(@examination.exam.course), I18n.t('errors.exam.end_time'))
     else
       if @examination.next_question.nil?
-        @examination.update(correct_answers: correct_answer,
-                            percentage_passing: @examination.percent_count(correct_answer,
-                                                                           @examination.exam.questions.count),
-                            finished_exam: true)
-        @examination.update(passed_exam: true) if @examination.success_passed_exam?
+        @examination.percentage_passing = calc_percent_count
+        @examination.passed_exam = @examination.success_passed_exam?
+        @examination.finished_exam = true
       else
-        @examination.update(current_question: @examination.next_question, correct_answers: correct_answer,
-                            next_question: @examination.exam.questions.where('id > ?',
-                                                                             @examination.next_question.id).first)
+        @examination.current_question = @examination.next_question
+        @examination.next_question = next_question
       end
+      @examination.save!
+
       redirect_to examination_path(@examination.id)
     end
   end
@@ -46,6 +45,18 @@ class ExaminationsController < ApplicationController
   end
 
   def current_user_answer
-    params[:user_answers].nil? ? [] : params[:user_answers]['current_question'].map(&:to_i)
+    @current_user_answer ||= params[:user_answers].nil? ? [] : params[:user_answers]['current_question'].map(&:to_i)
+  end
+
+  def current_correct_answers
+    @current_correct_answers ||= @examination.current_correct_answers_ids
+  end
+
+  def next_question
+    @examination.exam.questions.where('id > ?', @examination.next_question.id).first
+  end
+
+  def calc_percent_count
+    (@examination.correct_answers * 100) / @examination.exam.questions.count
   end
 end
