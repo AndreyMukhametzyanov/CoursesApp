@@ -1,9 +1,30 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: courses
+#
+#  id               :bigint           not null, primary key
+#  description      :string
+#  level            :integer
+#  name             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  user_id          :bigint           not null
+#  youtube_video_id :text
+#
+# Indexes
+#
+#  index_courses_on_name     (name) UNIQUE
+#  index_courses_on_user_id  (user_id)
+#
 class Course < ApplicationRecord
+  CORRECT_URL_PART = 'https://www.youtube.com/watch?v'
+
   include Commentable
 
   belongs_to :author, class_name: 'User', foreign_key: 'user_id', inverse_of: :developed_courses
+  has_one :exam, dependent: :destroy
   has_many :lessons, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :students, class_name: 'User', through: :orders, source: 'user'
@@ -11,14 +32,14 @@ class Course < ApplicationRecord
 
   attr_accessor :video_link
 
-  before_save :take_video_id
-
   validate :check_url
   validates :description, :level, presence: true
   validates :level, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than: 6 }
   validates :name, presence: true, uniqueness: true
   validates :name, uniqueness: { case_sensitive: false }
   validate :correct_picture_type, if: :cover_picture
+
+  before_save :take_video_id
 
   def owner?(user)
     author == user
@@ -35,11 +56,10 @@ class Course < ApplicationRecord
   end
 
   def check_url
-    correct = 'https://www.youtube.com/watch?v'
     return if video_link.blank?
 
     correct_link, id = video_link.split('=')
-    correct_link == correct ? id : errors.add(:video_link, :is_not_youtube_link)
+    correct_link == CORRECT_URL_PART ? id : errors.add(:video_link, :is_not_youtube_link)
   end
 
   def correct_picture_type

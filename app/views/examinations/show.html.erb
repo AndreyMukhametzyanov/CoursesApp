@@ -1,0 +1,16 @@
+<h3 class="text-center" id="timer" data-time="<%= @examination.time_remaining %>">TYT BYDET TIMER</h3>
+
+<div class="progress mb-2">
+  <div class="progress-bar" role="progressbar" style="width: <%= @examination.answers_percentage %>%" aria-valuemin="0" aria-valuemax="100">
+    <%= @examination.answers_percentage %> %
+  </div>
+</div>
+
+<h4> <%= @current_question.title %> </h4>
+
+<%= simple_form_for :user_answers, url: check_answer_examination_path(@examination), html: { id: 'question-form' } do |f| %>
+  <%= f.collection_check_boxes(:current_question, @current_question.answers, :id, :body, include_hidden: false) do |b| %>
+    <p><%= b.label(:"data-value" => b.value) { b.check_box + b.text } %></p>
+  <% end %>
+  <%= f.button :submit, "#{t('buttons.continue')}", class: "btn btn-outline-primary mt-3" %>
+<% end %>

@@ -16,6 +16,16 @@ Rails.application.routes.draw do
       get 'start'
       post 'order'
     end
+    resource :exam do
+      member do
+        post 'start'
+      end
+    end
   end
   resources :attachments, only: :destroy
+  resources :examinations, only: :show do
+    member do
+      post 'check_answer'
+    end
+  end
 end

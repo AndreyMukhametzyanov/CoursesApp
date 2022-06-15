@@ -28,6 +28,15 @@ en:
         body: 'Text'
       link:
         address: 'Address'
+      exam:
+        title: 'Title'
+        description: 'Description'
+        attempts_count: 'Number of exam attempts'
+        attempt_time: 'Time to take the exam (min)'
+      question:
+        title: 'Title'
+      answer:
+        body: 'Body'
   menu:
     sign_in: 'Sign in'
     sign_up: 'Sign up'
@@ -77,10 +86,49 @@ en:
     create_order:
       success: "Welcome to the course!"
       error: "Something was wrong"
+  exam:
+    head_create: 'Create exam for '
+    head_edit: 'Edit exam for '
+    create_button: 'Create exam'
+    edit_button: 'Edit exam'
+    pass_exam: 'Pass exam'
+    create: 'Exam created'
+    update: 'Exam updated'
+    start: 'Start the exam'
+    continue: 'Continue the exam'
+    title: 'Title'
+    description: 'Description'
+    attempts_number: 'Number of exam attempts'
+    attempts_time: 'Time to take the exam (sec)'
+    welcome: 'Welcome to the course exam '
+    table:
+      head: 'Your attempts'
+      attempt: 'Attempt #'
+      username: 'Username'
+      date_exam: 'Date exam'
+      passage_time: 'Passage time '
+      correct_answers: 'Correct answers'
+      number_of_questions: 'Number of questions'
+      percentage_passing: 'Percentage '
+      result: 'Result'
+      passed: 'Passed'
+      not_passed: 'Not passed'
+  question:
+    head: 'Questions'
+    remove: 'Remove question'
+    add: 'Add question'
+  answer:
+    head: 'Answers'
+    remove: 'Remove answer'
+    add: 'Add answer'
+    correct: 'Correct answer?'
   buttons:
     create: 'Create'
     edit: 'Edit'
     confirm: 'Confirm'
+    yes: 'Yes'
+    no: 'No'
+    continue: 'Continue'
   attentions:
     really_delete: 'Are you sure?'
   errors:
@@ -93,4 +141,11 @@ en:
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
       enrolled_error: 'You not enrolled in course'
+    exam:
+      change_error: 'You cannot edit or create the exam - you are not the author'
+      access_error: 'Access to exam denied'
+      not_create: 'The exam for the course has not been created yet'
+      attempt_error: 'The number of exam attempts has been increased'
+      end_time: 'Time to pass exam is over'
+
 

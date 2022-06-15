@@ -25,7 +25,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.2
+          ruby-version: 3.1.2
 
       - name: Install dependencies
         run: |
@@ -33,6 +33,7 @@ jobs:
           gem install bundler
           bundle install --jobs 4 --retry 3
           yarn install
+
       - name: Setup test database
         env:
           RAILS_ENV: test
@@ -43,11 +44,24 @@ jobs:
         run: |
           cp config/database.ci.yml config/database.yml
           rake db:create db:migrate
-      - name: Run rubocop
-        run: rubocop
+
+      - name: Run annotate models check
+        env:
+            RAILS_ENV: test
+            PGHOST: localhost
+            POSTGRES_DB: CoursesApp_test
+            POSTGRES_USER: CoursesApp
+            POSTGRES_PASSWORD: postgres
+        run: bundle exec annotate --frozen
+
+      - name: Run bundler audit
+        run: bundle exec bundle-audit check --update
 
       - name: Run security
-        run: brakeman
+        run: bundle exec brakeman --no-pager
+
+      - name: Run rubocop
+        run: bundle exec rubocop
 
       - name: Run tests
         env:
@@ -57,4 +71,4 @@ jobs:
           POSTGRES_PASSWORD: postgres
           PGPORT: ${{ job.services.postgres.ports[5432] }}
           RAILS_ENV: test
-        run: rspec
+        run: bundle exec rspec

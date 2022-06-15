@@ -4,7 +4,7 @@ class AttachmentsController < ApplicationController
   def destroy
     file = ActiveStorage::Attachment.find(params[:id])
     resource = find_resource(file.record_type, file.record_id)
-    return redirect_with_alert(root_path, I18n.t('attachment.error')) unless owned_by_user!(resource)
+    return redirect_with_alert(root_path, I18n.t('attachment.error')) unless owned_by_user?(resource)
 
     file.purge
     redirect_to_resource(resource)
@@ -27,7 +27,7 @@ class AttachmentsController < ApplicationController
     klass.constantize.find(record_id)
   end
 
-  def owned_by_user!(resource)
+  def owned_by_user?(resource)
     resource.respond_to?(:owner?) && resource.owner?(current_user)
   end
 end

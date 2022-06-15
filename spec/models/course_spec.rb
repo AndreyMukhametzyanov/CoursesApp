@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: courses
+#
+#  id               :bigint           not null, primary key
+#  description      :string
+#  level            :integer
+#  name             :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  user_id          :bigint           not null
+#  youtube_video_id :text
+#
+# Indexes
+#
+#  index_courses_on_name     (name) UNIQUE
+#  index_courses_on_user_id  (user_id)
+#
 require 'rails_helper'
 
 RSpec.describe Course, type: :model do
@@ -16,6 +34,7 @@ RSpec.describe Course, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:author) }
     it { is_expected.to have_one_attached(:cover_picture) }
+    it { is_expected.to have_one(:exam) }
   end
 
   describe 'custom validation for youtube' do
@@ -117,7 +136,7 @@ RSpec.describe Course, type: :model do
       end
 
       it 'is valid' do
-        expect(my_course.youtube_video_id).to eq(nil)
+        expect(my_course.youtube_video_id).to be_nil
       end
     end
 
@@ -128,7 +147,7 @@ RSpec.describe Course, type: :model do
       end
 
       it 'is valid' do
-        expect(my_course.youtube_video_id).to eq(nil)
+        expect(my_course.youtube_video_id).to be_nil
       end
     end
 

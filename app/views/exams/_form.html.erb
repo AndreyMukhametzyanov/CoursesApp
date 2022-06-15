@@ -1,0 +1,24 @@
+<%= simple_form_for [@course, @exam], url: course_exam_path do |f| %>
+  <div class="container">
+    <div class="row">
+      <div class="col-5">
+        <%= f.input :title %>
+        <%= f.input :description %>
+        <%= f.input :attempts_count %>
+        <%= f.input :attempt_time %>
+      </div>
+      <div class="col">
+        <h3> <%= I18n.t('question.head') %></h3>
+        <div id='questions'>
+          <%= f.simple_fields_for :questions do |question| %>
+            <%= render 'question_fields', f: question %>
+          <% end %>
+          <div class='links'>
+            <%= link_to_add_association "#{I18n.t('question.add')}", f, :questions %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= f.button :submit, (@exam.new_record? ? t('buttons.create') : t('buttons.edit')), class: "btn btn-outline-primary mt-3" %>
+<% end %>

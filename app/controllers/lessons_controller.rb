@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class LessonsController < ApplicationController
+  before_action :set_course, except: :destroy
+
   def new
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @lesson = @course.lessons.build
     else
@@ -11,11 +12,9 @@ class LessonsController < ApplicationController
   end
 
   def create
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
-      @lesson = @course.lessons.build(permit_params(:lesson, :title, :content, :youtube_video_id,
-                                                    :order_factor, files: [],
-                                                                   links_attributes: %i[id address _destroy]))
+      @lesson = @course.lessons.build(lesson_params)
+
       if @lesson.save
         redirect_to course_lesson_path(@course, @lesson)
       else
@@ -27,7 +26,6 @@ class LessonsController < ApplicationController
   end
 
   def show
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       @lesson = @course.lessons.find(params[:id])
     else
@@ -36,7 +34,6 @@ class LessonsController < ApplicationController
   end
 
   def edit
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @lesson = @course.lessons.find(params[:id])
     else
@@ -45,11 +42,10 @@ class LessonsController < ApplicationController
   end
 
   def update
-    @course = Course.find_by(id: params[:course_id])
     if @course.owner?(current_user)
       @lesson = @course.lessons.find(params[:id])
-      if @lesson.update(permit_params(:lesson, :title, :content, :youtube_video_id,
-                                      :order_factor, files: [], links_attributes: %i[id address _destroy]))
+
+      if @lesson.update(lesson_params)
         redirect_to course_lesson_path(@course, @lesson)
       else
         render :edit
@@ -60,4 +56,18 @@ class LessonsController < ApplicationController
   end
 
   def destroy; end
+
+  private
+
+  def set_course
+    @course = Course.find(params[:course_id])
+  end
+
+  def lesson_params
+    permit_params(
+      :lesson, :title, :content, :youtube_video_id, :order_factor,
+      files: [],
+      links_attributes: %i[id address _destroy]
+    )
+  end
 end

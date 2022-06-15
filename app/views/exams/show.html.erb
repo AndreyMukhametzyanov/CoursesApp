@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-sm-12">
+    <nav aria-label="breadcrumb" class="mt-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to t('courses.breadcrumb.home'), root_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{@course.name}", promo_course_path(@course) %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{t('courses.breadcrumb.lessons')}", course_lesson_path(@course, @course.lessons.last.id) %></li>
+        <li class="breadcrumb-item active" aria-current="page">exam</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<h1><%= "#{t('exam.welcome')} #{@course.name}" %></h1>
+<p><%= "#{t('exam.description')}: #{@course.exam.description}" %></p>
+<p><%= "#{t('exam.attempts_number')}: #{@course.exam.attempts_count}" %> </p>
+<p><%= "#{t('exam.attempts_time')}: #{@course.exam.attempt_time}" %> </p>
+
+<div class="my-3">
+  <% if @user_attempts < @attempts_of_exam %>
+    <% if @not_finished_exam %>
+      <%= link_to "#{t('exam.continue')}", examination_path(@not_finished_exam), class: 'btn btn-outline-primary' %>
+    <% else %>
+      <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+    <% end %>
+  <% end %>
+</div>
+
+<% if @examinations.any? %>
+  <h4><%= I18n.t('exam.table.head') %></h4>
+  <table class="table table-bordered mt-4">
+    <thead>
+    <tr>
+      <th scope="col"><%= I18n.t('exam.table.attempt') %></th>
+      <th scope="col"><%= I18n.t('exam.table.username') %></th>
+      <th scope="col"><%= I18n.t('exam.table.date_exam') %></th>
+      <th scope="col"><%= I18n.t('exam.table.passage_time') %></th>
+      <th scope="col"><%= I18n.t('exam.table.correct_answers') %></th>
+      <th scope="col"><%= I18n.t('exam.table.number_of_questions') %></th>
+      <th scope="col"><%= I18n.t('exam.table.percentage_passing') %></th>
+      <th scope="col"><%= I18n.t('exam.table.result') %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @examinations.each_with_index do |examination, i| %>
+      <tr>
+        <th scope="row"><%= i + 1 %></th>
+        <td><%= current_user.first_name %></td>
+        <td><%= examination.created_at.strftime("%d.%m.%Y %T") %></td>
+        <td><%= examination.passage_time / 60 %></td>
+        <td><%= examination.correct_answers %></td>
+        <td><%= examination.number_of_questions %></td>
+        <td><%= examination.percentage_passing %>%</td>
+        <td><%= examination.passed_exam ? "#{t('exam.table.passed')}" : "#{t('exam.table.not_passed')}" %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
