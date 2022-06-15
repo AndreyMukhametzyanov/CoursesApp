@@ -27,6 +27,7 @@ class Lesson < ApplicationRecord
   belongs_to :course
   has_many :links, dependent: :destroy
   has_many_attached :files
+  has_rich_text :content
 
   accepts_nested_attributes_for :links, reject_if: :all_blank, allow_destroy: true
 

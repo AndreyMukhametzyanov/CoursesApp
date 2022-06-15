@@ -1,0 +1,10 @@
+<figure class="attachment attachment--<%= blob.representable? ? "img" : "file" %> attachment--<%= blob.filename.extension %>">
+  <% if blob.representable? %>
+    <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [320, 240] : [800, 600]) %>
+  <% end %>
+  <% if (caption = blob.try(:caption)) %>
+    <figcaption class="attachment__caption">
+      <%= caption %>
+  <% end %>
+  </figcaption>
+</figure>

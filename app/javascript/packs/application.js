@@ -5,6 +5,8 @@
 require("jquery")
 require("@nathanvda/cocoon")
 
+import "trix"
+import "@rails/actiontext"
 
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
@@ -18,3 +20,6 @@ const images = require.context('../images', true)
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+require("trix")
+require("@rails/actiontext")
