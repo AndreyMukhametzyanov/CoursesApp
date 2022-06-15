@@ -16,10 +16,9 @@ import "channels"
 import 'bootstrap'
 import '../stylesheets/application.scss'
 import './exam_timer'
+
 const images = require.context('../images', true)
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-
-require("trix")
-require("@rails/actiontext")
