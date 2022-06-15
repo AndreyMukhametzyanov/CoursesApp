@@ -1,41 +1,81 @@
-# Установка и настройка ASDF
-
-1. sudo apt install curl git
-2. sudo apt update
-3. sudo apt upgrade
-4. git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.0
-5.  . $HOME/.asdf/asdf.sh
-6. cat .bashrc
-7. asdf
-8. asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
-9. asdf list-all ruby
-10. asdf install ruby 3.1.2
-11. apt-get install gcc
-12. sudo apt-get install gcc
-13. sudo apt install automake autoconf libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev libtool unixodbc-dev unzip curl
-14. sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
-15. asdf plugin-add nodejs
-16. asdf list-all nodejs
-17. asdf install nodejs 14.19.3
-18. nodejs
-19. asdf global nodejs 14.19.3
-20. node -v
-21. asdf global ruby 3.1.2
-22. ruby -v
-23. sudo apt install postgresql postgresql-contrib
-24. sudo service postgresql start
-25. mkdir ruby_projects
-26. cd ruby_projects/
-27. git clone https://github.com/AndreyMukhametzyanov/CoursesApp.git
-28. cd CoursesApp/
-29. bundle install
-30. sudo apt-get install libpq-dev
-31. bundle install
-32. sudo -u postgres createuser --superuser *имя*
-33. rails db:create
-34. rspec
-35. rails s
-36. yarn install
-37. npm install --global yarn
-38. yarn install
-39. rails s
+# Установка менеджера версий ASDF с нуля:
+1. Устанавливаем git и зависимости
+```shell script
+$ sudo apt install curl git
+```
+2. Подгружаем актуальный список пакетов и обновляемся:
+```shell script
+$ sudo apt update && sudo apt upgrade
+```
+3. Качаем ASDF:
+```shell script
+$ git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.0
+```
+4. Устанавливаем ASDF (подрубаемся к шеллу):
+```shell script
+$ . $HOME/.asdf/asdf.sh
+```
+5. Проверяем через любой редактор, что все прописалось в файле .bashrc:
+```shell script
+$ cat .bashrc
+```
+6. Проверяем что ASDF находится:
+```shell script
+$ asdf
+```
+7. Устанавливаем глобально Руби и проверяем что все ок:
+```shell script
+$ asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+$ asdf list-all ruby
+$ asdf install ruby 3.1.2
+$ asdf global ruby 3.1.2
+$ ruby -v
+```
+8. Устанавливаем компиляторы (не всегда требуется):
+```shell script
+$ sudo apt-get install gcc
+```
+9. Устанавливваем следующие системные зависимости:
+```shell script
+$ sudo apt install automake autoconf libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev libtool unixodbc-dev unzip curl
+$ sudo apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+```
+10. Устанавливаем глобально NodeJs через ASDF и проверяем что все ок:
+```shell script
+$ asdf plugin-add nodejs
+$ asdf list-all nodejs
+$ asdf install nodejs 14.19.3
+$ nodejs
+$ asdf global nodejs 14.19.3
+$ node -v
+```
+11. Устанавливаем и запускаем БД:
+```shell script
+$ sudo apt install postgresql postgresql-contrib
+$ sudo service postgresql start
+```
+11. Делаем себя суперменом:
+```shell script
+$ sudo -u postgres createuser --superuser *имя*
+```
+12. Устанавливаем Yarn, чтоб JS не ругался:
+```shell script
+$ yarn install
+$ npm install --global yarn
+```
+13. Устанавливаем библиотеку для связи с БД:
+```shell script
+$ sudo apt-get install libpq-dev
+```
+14. Разворачиваем проект и проверяем что все ок:
+```shell script
+$ mkdir ruby_projects
+$ cd ruby_projects/
+$ git clone *ссылка на GIT*
+$ cd *корень проекта*/
+$ bundle install
+$ rails db:create
+$ rspec
+$ rails s
+```
+На этом все. Вы потрясающий! 
