@@ -66,7 +66,6 @@ $ sudo -u postgres createuser --superuser *имя*
 ```
 13. Устанавливаем Yarn, чтоб JS не ругался:
 ```shell script
-$ yarn install
 $ npm install --global yarn
 ```
 14. Устанавливаем библиотеку для связи с БД:
@@ -79,6 +78,7 @@ $ mkdir ruby_projects
 $ cd ruby_projects/
 $ git clone *ссылка на GIT*
 $ cd *корень проекта*/
+$ yarn install
 $ bundle install
 $ rails db:create
 $ rspec
