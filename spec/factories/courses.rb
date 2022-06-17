@@ -25,6 +25,7 @@ FactoryBot.define do
     name { "Course #{SecureRandom.alphanumeric(20)}" }
     video_link { '' }
     description { 'MyString' }
+    short_description { 'MyString' }
     level { 1 }
     cover_picture { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
   end

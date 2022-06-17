@@ -23,20 +23,22 @@ RSpec.describe CoursesController, type: :controller do
   describe '#create' do
     context 'when new course is valid' do
       let(:name) { 'Course' }
-      let(:description) { 'test' }
+      let(:description) { "<div class=\"trix-content\">\n  test\n</div>\n" }
+      let(:short_description) { 'test' }
       let(:level) { 1 }
       let(:course) { Course.last }
       let(:picture) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
 
       before do
-        post :create, params: { course: { name: 'Course', video_link: '',
+        post :create, params: { course: { name: 'Course', video_link: '', short_description: short_description,
                                           description: 'test', level: 1, cover_picture: picture } }
       end
 
       it 'renders correct page' do
         expect(course.name).to eq(name)
         expect(course.cover_picture).to be_attached
-        expect(course.description).to eq(description)
+        expect(course.short_description.to_s).to eq(short_description)
+        expect(course.description.to_s).to eq(description)
         expect(course.level).to eq(level)
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(courses_path)

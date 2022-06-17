@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RichTextAreaInput < SimpleForm::Inputs::Base
   def input_html_classes
     super.push('trix-content')

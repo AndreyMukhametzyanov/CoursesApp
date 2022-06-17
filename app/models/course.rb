@@ -31,7 +31,6 @@ class Course < ApplicationRecord
   has_many :students, class_name: 'User', through: :orders, source: 'user'
   has_one_attached :cover_picture
   has_rich_text :description
-  has_rich_text :short_description
 
   attr_accessor :video_link
 
