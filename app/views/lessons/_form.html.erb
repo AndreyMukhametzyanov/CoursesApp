@@ -1,6 +1,6 @@
 <%= simple_form_for [@course, @lesson] do |f| %>
   <%= f.input :title %>
-  <%= f.input :content %>
+  <%= f.input :content, as: :rich_text_area %>
   <%= f.input :youtube_video_id %>
   <%= f.input :order_factor %>
   <%= f.file_field :files, multiple: true, class: "my-3" %>

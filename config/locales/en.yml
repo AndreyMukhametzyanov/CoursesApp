@@ -16,9 +16,10 @@ en:
       course:
         name: 'Name'
         level: 'Level'
-        description: 'description'
+        description: 'Full description'
         video_link: 'Video link'
         cover_picture: 'File '
+        short_description: 'Short description'
       lesson:
         title: 'Title'
         content: 'Content'
@@ -52,7 +53,7 @@ en:
       lessons: 'Lessons'
     index:
       head: 'Platform for online courses'
-      description: 'Description'
+      short_description: 'Short description'
       detailed: 'More detailed'
       author: 'Author'
     promo:

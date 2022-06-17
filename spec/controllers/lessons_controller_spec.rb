@@ -43,7 +43,7 @@ RSpec.describe LessonsController, type: :controller do
 
       context 'when lesson is valid' do
         let!(:title) { 'Lesson' }
-        let!(:content) { 'test' }
+        let!(:content) { "<div class=\"trix-content\">\n  test\n</div>\n" }
         let(:one_lesson) { course.lessons.last }
         let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
         let(:another_file) do
@@ -62,7 +62,7 @@ RSpec.describe LessonsController, type: :controller do
         it 'renders correct page' do
           expect(one_lesson.links.count).to eq(links.count)
           expect(one_lesson.title).to eq(title)
-          expect(one_lesson.content).to eq(content)
+          expect(one_lesson.content.to_s).to eq(content)
           expect(one_lesson.files).to be_attached
           expect(response).to have_http_status(:found)
           expect(response).to redirect_to(course_lesson_path(course, one_lesson))

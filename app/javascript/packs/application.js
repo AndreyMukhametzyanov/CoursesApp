@@ -5,6 +5,8 @@
 require("jquery")
 require("@nathanvda/cocoon")
 
+import "trix"
+import "@rails/actiontext"
 
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
@@ -14,7 +16,9 @@ import "channels"
 import 'bootstrap'
 import '../stylesheets/application.scss'
 import './exam_timer'
+
 const images = require.context('../images', true)
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
