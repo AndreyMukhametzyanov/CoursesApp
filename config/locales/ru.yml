@@ -16,9 +16,10 @@ ru:
       course:
         name: 'Название'
         level: 'Сложность'
-        description: 'Описание'
+        description: 'Подробное описание'
         video_link: 'Ссылка'
         cover_picture: 'Файл'
+        short_description: 'Краткое описание'
       lesson:
         title: 'Название'
         content: 'Текст'
@@ -52,12 +53,12 @@ ru:
       lessons: 'Лекции'
     index:
       head: 'Платформа для онлайн курсов'
-      description: 'Описание'
+      short_description: 'Краткое описание'
       detailed: 'Подробнее'
       author: 'Автор'
     promo:
       head: 'Промо ролик курса'
-      description: 'Краткое описание курса:'
+      description: 'Описание курса:'
       level: 'Сложность:'
       continue: 'Продолжить обучение'
       edit_course: 'Изменить курс'

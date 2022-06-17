@@ -4,14 +4,15 @@
 #
 # Table name: courses
 #
-#  id               :bigint           not null, primary key
-#  description      :string
-#  level            :integer
-#  name             :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  user_id          :bigint           not null
-#  youtube_video_id :text
+#  id                :bigint           not null, primary key
+#  description       :string
+#  level             :integer
+#  name              :string
+#  short_description :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  user_id           :bigint           not null
+#  youtube_video_id  :text
 #
 # Indexes
 #
@@ -30,11 +31,12 @@ class Course < ApplicationRecord
   has_many :students, class_name: 'User', through: :orders, source: 'user'
   has_one_attached :cover_picture
   has_rich_text :description
+  has_rich_text :short_description
 
   attr_accessor :video_link
 
   validate :check_url
-  validates :description, :level, presence: true
+  validates :description, :short_description, :level, presence: true
   validates :level, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than: 6 }
   validates :name, presence: true, uniqueness: true
   validates :name, uniqueness: { case_sensitive: false }

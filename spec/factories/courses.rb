@@ -4,14 +4,15 @@
 #
 # Table name: courses
 #
-#  id               :bigint           not null, primary key
-#  description      :string
-#  level            :integer
-#  name             :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  user_id          :bigint           not null
-#  youtube_video_id :text
+#  id                :bigint           not null, primary key
+#  description       :string
+#  level             :integer
+#  name              :string
+#  short_description :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  user_id           :bigint           not null
+#  youtube_video_id  :text
 #
 # Indexes
 #
