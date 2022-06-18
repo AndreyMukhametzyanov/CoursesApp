@@ -93,6 +93,9 @@ en:
     create:
       success: "Feedback created!"
       error: "You can't create another feedback"
+    update:
+      success: "Feedback updated!"
+      error: "Something was wrong"
   orders:
     create_order:
       success: "Welcome to the course!"
@@ -151,7 +154,7 @@ en:
       change_error: 'You cannot edit or create the course - you are not the author'
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
-      enrolled_error: 'You not enrolled in course'
+      enrolled_error: 'You not enrolled in course or you not course owner'
     exam:
       change_error: 'You cannot edit or create the exam - you are not the author'
       access_error: 'Access to exam denied'
