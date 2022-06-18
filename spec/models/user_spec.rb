@@ -40,5 +40,6 @@ RSpec.describe User, type: :model do
     it { is_expected.to have_many(:orders) }
     it { is_expected.to have_many(:developed_courses) }
     it { is_expected.to have_many(:ordered_courses) }
+    it { is_expected.to have_many(:feedbacks) }
   end
 end

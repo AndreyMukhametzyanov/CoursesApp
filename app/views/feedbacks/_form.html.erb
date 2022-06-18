@@ -1,0 +1,11 @@
+<h6 class="my-3"><%= t('feedbacks.add_feedback') %></h6>
+
+<%= simple_form_for resource.append(Feedback.new) do |f| %>
+  <%= f.input :body, input_html: { style: "width: 641px" } %>
+  <%= f.input :grade, input_html: { style: "width: 641px" } %>
+
+  <%= f.label :grade, label: 'Grade' %>
+  <p><%= f.collection_radio_buttons :grade, [[1, '1'], [2, '2'], [3, '3'], [4, '4'], [5, '5']], :first, :last %></p>
+
+  <%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary mt-3" %>
+<% end %>

@@ -38,6 +38,9 @@ ru:
         title: 'Название'
       answer:
         body: 'Ответ'
+      feedback:
+        body: 'Текст'
+        grade: 'Оценка'
   menu:
     sign_in: 'Войти'
     sign_up: 'Зарегистрироваться'
@@ -83,6 +86,13 @@ ru:
     create:
       success: "Комментарий создан!"
       error: "Что-то пошло не так"
+  feedbacks:
+    all_feedbacks: 'Отзывы'
+    add_feedback: 'Добавить отзыв'
+    no_feedbacks: 'Ни одного отзыва еще нет. Будьте первым!'
+    create:
+      success: "Отзыв создан!"
+      error: "Вы не можете создать еще один отзыв"
   orders:
     create_order:
       success: "Доброе пожаловать на курс!"

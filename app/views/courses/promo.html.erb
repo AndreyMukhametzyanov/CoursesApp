@@ -54,6 +54,7 @@
     <% end %>
   <% end %>
 </p>
-
+<%= render partial: 'feedbacks/feedbacks', locals: { resource: @course } %>
+<%= render partial: 'feedbacks/form', locals: { resource: [@course] } %>
 <%= render partial: 'comments/comments', locals: { resource: @course } %>
 <%= render partial: 'comments/form', locals: { resources: [@course] } %>

@@ -38,6 +38,9 @@ en:
         title: 'Title'
       answer:
         body: 'Body'
+      feedback:
+        body: 'Text'
+        grade: 'Grade'
   menu:
     sign_in: 'Sign in'
     sign_up: 'Sign up'
@@ -81,8 +84,15 @@ en:
     all_comments: 'Comments'
     add_comment: 'Add a comment'
     create:
-      success: "Comment created"
+      success: "Comment created!"
       error: "Something was wrong"
+  feedbacks:
+    all_feedbacks: 'Feedbacks'
+    add_feedback: 'Add feedback'
+    no_feedbacks: 'There are no feedbacks yet. Be first!'
+    create:
+      success: "Feedback created!"
+      error: "You can't create another feedback"
   orders:
     create_order:
       success: "Welcome to the course!"
