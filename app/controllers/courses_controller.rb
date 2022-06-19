@@ -39,7 +39,9 @@ class CoursesController < ApplicationController
     end
   end
 
-  def promo; end
+  def promo
+    @feedback = Feedback.find_by(course:@course, user: current_user)
+  end
 
   def start
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)

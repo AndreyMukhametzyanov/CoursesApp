@@ -90,6 +90,7 @@ en:
     all_feedbacks: 'Feedbacks'
     add_feedback: 'Add feedback'
     no_feedbacks: 'There are no feedbacks yet. Be first!'
+    edit_feedback: 'Edit feedback'
     create:
       success: "Feedback created!"
       error: "You can't create another feedback"

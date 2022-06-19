@@ -54,7 +54,13 @@
     <% end %>
   <% end %>
 </p>
+
 <%= render partial: 'feedbacks/feedbacks', locals: { resource: @course } %>
-<%= render partial: 'feedbacks/form', locals: { resource: [@course] } %>
+
+<% if @feedback %>
+  <%= link_to t('buttons.edit'), edit_course_feedback_path(@course, @feedback), class: 'btn btn-outline-primary' %>
+<% elsif @course.owner?(current_user) || @course.enrolled_in_course?(current_user) %>
+  <%= render partial: 'feedbacks/form', locals: { resource: [@course] } %>
+<% end %>
 <%= render partial: 'comments/comments', locals: { resource: @course } %>
 <%= render partial: 'comments/form', locals: { resources: [@course] } %>

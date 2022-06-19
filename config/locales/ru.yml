@@ -90,6 +90,7 @@ ru:
     all_feedbacks: 'Отзывы'
     add_feedback: 'Добавить отзыв'
     no_feedbacks: 'Ни одного отзыва еще нет. Будьте первым!'
+    edit_feedback: 'Редактировать отзыв'
     create:
       success: "Отзыв создан!"
       error: "Вы не можете создать еще один отзыв"

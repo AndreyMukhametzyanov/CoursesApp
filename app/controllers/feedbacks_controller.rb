@@ -15,6 +15,14 @@ class FeedbacksController < ApplicationController
     end
   end
 
+  def edit
+    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
+      @feedback = Feedback.find_by(user: current_user, course: @course)
+    else
+      redirect_with_alert(courses_path, I18n.t('errors.courses.enrolled_error'))
+    end
+  end
+
   def update
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       @feedback = Feedback.find_by(user: current_user, course: @course)

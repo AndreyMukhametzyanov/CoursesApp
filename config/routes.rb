@@ -21,7 +21,7 @@ Rails.application.routes.draw do
         post 'start'
       end
     end
-    resources :feedbacks, only: %i[create edit destroy]
+    resources :feedbacks, only: %i[create edit update destroy]
   end
   resources :attachments, only: :destroy
   resources :examinations, only: :show do
