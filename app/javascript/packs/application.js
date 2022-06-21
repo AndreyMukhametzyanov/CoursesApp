@@ -16,7 +16,6 @@ import "channels"
 import 'bootstrap'
 import '../stylesheets/application.scss'
 import './exam_timer'
-//yo
 const images = require.context('../images', true)
 
 Rails.start()
