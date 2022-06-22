@@ -1,7 +1,0 @@
-<h1><%= t('feedbacks.edit_feedback') %></h1>
-
-<%= simple_form_for [@course, @feedback] do |f| %>
-  <%= f.input :body, input_html: { style: "width: 641px" } %>
-  <%= f.input :grade, as: :select, collection: [1, 2, 3, 4, 5], input_html: { style: "width: 641px" } %>
-  <%= f.button :submit,t('buttons.edit'), class: "btn btn-outline-primary mt-3" %>
-<% end %>

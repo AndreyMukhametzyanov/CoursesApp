@@ -40,6 +40,7 @@ class CoursesController < ApplicationController
   end
 
   def promo
+    @feedback = @course.feedbacks.new
     @feedbacks = @course.feedbacks.includes(:users)
   end
 

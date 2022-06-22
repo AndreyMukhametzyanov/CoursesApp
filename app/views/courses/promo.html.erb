@@ -55,12 +55,16 @@
   <% end %>
 </p>
 
-<%= render partial: 'feedbacks/feedbacks', locals: { resource: @course } %>
+<%= render partial: 'feedbacks/feedback', locals: { resource: @course } %>
 
-<% if @feedback %>
-  <%= link_to t('buttons.edit'), edit_course_feedback_path(@course, @feedback), class: 'btn btn-outline-primary' %>
-<% elsif @course.owner?(current_user) || @course.enrolled_in_course?(current_user) %>
-  <%= render partial: 'feedbacks/form', locals: { resource: [@course] } %>
-<% end %>
+<h5 class="my-3"><%= t('feedbacks.all_feedbacks') %></h5>
+<%# if @feedbacks %>
+  <%#= t('feedbacks.no_feedbacks') %>
+<%# else %>
+  <% if @course.enrolled_in_course?(current_user)%>
+    <%= render partial: 'feedbacks/form', locals: { course: @course, feedback: @feedback } %>
+  <% end %>
+<%# end %>
+
 <%= render partial: 'comments/comments', locals: { resource: @course } %>
 <%= render partial: 'comments/form', locals: { resources: [@course] } %>
