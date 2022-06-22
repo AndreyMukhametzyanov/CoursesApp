@@ -27,7 +27,7 @@ class Feedback < ApplicationRecord
   belongs_to :user
   belongs_to :course
 
-  validates :body, length: { minimum: 10 }
+  validates :body, length: { minimum: 10 }, allow_blank: true
   validates :grade, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than: 6 }
   validates :course_id, uniqueness: { scope: :user_id }
 end
