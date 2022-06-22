@@ -40,7 +40,7 @@ class CoursesController < ApplicationController
   end
 
   def promo
-    @feedback = @course.feedbacks.new
+    @feedback = Feedback.find_or_initialize_by(course: @course, user: current_user)
     @feedbacks = @course.feedbacks.includes(:users)
   end
 
