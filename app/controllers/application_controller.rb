@@ -5,7 +5,22 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!, exept: %i[index show]
 
+  around_action :switch_locale
+
   protected
+
+  def switch_locale(&action)
+    locale = locale_from_url || I18n.default_locale
+    I18n.with_locale locale, &action
+  end
+
+  def locale_from_url
+    locale if I18n.available_locales.map(&:to_s).include?(params[:locale])
+  end
+
+  def default_url_options
+    { locale: I18n.locale }
+  end
 
   def redirect_with_alert(path, msg)
     redirect_by_kind(path, :alert, msg)

@@ -83,20 +83,17 @@ en:
   comments:
     all_comments: 'Comments'
     add_comment: 'Add a comment'
+    no_comments: 'There are no comments yet. Be first!'
     create:
       success: "Comment created!"
       error: "Something was wrong"
   feedbacks:
     all_feedbacks: 'Feedbacks'
-    add_feedback: 'Add feedback'
     no_feedbacks: 'There are no feedbacks yet. Be first!'
-    edit_feedback: 'Edit feedback'
     create:
       success: "Feedback created!"
-      error: "You can't create another feedback"
     update:
       success: "Feedback updated!"
-      error: "Something was wrong"
   orders:
     create_order:
       success: "Welcome to the course!"

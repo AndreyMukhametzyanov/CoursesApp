@@ -10,7 +10,7 @@ class FeedbacksController < ApplicationController
     if @feedback.save
       redirect_with_notice(promo_course_path(@course), I18n.t('feedbacks.create.success'))
     else
-      redirect_with_alert(promo_course_path(@course), I18n.t('feedbacks.create.error'))
+      redirect_with_alert(promo_course_path(@course), @feedback.errors.full_messages.first)
     end
   end
 
@@ -19,7 +19,7 @@ class FeedbacksController < ApplicationController
     if @feedback.update(feedback_params)
       redirect_with_notice(promo_course_path(@course), I18n.t('feedbacks.update.success'))
     else
-      redirect_with_alert(promo_course_path(@course), I18n.t('feedbacks.update.error'))
+      redirect_with_alert(promo_course_path(@course), @feedback.errors.full_messages.first)
     end
   end
 
