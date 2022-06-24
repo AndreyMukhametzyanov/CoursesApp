@@ -1,4 +1,6 @@
 en:
+  en: 'English'
+  ru: 'Russian'
   activerecord:
     errors:
       models:

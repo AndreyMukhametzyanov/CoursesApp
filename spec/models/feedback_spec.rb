@@ -34,7 +34,7 @@ RSpec.describe Feedback, type: :model do
   end
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:body) }
+    it { is_expected.to allow_value(nil).for(:body) }
     it { is_expected.to validate_presence_of(:grade) }
     it { is_expected.to validate_numericality_of(:grade).is_greater_than_or_equal_to(1).is_less_than(6) }
   end
