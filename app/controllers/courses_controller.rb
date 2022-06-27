@@ -47,7 +47,7 @@ class CoursesController < ApplicationController
   def start
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       @lesson = @course.lessons.first
-      return redirect_to(course_lesson_path(@course, @lesson)) if @lesson
+      return redirect_to(course_lesson_path(@course.od, @lesson)) if @lesson
 
       redirect_with_alert(promo_course_path, I18n.t('errors.lessons.access_error'))
     else

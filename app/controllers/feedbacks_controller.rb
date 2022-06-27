@@ -3,6 +3,7 @@
 class FeedbacksController < ApplicationController
   before_action :set_course
   before_action :check_enroll
+  # before_action :check_owner
 
   def create
     @feedback = @course.feedbacks.create(feedback_params)
@@ -33,6 +34,10 @@ class FeedbacksController < ApplicationController
     unless @course.enrolled_in_course?(current_user)
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
     end
+  end
+
+  def check_owner
+    redirect_with_alert(promo_course_path(@course), I18n.t('feedbacks.author_error')) if @course.owner?(current_user)
   end
 
   def set_course

@@ -92,6 +92,7 @@ ru:
   feedbacks:
     all_feedbacks: 'Отзывы'
     no_feedbacks: 'Ни одного отзыва еще нет. Будьте первым!'
+    author_error: 'Автор не может оставлять отзывы'
     create:
       success: "Отзыв создан!"
     update:

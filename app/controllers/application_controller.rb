@@ -4,23 +4,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!, exept: %i[index show]
+  before_action :set_locale
 
-  around_action :switch_locale
+  def default_url_options
+    I18n.default_locale == I18n.locale ? {} : { locale: I18n.locale }
+  end
 
   protected
 
-  def switch_locale(&action)
-    locale = locale_from_url || I18n.default_locale
-    I18n.with_locale locale, &action
-  end
-
-  def locale_from_url
-    locale = params[:locale]
-    locale if I18n.available_locales.map(&:to_s).include?(locale)
-  end
-
-  def default_url_options
-    { locale: I18n.locale }
+  def set_locale
+    I18n.locale = I18n.locale_available?(params[:locale]) ? params[:locale] : I18n.default_locale
   end
 
   def redirect_with_alert(path, msg)

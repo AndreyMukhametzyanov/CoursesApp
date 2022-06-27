@@ -92,6 +92,7 @@ en:
   feedbacks:
     all_feedbacks: 'Feedbacks'
     no_feedbacks: 'There are no feedbacks yet. Be first!'
+    author_error: 'The author cant leave reviews'
     create:
       success: "Feedback created!"
     update:
