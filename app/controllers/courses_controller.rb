@@ -39,7 +39,10 @@ class CoursesController < ApplicationController
     end
   end
 
-  def promo; end
+  def promo
+    @feedback = Feedback.find_or_initialize_by(course: @course, user: current_user)
+    @feedbacks = @course.feedbacks.includes(:user)
+  end
 
   def start
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
@@ -53,7 +56,7 @@ class CoursesController < ApplicationController
   end
 
   def order
-    @order = Order.create(user_id: current_user.id, course_id: params[:id])
+    @order = Order.new(user: current_user, course_id: params[:id])
 
     if @order.save
       redirect_with_notice(promo_course_path(params[:id]), I18n.t('orders.create_order.success'))

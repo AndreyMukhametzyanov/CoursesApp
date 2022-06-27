@@ -55,5 +55,24 @@
   <% end %>
 </p>
 
+
+
+<h5 class="my-3"><%= t('feedbacks.all_feedbacks') %></h5>
+
+<%= render @feedbacks %>
+<% if @course.enrolled_in_course?(current_user) %>
+  <% if @feedbacks.empty? %>
+    <%= t('feedbacks.no_feedbacks') %>
+  <% end %>
+  <%= render partial: 'feedbacks/form', locals: { course: @course, feedback: @feedback } %>
+<% end %>
+
 <%= render partial: 'comments/comments', locals: { resource: @course } %>
-<%= render partial: 'comments/form', locals: { resources: [@course] } %>
+
+<% if @course.enrolled_in_course?(current_user) || @course.owner?(current_user) %>
+  <% if @course.comments.empty? %>
+    <%= t('comments.no_comments') %>c
+  <% end %>
+  <%= render partial: 'comments/form', locals: { resources: [@course] } %>
+<% end %>
+

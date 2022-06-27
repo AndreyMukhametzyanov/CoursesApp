@@ -13,22 +13,30 @@ AllCops:
 
 Metrics/MethodLength:
   Max: 30
+
 Style/Copyright:
   Enabled: false
+
 Style/MethodCallWithArgsParentheses:
   Enabled: false
+
 Style/StringHashKeys:
   Enabled: false
+
 Style/MissingElse:
   Enabled: false
+
 Style/DocumentationMethod:
   Enabled: false
+
 Style/AsciiComments:
   Enabled: false
+
 Metrics/BlockLength:
   Max: 60
   Exclude:
     - spec/**/*
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
@@ -54,7 +62,7 @@ RSpec/MultipleMemoizedHelpers:
   Max: 10
 
 RSpec/NestedGroups:
-  Max: 4
+  Max: 10
 
 RSpec/ExampleLength:
   Max: 15

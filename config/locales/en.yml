@@ -1,4 +1,6 @@
 en:
+  en: 'English'
+  ru: 'Russian'
   activerecord:
     errors:
       models:
@@ -38,6 +40,9 @@ en:
         title: 'Title'
       answer:
         body: 'Body'
+      feedback:
+        body: 'Text'
+        grade: 'Grade'
   menu:
     sign_in: 'Sign in'
     sign_up: 'Sign up'
@@ -80,9 +85,18 @@ en:
   comments:
     all_comments: 'Comments'
     add_comment: 'Add a comment'
+    no_comments: 'There are no comments yet. Be first!'
     create:
-      success: "Comment created"
+      success: "Comment created!"
       error: "Something was wrong"
+  feedbacks:
+    all_feedbacks: 'Feedbacks'
+    no_feedbacks: 'There are no feedbacks yet. Be first!'
+    author_error: 'The author cant leave reviews'
+    create:
+      success: "Feedback created!"
+    update:
+      success: "Feedback updated!"
   orders:
     create_order:
       success: "Welcome to the course!"
@@ -141,7 +155,7 @@ en:
       change_error: 'You cannot edit or create the course - you are not the author'
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
-      enrolled_error: 'You not enrolled in course'
+      enrolled_error: 'You not enrolled in course or you not course owner'
     exam:
       change_error: 'You cannot edit or create the exam - you are not the author'
       access_error: 'Access to exam denied'

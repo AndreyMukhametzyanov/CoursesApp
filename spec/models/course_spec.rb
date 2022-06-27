@@ -36,6 +36,10 @@ RSpec.describe Course, type: :model do
     it { is_expected.to belong_to(:author) }
     it { is_expected.to have_one_attached(:cover_picture) }
     it { is_expected.to have_one(:exam) }
+    it { is_expected.to have_many(:lessons) }
+    it { is_expected.to have_many(:orders) }
+    it { is_expected.to have_many(:feedbacks) }
+    it { is_expected.to have_many(:students) }
   end
 
   describe 'custom validation for youtube' do

@@ -1,0 +1,16 @@
+<div class="card mb-4" style="width: 40rem;">
+  <div class="card-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm"><%= feedback.user.first_name %></div>
+        <div class="col-sm"> Grade: <%= feedback.grade %></div>
+        <div class="col-sm" style="padding-left: 30px;padding-right: 0px;">
+          <%= feedback.created_at.strftime("%Y.%m.%d %H:%M") %> MSK
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-text"><%= feedback.body %></p>
+  </div>
+</div>

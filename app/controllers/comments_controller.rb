@@ -1,14 +1,24 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
+  before_action :set_course
+
   def create
-    commentable.comments.create(comment_params).tap do |comment|
-      prepare_flash(comment)
-      redirect(commentable)
+    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
+      commentable.comments.create(comment_params).tap do |comment|
+        prepare_flash(comment)
+        redirect(commentable)
+      end
+    else
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
     end
   end
 
   private
+
+  def set_course
+    @course = Course.find(params[:course_id])
+  end
 
   def commentable
     @commentable ||=
