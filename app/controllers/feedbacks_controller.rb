@@ -31,9 +31,9 @@ class FeedbacksController < ApplicationController
   end
 
   def check_enroll
-    unless @course.enrolled_in_course?(current_user)
-      redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
-    end
+    return if @course.enrolled_in_course?(current_user)
+
+    redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
   end
 
   def check_owner

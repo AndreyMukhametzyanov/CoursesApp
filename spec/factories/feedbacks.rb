@@ -25,9 +25,9 @@
 #
 FactoryBot.define do
   factory :feedback do
-    body { 'MyText for feedback' }
-    grade { 1 }
     user
     course
+    body { 'MyText for feedback' }
+    grade { 1 }
   end
 end
