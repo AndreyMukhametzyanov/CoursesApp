@@ -1,24 +1,11 @@
-# README
+# Онлайн платформа для создания курсов
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Онлайн платформа для размещения курсов.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Реализовано: 
+* Авторизация пользователей
+* CRUD курсов и лекций к ним
+* Возможность прикрепления файлов ссылок и различной доп информации к курсам и лекциям
+* Возможность прохождения экзамена в конце курса
+* Проект покрыт тестами
+* Проект находится в доработке полное описание будеет реализовано позже
