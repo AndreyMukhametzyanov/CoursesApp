@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_18_121222) do
+ActiveRecord::Schema.define(version: 2022_07_01_132000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,16 @@ ActiveRecord::Schema.define(version: 2022_06_18_121222) do
     t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
+  create_table "final_projects", force: :cascade do |t|
+    t.text "description"
+    t.text "short_description"
+    t.integer "execution_days"
+    t.bigint "course_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id"], name: "index_final_projects_on_course_id"
+  end
+
   create_table "lessons", force: :cascade do |t|
     t.text "youtube_video_id"
     t.text "content"
@@ -165,6 +175,16 @@ ActiveRecord::Schema.define(version: 2022_06_18_121222) do
     t.index ["exam_id"], name: "index_questions_on_exam_id"
   end
 
+  create_table "user_projects", force: :cascade do |t|
+    t.boolean "complete", default: false
+    t.bigint "final_project_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["final_project_id"], name: "index_user_projects_on_final_project_id"
+    t.index ["user_id"], name: "index_user_projects_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name"
@@ -195,6 +215,9 @@ ActiveRecord::Schema.define(version: 2022_06_18_121222) do
   add_foreign_key "exams", "courses"
   add_foreign_key "feedbacks", "courses"
   add_foreign_key "feedbacks", "users"
+  add_foreign_key "final_projects", "courses"
   add_foreign_key "lessons", "courses"
   add_foreign_key "questions", "exams"
+  add_foreign_key "user_projects", "final_projects"
+  add_foreign_key "user_projects", "users"
 end

@@ -1,0 +1,28 @@
+# frozen_string_literal: true
+
+# == Schema Information
+#
+# Table name: final_projects
+#
+#  id                :bigint           not null, primary key
+#  description       :text
+#  execution_days    :integer
+#  short_description :text
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  course_id         :bigint           not null
+#
+# Indexes
+#
+#  index_final_projects_on_course_id  (course_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (course_id => courses.id)
+#
+class FinalProject < ApplicationRecord
+  belongs_to :course
+
+  validates :short_description, :description, presence: true
+  validates :execution_days, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
+end
