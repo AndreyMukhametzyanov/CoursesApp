@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_01_132000) do
+ActiveRecord::Schema.define(version: 2022_07_02_120955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,16 @@ ActiveRecord::Schema.define(version: 2022_07_01_132000) do
     t.index ["exam_id"], name: "index_questions_on_exam_id"
   end
 
+  create_table "replies", force: :cascade do |t|
+    t.text "user_reply"
+    t.text "teacher_comment"
+    t.integer "status"
+    t.bigint "user_project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_project_id"], name: "index_replies_on_user_project_id"
+  end
+
   create_table "user_projects", force: :cascade do |t|
     t.boolean "complete", default: false
     t.bigint "final_project_id", null: false
@@ -218,6 +228,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_132000) do
   add_foreign_key "final_projects", "courses"
   add_foreign_key "lessons", "courses"
   add_foreign_key "questions", "exams"
+  add_foreign_key "replies", "user_projects"
   add_foreign_key "user_projects", "final_projects"
   add_foreign_key "user_projects", "users"
 end

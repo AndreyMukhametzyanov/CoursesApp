@@ -37,9 +37,10 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to have_many(:orders) }
+    it { is_expected.to have_many(:user_projects) }
     it { is_expected.to have_many(:developed_courses) }
     it { is_expected.to have_many(:ordered_courses) }
     it { is_expected.to have_many(:feedbacks) }
+    it { is_expected.to have_many(:user_projects) }
   end
 end

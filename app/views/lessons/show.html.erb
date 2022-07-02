@@ -23,6 +23,9 @@
         <%= link_to "#{t('lessons.lesson_num')} #{i + 1}", course_lesson_path(@course, lesson), class: "list-group-item list-group-item-action my-1 #{css_class}" %>
       </div>
     <% end %>
+    <% if @course.final_project %>
+      <%= link_to "#{t('final_project.pass')}", course_final_project_path(@course), class: "list-group-item list-group-item-action my-1" %>
+    <% end %>
     <% if @course.exam %>
       <%= link_to "#{t('exam.pass_exam')}", course_exam_path(@course), class: "list-group-item list-group-item-action my-1" %>
     <% end %>

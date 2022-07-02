@@ -22,5 +22,11 @@
 require 'rails_helper'
 
 RSpec.describe UserProject, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build(:user_project) }
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:final_project) }
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:replies) }
+  end
 end

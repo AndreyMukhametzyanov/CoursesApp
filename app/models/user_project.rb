@@ -24,4 +24,5 @@
 class UserProject < ApplicationRecord
   belongs_to :final_project
   belongs_to :user
+  has_many :replies, dependent: :destroy
 end

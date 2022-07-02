@@ -20,11 +20,9 @@
 #
 FactoryBot.define do
   factory :final_project do
-    description { "MyString" }
-    text { "MyString" }
-    short_description { "MyString" }
-    text { "MyString" }
+    course
+    description { "Description" }
+    short_description { "Short description" }
     execution_days { 1 }
-    course { nil }
   end
 end

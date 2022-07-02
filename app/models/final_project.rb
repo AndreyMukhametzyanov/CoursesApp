@@ -22,6 +22,9 @@
 #
 class FinalProject < ApplicationRecord
   belongs_to :course
+  has_many :user_projects, dependent: :destroy
+  has_many_attached :files
+  has_rich_text :description
 
   validates :short_description, :description, presence: true
   validates :execution_days, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }

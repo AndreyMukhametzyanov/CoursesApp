@@ -21,5 +21,16 @@
 require 'rails_helper'
 
 RSpec.describe FinalProject, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build(:final_project) }
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:short_description) }
+    it { is_expected.to validate_presence_of(:description) }
+    it { is_expected.to validate_numericality_of(:execution_days).is_greater_than_or_equal_to(1) }
+  end
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:course) }
+    it { is_expected.to have_many(:user_projects) }
+  end
 end

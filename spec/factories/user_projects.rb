@@ -21,8 +21,7 @@
 #
 FactoryBot.define do
   factory :user_project do
+    final_project
     complete { false }
-    final_project { nil }
-    user { nil }
   end
 end
