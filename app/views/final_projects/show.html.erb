@@ -34,9 +34,8 @@
 <% end %>
 
 <div class="my-3">
-    <% if @not_finished_exam %>
-      <%= link_to "#{t('final_project.continue')}", examination_path(@not_finished_exam), class: 'btn btn-outline-primary' %>
-    <% else %>
-      <%= link_to "#{t('final_project.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
-    <% end %>
+  <%= link_to "#{t('final_project.start')}", start_course_final_project_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+  <% if @user_project %>
+    <%= render partial: 'replies/form', locals: { course: @course, final_project: @final_project, reply: @reply } %>
+  <% end %>
 </div>

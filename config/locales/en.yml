@@ -156,6 +156,8 @@ en:
     execution_days: 'Days to complete the final project'
     start: 'Start final project'
     continue: 'Continue final project'
+  reply:
+    all_replies: 'Add yours reply'
   buttons:
     create: 'Create'
     edit: 'Edit'
@@ -184,4 +186,5 @@ en:
     final_project:
       change_error: 'You cannot edit or create the final project - you are not the author'
       access_error: 'Access to final project denied'
+      not_create: 'The final project for the course has not been created yet'
 

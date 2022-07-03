@@ -36,6 +36,7 @@ class FinalProjectsController < ApplicationController
   def show
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       @final_project = @course.final_project
+      @reply = Reply.new
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.access_error'))
     end
@@ -51,6 +52,19 @@ class FinalProjectsController < ApplicationController
       end
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.change_error'))
+    end
+  end
+
+  def start
+    unless @course.enrolled_in_course?(current_user) || @course.owner?(current_user)
+      return redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
+    end
+
+    if @course.final_project
+      @user_project = UserProject.create(final_project: @course.final_project, user: current_user)
+      redirect_to course_final_project_path(@course)
+    else
+      redirect_with_alert(promo_course_path, I18n.t('errors.final_project.not_create'))
     end
   end
 
