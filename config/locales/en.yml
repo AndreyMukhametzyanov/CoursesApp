@@ -47,6 +47,10 @@ en:
         description: 'Description'
         short_description: 'Short description'
         execution_days: 'Set a deadline, days'
+      reply:
+        user_reply: "Enter your reply"
+        teacher_comment: "Teacher reply"
+        status: 'Status'
   menu:
     sign_in: 'Sign in'
     sign_up: 'Sign up'
@@ -157,7 +161,12 @@ en:
     start: 'Start final project'
     continue: 'Continue final project'
   reply:
+    students: 'Students replies'
     all_replies: 'Add yours reply'
+    create: 'The solution has been sent for verification'
+    update: 'The new solution has been sent for review'
+    reply: 'Reply '
+    from: 'from '
   buttons:
     create: 'Create'
     edit: 'Edit'

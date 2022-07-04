@@ -20,8 +20,10 @@
 #
 class Reply < ApplicationRecord
   belongs_to :user_project
-  enum status: { verification: 0, rejected: 1, accepted: 2 }
+  enum status: [:verification, :rejected, :accepted], _default: "verification"
   has_many_attached :files
 
   validates :user_reply, presence: true
+
+
 end

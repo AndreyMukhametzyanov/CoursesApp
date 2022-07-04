@@ -12,8 +12,8 @@
 </div>
 
 <h1><%= "#{t('final_project.welcome')} #{@course.name}" %></h1>
-<p><%= "#{t('final_project.description')}: #{@final_project.description}" %></p>
 <p><%= "#{t('final_project.execution_days')}: #{@final_project.execution_days}" %> </p>
+<p><strong><%= t('final_project.description') %></strong> <%= @final_project.description %></p>
 
 <% if @final_project.files.attached? %>
   <h6> <%= I18n.t('lessons.label.label_name') %> </h6>
@@ -32,11 +32,33 @@
     </div>
   <% end %>
 <% end %>
-
-<div class="my-3">
-  <% if @user_project %>
-    <%= render partial: 'replies/form', locals: { course: @course, final_project: @final_project, reply: @reply } %>
-  <% else %>
-    <%= link_to "#{t('final_project.start')}", start_course_final_project_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+<% if @course.owner?(current_user) %>
+<h3 class="my-3"><%= t('reply.students') %></h3>
+  <% @user_projects.each do |user_project| %>
+    <% user_project.replies.each_with_index do |reply, i| %>
+      <div class="card mb-4" style="width: 40rem;">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-6"><%= "#{t('reply.reply')} #{i + 1} #{t('reply.from')} #{User.find(user_project.user_id).first_name}" %></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-text"><%= reply.user_reply %></p>
+          <% reply.files.each do |file| %>
+            <div class="col-sm-8">
+              <%= I18n.t('lessons.label.label_name') %>: <%= link_to file.filename, rails_blob_path(file, disposition: :attachment), class: '' %>
+            </div>
+          <% end %>
+          </p>
+        </div>
+      </div>
+    <% end %>
   <% end %>
+<% end %>
+<%=@user_project.inspect %>
+<% if @user_project %>
+  <%= render partial: 'replies/form', locals: { course: @course, final_project: @final_project, reply: @reply } %>
+<% else %>
+  <%= link_to "#{t('final_project.start')}", start_course_final_project_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+<% end %>
 </div>

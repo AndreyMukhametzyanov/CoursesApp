@@ -38,6 +38,8 @@ class FinalProjectsController < ApplicationController
       @final_project = @course.final_project
       @reply = Reply.new
       @user_project = UserProject.find_by(final_project: @final_project, user: current_user)
+      @user_projects = @final_project.user_projects
+      # @replied_user = User.find(user_project.user_id).first_name
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.access_error'))
     end

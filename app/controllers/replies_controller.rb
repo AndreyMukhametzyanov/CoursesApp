@@ -4,17 +4,27 @@ class RepliesController < ApplicationController
   before_action :set_course
 
   def create
+    user_project = current_user.user_projects.find_by(final_project: @course.final_project)
+    @reply = user_project.replies.build(user_replies_params)
+    if @reply.save
+      redirect_with_notice(course_final_project_path(@course), I18n.t('reply.create'))
+    else
+      redirect_with_alert(course_final_project_path(@course), @reply.errors.full_messages.first)
+    end
+  end
 
-    final_project = @course.final_project
-    user_project = current_user.user_projects.find_by(final_project: final_project)
-    @reply = user_project.replies.build(replies_params)
+  def update
 
   end
 
   private
 
-  def replies_params
-    permit_params(:reply, :teacher_comment, :user_reply, :status, files: [])
+  def user_replies_params
+    permit_params(:reply,:user_reply, files: [])
+  end
+
+  def teacher_replies_params
+    permit_params(:reply,:teacher_comment, :status)
   end
 
   def set_course
