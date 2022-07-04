@@ -34,8 +34,9 @@
 <% end %>
 
 <div class="my-3">
-  <%= link_to "#{t('final_project.start')}", start_course_final_project_path(@course), method: :post, class: 'btn btn-outline-primary' %>
   <% if @user_project %>
     <%= render partial: 'replies/form', locals: { course: @course, final_project: @final_project, reply: @reply } %>
+  <% else %>
+    <%= link_to "#{t('final_project.start')}", start_course_final_project_path(@course), method: :post, class: 'btn btn-outline-primary' %>
   <% end %>
 </div>

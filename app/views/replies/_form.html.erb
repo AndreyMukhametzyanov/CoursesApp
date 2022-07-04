@@ -1,7 +1,8 @@
 <h6 class="my-3"><%= t('reply.all_replies') %></h6>
 
-<%= simple_form_for [course, final_project, reply] do |f| %>
+<%= simple_form_for [course, :final_project, reply] do |f| %>
   <%= f.input :user_reply, input_html: { style: "width: 641px" } %>
-  <%= f.input :teacher_comment, input_html: { style: "width: 641px" } %>
-  <%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary mt-3" %>
+  <%#= f.input :teacher_comment, input_html: { style: "width: 641px" } %>
+  <%= f.file_field :files, multiple: true, class: "my-3" %>
+  <p><%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary mt-3" %></p>
 <% end %>
