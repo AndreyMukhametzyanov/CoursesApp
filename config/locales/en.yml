@@ -196,4 +196,5 @@ en:
       change_error: 'You cannot edit or create the final project - you are not the author'
       access_error: 'Access to final project denied'
       not_create: 'The final project for the course has not been created yet'
-
+    reply:
+      create_error: 'You cannot create the replies - you are author of this course'

@@ -39,7 +39,7 @@
       <div class="card mb-4" style="width: 40rem;">
         <div class="card-header">
           <div class="row">
-            <div class="col-sm-6"><%= "#{t('reply.reply')} #{i + 1} #{t('reply.from')} #{User.find(user_project.user_id).first_name}" %></div>
+            <div class="col-sm-6"><%= "#{t('reply.reply')} #{i + 1} #{t('reply.from')} #{reply.user.first_name}" %></div>
           </div>
         </div>
         <div class="card-body">
@@ -55,7 +55,6 @@
     <% end %>
   <% end %>
 <% end %>
-<%=@user_project.inspect %>
 <% if @user_project %>
   <%= render partial: 'replies/form', locals: { course: @course, final_project: @final_project, reply: @reply } %>
 <% else %>
