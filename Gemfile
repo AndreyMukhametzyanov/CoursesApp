@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
+gem 'aasm'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'cocoon'
 gem 'devise'

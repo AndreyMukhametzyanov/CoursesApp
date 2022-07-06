@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       member do
         post 'start'
       end
-      resources :replies, only: %i[create update ]
+      resources :replies, only: %i[create update]
     end
     resources :lessons, except: :index, concerns: :commentable
     member do

@@ -1,0 +1,23 @@
+<button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#ReplyUpdateForm<%= reply.id %>">
+  Проверить
+</button>
+<div class="modal fade" id="ReplyUpdateForm<%= reply.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Решение от юзера <%= reply.user.first_name %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <%= simple_form_for [course, :final_project, reply] do |f| %>
+        <div class="modal-body">
+          <%= f.input :teacher_comment %>
+          <%= f.input :status, collection: reply.available_statuses_for_select, include_blank: false %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <%= f.button :submit, t('buttons.create'), class: "btn btn-outline-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

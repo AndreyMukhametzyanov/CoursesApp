@@ -48,6 +48,10 @@ en:
         short_description: 'Short description'
         execution_days: 'Set a deadline, days'
       reply:
+        statuses:
+          verification: 'Verification'
+          rejected: 'Rejected'
+          accepted: 'Accepted'
         user_reply: "Enter your reply"
         teacher_comment: "Teacher reply"
         status: 'Status'

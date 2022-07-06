@@ -3,7 +3,7 @@
 # Table name: replies
 #
 #  id              :bigint           not null, primary key
-#  status          :integer
+#  status          :text
 #  teacher_comment :text
 #  user_reply      :text
 #  created_at      :datetime         not null

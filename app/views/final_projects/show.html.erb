@@ -33,31 +33,15 @@
   <% end %>
 <% end %>
 <% if @course.owner?(current_user) %>
-<h3 class="my-3"><%= t('reply.students') %></h3>
+  <h3 class="my-3"><%= t('reply.students') %></h3>
   <% @user_projects.each do |user_project| %>
-    <% user_project.replies.each_with_index do |reply, i| %>
-      <div class="card mb-4" style="width: 40rem;">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-sm-6"><%= "#{t('reply.reply')} #{i + 1} #{t('reply.from')} #{reply.user.first_name}" %></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <p class="card-text"><%= reply.user_reply %></p>
-          <% reply.files.each do |file| %>
-            <div class="col-sm-8">
-              <%= I18n.t('lessons.label.label_name') %>: <%= link_to file.filename, rails_blob_path(file, disposition: :attachment), class: '' %>
-            </div>
-          <% end %>
-          </p>
-        </div>
-      </div>
-    <% end %>
+    <%= render user_project.replies %>
   <% end %>
 <% end %>
-<% if @user_project %>
-  <%= render partial: 'replies/form', locals: { course: @course, final_project: @final_project, reply: @reply } %>
-<% else %>
+<% if @current_user_project %>
+  <%= render @current_user_project.replies %>
+  <%= render partial: 'replies/form', locals: { course: @course, reply: @reply } %>
+<% elsif !@course.owner?(current_user) %>
   <%= link_to "#{t('final_project.start')}", start_course_final_project_path(@course), method: :post, class: 'btn btn-outline-primary' %>
 <% end %>
 </div>

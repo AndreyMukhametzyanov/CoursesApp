@@ -48,6 +48,10 @@ ru:
         short_description: 'Краткое описание'
         execution_days: 'Время до сдачи дипломного проект, дни'
       reply:
+        statuses:
+          verification: 'На проверке'
+          rejected: 'Отклонено'
+          accepted: 'Принято'
         user_reply: "Ваше решение"
         teacher_comment: "Коментарий для студента"
         status: 'Статус'
