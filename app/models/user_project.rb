@@ -13,9 +13,8 @@
 #
 # Indexes
 #
-#  index_user_project_final_project_id_and_user_id  (final_project_id,user_id) UNIQUE
-#  index_user_projects_on_final_project_id          (final_project_id)
-#  index_user_projects_on_user_id                   (user_id)
+#  index_user_projects_on_final_project_id  (final_project_id)
+#  index_user_projects_on_user_id           (user_id)
 #
 # Foreign Keys
 #
@@ -27,5 +26,13 @@ class UserProject < ApplicationRecord
   belongs_to :user
   has_many :replies, dependent: :destroy
 
-  validates :user_id , uniqueness: { scope: :final_project_id }
+  validates :user_id, uniqueness: { scope: :final_project_id }
+
+  def time_remaining
+    (created_at + final_project.execution_days.days) - Time.zone.now
+  end
+
+  def time_is_over?
+    time_remaining <= 0
+  end
 end

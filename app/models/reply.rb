@@ -19,14 +19,14 @@
 #  fk_rails_...  (user_project_id => user_projects.id)
 #
 class Reply < ApplicationRecord
+  include AASM
+
   belongs_to :user_project
   has_one :user, through: :user_project
   has_many_attached :files
 
   validates :user_reply, presence: true, if: -> { files.empty? }
   validates :status, presence: true
-
-  include AASM
 
   aasm column: :status do
     state :verification, initial: true, display: 'На проверке'

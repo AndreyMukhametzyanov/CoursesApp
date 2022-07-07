@@ -48,10 +48,6 @@ ru:
         short_description: 'Краткое описание'
         execution_days: 'Время до сдачи дипломного проект, дни'
       reply:
-        statuses:
-          verification: 'На проверке'
-          rejected: 'Отклонено'
-          accepted: 'Принято'
         user_reply: "Ваше решение"
         teacher_comment: "Коментарий для студента"
         status: 'Статус'
@@ -105,6 +101,7 @@ ru:
       error: "Что-то пошло не так"
   feedbacks:
     all_feedbacks: 'Отзывы'
+    add_feedback: 'Оставить отзыв'
     no_feedbacks: 'Ни одного отзыва еще нет. Будьте первым!'
     author_error: 'Автор не может оставлять отзывы'
     create:
@@ -171,11 +168,13 @@ ru:
     update: 'Новое решение отправлено на проверку'
     reply: 'Решение '
     from: 'от '
-
+    user_reply: 'Ваши решения'
+    teacher_comment: 'Коментарий преподавателя: '
   buttons:
     create: 'Создать'
     edit: 'Изменить'
     confirm: 'Подтвердить'
+    send: 'Отправить'
     yes: 'Да'
     no: 'Нет'
     continue: 'Продолжить'
@@ -203,3 +202,4 @@ ru:
       not_create: 'Дипломный проект для курса еще не создан'
     reply:
       create_error: 'Вы не можете создавать отзывы - вы являетесь автором этого курса'
+      time_is_over: 'Время на выполнения задания вышло'

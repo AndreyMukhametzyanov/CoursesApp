@@ -2,6 +2,7 @@
 
 class RepliesController < ApplicationController
   before_action :set_course
+  before_action :check_execution_time
 
   def create
     if @course.owner?(current_user)
@@ -31,6 +32,10 @@ class RepliesController < ApplicationController
   end
 
   private
+
+  def check_execution_time
+    redirect_with_alert(course_final_project_path(@course), I18n.t('errors.reply.time_is_over')) if time_remaining <= 0
+  end
 
   def user_replies_params
     permit_params(:reply, :user_reply, files: [])

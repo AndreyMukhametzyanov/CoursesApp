@@ -2,21 +2,23 @@
   <div class="card-header">
     <div class="row">
       <div class="col"><%= "#{t('reply.reply')} #{t('reply.from')} #{reply.user.first_name} #{reply.created_at.strftime("%Y.%m.%d %H:%M")}" %>
-        <span class="float-end badge <%= reply_status_color(reply.status) %> fs-6" ><%= reply.aasm.human_state %></span>
+        <span class="float-end badge <%= reply_status_color(reply.status) %> fs-6"><%= reply.aasm.human_state %></span>
       </div>
     </div>
   </div>
   <div class="card-body">
     <p class="card-text">
       <%= reply.user_reply %>
-    </p>
+      <% unless reply.teacher_comment.empty? %>
+        <h6><%= I18n.t('reply.teacher_comment') %></h6>
+        <%= reply.teacher_comment %>
+      <% end %>
     <% reply.files.each do |file| %>
       <div class="col-sm-8">
         <%= I18n.t('lessons.label.label_name') %>
         <%= link_to file.filename, rails_blob_path(file, disposition: :attachment), class: '' %>
       </div>
     <% end %>
-    </p>
     <% if reply.verification? && @course.owner?(current_user) %>
       <%= render partial: 'replies/teacher_form', locals: { course: @course, reply: reply } %>
     <% end %>
