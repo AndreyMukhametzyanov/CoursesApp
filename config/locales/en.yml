@@ -170,6 +170,7 @@ en:
     from: 'from '
     user_reply: 'Your solutions'
     teacher_comment: 'Teacher comment:'
+    teacher_reply: 'A comment on the students decision has been sent'
   buttons:
     create: 'Create'
     edit: 'Edit'

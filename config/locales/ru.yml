@@ -170,6 +170,7 @@ ru:
     from: 'от '
     user_reply: 'Ваши решения'
     teacher_comment: 'Коментарий преподавателя: '
+    teacher_reply: 'Коментарий к решению студента отправлен'
   buttons:
     create: 'Создать'
     edit: 'Изменить'

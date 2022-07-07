@@ -12,7 +12,7 @@
 </div>
 
 <h1><%= "#{t('final_project.welcome')} #{@course.name}" %></h1>
-<p><%= "#{t('final_project.execution_days')}: #{@final_project.execution_days}" %> </p>
+<p><%= "#{t('final_project.execution_days')}: #{@time_left}" %> </p>
 <p><strong><%= t('final_project.description') %></strong> <%= @final_project.description %></p>
 <% if @final_project.files.attached? %>
   <h6> <%= I18n.t('lessons.label.label_name') %> </h6>
@@ -37,10 +37,10 @@
   <% @user_projects.each do |user_project| %>
     <%= render user_project.replies %> <!-- Рендер формы реплай -->
   <% end %>
-<% elsif @current_user_project %> <!-- от лица юзера -->
+<% elsif @current_user_project && !@current_user_project.time_is_over? %> <!-- от лица юзера -->
   <h5 class="my-3"><%= t('reply.user_reply') %></h5>
   <%= render @current_user_project.replies %>
-  <% if @current_user_project.replies.last.status != "verification" %>
+  <% if @current_user_project.replies.last&.status != "verification" %>
     <%= render partial: 'replies/form', locals: { course: @course, reply: @reply } %>
   <% end %>
 <% elsif !@course.owner?(current_user) %>

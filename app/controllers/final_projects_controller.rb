@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FinalProjectsController < ApplicationController
   before_action :set_course
 
@@ -39,6 +41,7 @@ class FinalProjectsController < ApplicationController
       @reply = Reply.new
       @current_user_project = UserProject.find_by(final_project: @final_project, user: current_user)
       @user_projects = @final_project.user_projects
+      @time_left = @current_user_project&.student_time_left
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.access_error'))
     end
@@ -73,7 +76,7 @@ class FinalProjectsController < ApplicationController
   private
 
   def final_project_params
-    permit_params(:final_project, :description, :short_description, :execution_days, files: [],)
+    permit_params(:final_project, :description, :short_description, :execution_days, files: [])
   end
 
   def set_course

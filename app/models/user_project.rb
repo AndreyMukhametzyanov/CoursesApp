@@ -29,10 +29,14 @@ class UserProject < ApplicationRecord
   validates :user_id, uniqueness: { scope: :final_project_id }
 
   def time_remaining
-    (created_at + final_project.execution_days.days) - Time.zone.now
+    (created_at.beginning_of_day + final_project.execution_days.days) - Time.zone.now.beginning_of_day
+  end
+
+  def student_time_left
+    (time_remaining / 60 / 60 / 24).to_i
   end
 
   def time_is_over?
-    time_remaining <= 0
+    student_time_left <= 0
   end
 end

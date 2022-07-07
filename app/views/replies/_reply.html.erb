@@ -9,7 +9,7 @@
   <div class="card-body">
     <p class="card-text">
       <%= reply.user_reply %>
-      <% unless reply.teacher_comment.empty? %>
+      <% if reply.teacher_comment.present? %>
         <h6><%= I18n.t('reply.teacher_comment') %></h6>
         <%= reply.teacher_comment %>
       <% end %>
