@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ReplyHelper
   def reply_status_color(status)
     case status

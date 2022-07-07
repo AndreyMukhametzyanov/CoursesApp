@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: final_projects
@@ -21,8 +23,8 @@
 FactoryBot.define do
   factory :final_project do
     course
-    description { "Description" }
-    short_description { "Short description" }
+    description { 'Description' }
+    short_description { 'Short description' }
     execution_days { 1 }
   end
 end

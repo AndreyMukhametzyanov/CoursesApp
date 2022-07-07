@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: replies
@@ -21,8 +23,8 @@
 FactoryBot.define do
   factory :reply do
     user_project
-    user_reply { "MyText" }
-    teacher_comment { "MyText" }
+    user_reply { 'MyText' }
+    teacher_comment { 'MyText' }
     status { 1 }
   end
 end
