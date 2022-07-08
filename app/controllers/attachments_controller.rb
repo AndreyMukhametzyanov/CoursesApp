@@ -18,6 +18,8 @@ class AttachmentsController < ApplicationController
       redirect_with_notice(course_lesson_path(resource.course.id, resource.id), I18n.t('attachment.delete'))
     when Course
       redirect_with_notice(promo_course_path(resource.id), I18n.t('attachment.delete'))
+    when FinalProject
+      redirect_with_notice(course_final_project_path(resource.course.id), I18n.t('attachment.delete'))
     else
       redirect_with_alert(root_path, I18n.t('attachment.error'))
     end

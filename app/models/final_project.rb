@@ -28,4 +28,6 @@ class FinalProject < ApplicationRecord
 
   validates :short_description, :description, presence: true
   validates :execution_days, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
+
+  delegate :owner?, to: :course
 end

@@ -41,7 +41,6 @@ class FinalProjectsController < ApplicationController
       @reply = Reply.new
       @current_user_project = UserProject.find_by(final_project: @final_project, user: current_user)
       @user_projects = @final_project.user_projects
-      @time_left = @current_user_project&.student_time_left
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.access_error'))
     end
