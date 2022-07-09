@@ -13,6 +13,22 @@ RSpec.describe RepliesController, type: :controller do
   before { sign_in user }
 
   describe '#create' do
+    context 'when time is over' do
+      let(:alert_message) { I18n.t('errors.reply.time_is_over') }
+
+      it 'correct redirect to start examination page and increase correct answers' do
+        sign_in student
+        travel_to(3.days.from_now) do
+          post :create,
+               params: { course_id: course.id,
+                         reply: { user_reply: 'user', status: 'verification' } }
+
+          expect(flash[:alert]).to eq(alert_message)
+          expect(response).to redirect_to course_final_project_path(course)
+        end
+      end
+    end
+
     context 'when user is owner' do
       let(:alert_message) { I18n.t('errors.reply.create_error') }
 
