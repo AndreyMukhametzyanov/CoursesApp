@@ -26,6 +26,10 @@ require 'rails_helper'
 RSpec.describe UserProject, type: :model do
   subject { build(:user_project) }
 
+  describe 'validations' do
+    it { is_expected.to validate_uniqueness_of(:user_id).scoped_to(:final_project_id) }
+  end
+
   describe 'associations' do
     it { is_expected.to belong_to(:final_project) }
     it { is_expected.to belong_to(:user) }

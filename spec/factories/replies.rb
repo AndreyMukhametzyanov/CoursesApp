@@ -24,7 +24,6 @@ FactoryBot.define do
   factory :reply do
     user_project
     user_reply { 'MyText' }
-    teacher_comment { 'MyText' }
-    status { 1 }
+    teacher_comment { '' }
   end
 end

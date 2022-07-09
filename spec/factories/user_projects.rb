@@ -23,6 +23,7 @@
 #
 FactoryBot.define do
   factory :user_project do
+    user
     final_project
     complete { false }
   end

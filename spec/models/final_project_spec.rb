@@ -34,5 +34,6 @@ RSpec.describe FinalProject, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:course) }
     it { is_expected.to have_many(:user_projects) }
+    it { is_expected.to delegate_method(:owner?).to(:course) }
   end
 end

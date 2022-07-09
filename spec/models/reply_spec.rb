@@ -27,13 +27,11 @@ RSpec.describe Reply, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:user_reply) }
+    it { is_expected.to validate_presence_of(:status) }
   end
 
   describe 'associations' do
     it { is_expected.to belong_to(:user_project) }
-  end
-
-  describe 'enum' do
-    it { is_expected.to define_enum_for(:status).with_values({ verification: 0, rejected: 1, accepted: 2 }) }
+    it { is_expected.to have_one(:user) }
   end
 end

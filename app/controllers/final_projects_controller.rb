@@ -68,7 +68,7 @@ class FinalProjectsController < ApplicationController
       @user_project = UserProject.create(final_project: @course.final_project, user: current_user)
       redirect_to course_final_project_path(@course)
     else
-      redirect_with_alert(promo_course_path, I18n.t('errors.final_project.not_create'))
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.not_create'))
     end
   end
 
