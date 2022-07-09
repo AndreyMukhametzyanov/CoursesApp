@@ -20,9 +20,10 @@ RSpec.describe FinalProjectsController, type: :controller do
     end
 
     context 'when final project already exist' do
-      subject(:final_project) { create :final_project, course: course }
-
-      before { get :new, params: { course_id: course.id } }
+      before do
+        create :final_project, course: course
+        get :new, params: { course_id: course.id }
+      end
 
       it 'is correct render form' do
         expect(response).to redirect_to(edit_course_final_project_path(course))
