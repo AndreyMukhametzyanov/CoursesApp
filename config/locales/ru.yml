@@ -175,6 +175,10 @@ ru:
     user_reply: 'Ваши решения'
     teacher_comment: 'Коментарий преподавателя: '
     teacher_reply: 'Коментарий к решению студента отправлен'
+    status:
+      verification: 'На проверке'
+      rejected: 'Отклонено'
+      accepted: 'Принято'
   buttons:
     create: 'Создать'
     edit: 'Изменить'

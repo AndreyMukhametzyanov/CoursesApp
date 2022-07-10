@@ -175,6 +175,10 @@ en:
     user_reply: 'Your solutions'
     teacher_comment: 'Teacher comment:'
     teacher_reply: 'A comment on the students decision has been sent'
+    status:
+      verification: 'Verification'
+      rejected: 'Rejected'
+      accepted: 'Accepted'
   buttons:
     create: 'Create'
     edit: 'Edit'

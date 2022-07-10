@@ -31,9 +31,9 @@ class Reply < ApplicationRecord
   validates :status, presence: true
 
   aasm column: :status do
-    state :verification, initial: true, display: 'На проверке'
-    state :rejected, display: 'Отклонено'
-    state :accepted, display: 'Принято'
+    state :verification, initial: true, display: I18n.t('reply.status.verification')
+    state :rejected, display: I18n.t('reply.status.rejected')
+    state :accepted, display: I18n.t('reply.status.accepted')
 
     event :accept do
       transitions from: :verification, to: :accepted
