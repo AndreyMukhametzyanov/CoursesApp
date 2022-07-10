@@ -19,10 +19,13 @@ class RepliesController < ApplicationController
   def update
     if @course.owner?(current_user)
       @reply = Reply.find(params[:id])
-      if @reply.update(teacher_replies_params)
-        redirect_with_notice(course_final_project_path(@course), I18n.t('reply.teacher_reply'))
-      else
-        redirect_with_alert(course_final_project_path(@course), @reply.errors.full_messages.first)
+      ActiveRecord::Base.transaction do
+        if @reply.update(teacher_replies_params)
+          @reply.user_project.complete! if @reply.accepted?
+          redirect_with_notice(course_final_project_path(@course), I18n.t('reply.teacher_reply'))
+        else
+          redirect_with_alert(course_final_project_path(@course), @reply.errors.full_messages.first)
+        end
       end
     else
       redirect_to course_final_project_path(@course)

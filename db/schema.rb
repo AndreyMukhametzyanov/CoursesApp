@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(version: 2022_07_02_120955) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["final_project_id", "user_id"], name: "index_user_project_final_project_id_and_user_id", unique: true
     t.index ["final_project_id"], name: "index_user_projects_on_final_project_id"
     t.index ["user_id"], name: "index_user_projects_on_user_id"
   end

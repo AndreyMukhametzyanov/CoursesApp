@@ -100,7 +100,8 @@ RSpec.describe RepliesController, type: :controller do
 
       it 'return notice and correct redirect' do
         expect(reply.reload.status).to eq('accepted')
-        expect(reply.reload.teacher_comment).to eq(teacher_comment)
+        expect(reply.user_project).to be_complete
+        expect(reply.teacher_comment).to eq(teacher_comment)
         expect(flash[:notice]).to eq(notice)
         expect(response).to redirect_to(course_final_project_path(course))
       end

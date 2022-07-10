@@ -19,24 +19,15 @@
     <%= @current_user_project.student_time_left %>
   <% end %>
 </p>
-<p><strong><%= t('final_project.description') %></strong> <%= @final_project.description %></p>
-<% if @final_project.files.attached? %>
-  <h6> <%= I18n.t('lessons.label.label_name') %> </h6>
-  <% @final_project.files.each do |file| %>
-    <div class="container">
-      <div class="row">
-        <div class="col-2">
-          <%= link_to file.filename, rails_blob_path(file, disposition: :attachment), class: '' %>
-        </div>
-        <div class="col">
-          <% if @course.owner?(current_user) %>
-            <%= link_to "#{I18n.t 'attachment.remove'}", attachment_path(file.id), method: :delete, data: { confirm: I18n.t('attentions.really_delete') } %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% end %>
+
+<p><strong><%= t('final_project.description') %></strong></p>
+<% if @course.owner?(current_user) || @current_user_project.present? %>
+  <p> <%= @final_project.description %></p>
+<% else %>
+  <p> <%= @final_project.short_description %></p>
 <% end %>
+
+<%= render partial: 'attachments/attachments', locals: { resource: @final_project, with_destroy_links: @course.owner?(current_user) } %>
 
 <% if @course.owner?(current_user) %>
   <h5 class="my-3"><%= t('reply.students') %></h5>
@@ -46,7 +37,7 @@
 <% elsif @current_user_project && !@current_user_project.time_is_over? %> <!-- от лица юзера -->
   <h5 class="my-3"><%= t('reply.user_reply') %></h5>
   <%= render @current_user_project.replies %>
-  <% if @current_user_project.replies.last&.status != "verification" %>
+  <% if @current_user_project.replies.last&.status != "accepted" && @current_user_project.replies.last&.status != "verification" %>
     <%= render partial: 'replies/form', locals: { course: @course, reply: @reply } %>
   <% end %>
 <% elsif !@course.owner?(current_user) %>

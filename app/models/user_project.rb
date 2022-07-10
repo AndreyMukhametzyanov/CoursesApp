@@ -13,8 +13,9 @@
 #
 # Indexes
 #
-#  index_user_projects_on_final_project_id  (final_project_id)
-#  index_user_projects_on_user_id           (user_id)
+#  index_user_project_final_project_id_and_user_id  (final_project_id,user_id) UNIQUE
+#  index_user_projects_on_final_project_id          (final_project_id)
+#  index_user_projects_on_user_id                   (user_id)
 #
 # Foreign Keys
 #
@@ -27,6 +28,7 @@ class UserProject < ApplicationRecord
   has_many :replies, dependent: :destroy
 
   validates :user_id, uniqueness: { scope: :final_project_id }
+  validate :check_owner
 
   def time_remaining
     (created_at.beginning_of_day + final_project.execution_days.days) - Time.zone.now.beginning_of_day
@@ -38,5 +40,18 @@ class UserProject < ApplicationRecord
 
   def time_is_over?
     student_time_left <= 0
+  end
+
+  def complete!
+    update!(complete: true)
+  end
+
+  private
+
+  def check_owner
+    return unless final_project&.course && user
+    return unless final_project.course.owner?(user)
+
+    errors.add(:final_project, :can_not_create_user_project)
   end
 end

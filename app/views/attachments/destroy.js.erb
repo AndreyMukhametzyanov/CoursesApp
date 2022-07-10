@@ -1,0 +1,5 @@
+document.getElementById("attachment-<%= @file.id %>").remove()
+
+if (document.querySelectorAll(".attachment-container").length <= 0) {
+    document.getElementById("attachments-header").remove()
+}

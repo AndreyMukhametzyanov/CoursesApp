@@ -14,6 +14,10 @@ en:
           attributes:
             address:
               is_not_uri: 'is not url'
+        user_project:
+          attributes:
+            final_project:
+              can_not_create_user_project: 'the author of the course cannot submit a diploma project for his course'
     attributes:
       course:
         name: 'Name'
@@ -158,7 +162,7 @@ en:
     pass: 'Final project '
     welcome: 'Welcome to the course final project '
     description: 'Description'
-    execution_days: 'Days to complete the final project'
+    execution_days: 'Remaining days to complete the final project'
     start: 'Start final project'
     continue: 'Continue final project'
   reply:

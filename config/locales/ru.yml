@@ -14,6 +14,10 @@ ru:
           attributes:
             address:
               is_not_uri: 'которую вы пытаетесь вставть, не является ссылкой'
+        user_project:
+          attributes:
+            final_project:
+              can_not_create_user_project: 'автор курса не может сдать дипломный проект на свой курс'
     attributes:
       course:
         name: 'Название'
@@ -158,7 +162,7 @@ ru:
     pass: 'Дипломный проект'
     welcome: 'Дипломный проект по курсу '
     description: 'Описание'
-    execution_days: 'Дней на выполнение дипломного проекта'
+    execution_days: 'Осталось дней на выполнение дипломного проекта'
     start: 'Начать дипломный проект'
     continue: 'Продолжить дипломный проект'
   reply:

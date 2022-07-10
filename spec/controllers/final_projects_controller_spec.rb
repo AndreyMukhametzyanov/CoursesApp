@@ -189,6 +189,7 @@ RSpec.describe FinalProjectsController, type: :controller do
   end
 
   describe '#start' do
+    let(:student) { create :user }
     let!(:final_project) { create :final_project, course: course }
 
     context 'when user is not owner or not enrolled in course' do
@@ -210,13 +211,13 @@ RSpec.describe FinalProjectsController, type: :controller do
       let(:user_project) { final_project.user_projects.last }
 
       before do
-        create :order, user: user, course: course
+        sign_in student
+        create :order, user: student, course: course
         post :start, params: { course_id: course.id }
       end
 
       it 'return correct render' do
-        expect(final_project.user_projects.find_by(user_id: user.id)).not_to be_nil
-        expect(assigns(:user_project)).to eq(user_project)
+        expect(final_project.user_projects.find_by(user_id: student.id)).not_to be_nil
         expect(response).to redirect_to course_final_project_path(course)
       end
     end
