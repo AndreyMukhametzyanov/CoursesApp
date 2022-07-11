@@ -35,7 +35,7 @@ class UserProject < ApplicationRecord
   end
 
   def student_time_left
-    (time_remaining / 86400).to_i
+    (time_remaining / 86_400).to_i
   end
 
   def time_is_over?
