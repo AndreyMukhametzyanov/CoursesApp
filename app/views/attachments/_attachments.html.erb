@@ -1,0 +1,17 @@
+<% if resource.files.attached? %>
+  <h6 id='attachments-header'> <%= I18n.t('lessons.label.label_name') %> </h6>
+  <% resource.files.each do |file| %>
+    <div class="container attachment-container" id='attachment-<%= file.id %>'>
+      <div class="row">
+        <div class="col-2">
+          <%= link_to file.filename, rails_blob_path(file, disposition: :attachment), class: '' %>
+        </div>
+        <div class="col">
+          <% if with_destroy_links %>
+            <%= link_to "#{I18n.t 'attachment.remove'}", attachment_path(file.id), method: :delete, remote: true, data: { confirm: I18n.t('attentions.really_delete') } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

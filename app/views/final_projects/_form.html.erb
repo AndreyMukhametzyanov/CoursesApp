@@ -1,0 +1,11 @@
+<%= simple_form_for [@course, @final_project], url: course_final_project_path do |f| %>
+  <div class="container">
+    <div class="row">
+      <%= f.input :short_description %>
+      <%= f.input :description, as: :rich_text_area%>
+      <%= f.input :execution_days %>
+      <%= f.file_field :files, multiple: true, class: "my-3" %>
+    </div>
+  </div>
+  <%= f.button :submit, (@final_project.new_record? ? t('buttons.create') : t('buttons.edit')), class: "btn btn-outline-primary mt-3" %>
+<% end %>

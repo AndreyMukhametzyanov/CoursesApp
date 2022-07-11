@@ -26,6 +26,7 @@ class Course < ApplicationRecord
 
   belongs_to :author, class_name: 'User', foreign_key: 'user_id', inverse_of: :developed_courses
   has_one :exam, dependent: :destroy
+  has_one :final_project, dependent: :destroy
   has_many :lessons, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :feedbacks, dependent: :destroy

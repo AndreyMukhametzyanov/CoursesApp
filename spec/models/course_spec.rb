@@ -40,6 +40,7 @@ RSpec.describe Course, type: :model do
     it { is_expected.to have_many(:orders) }
     it { is_expected.to have_many(:feedbacks) }
     it { is_expected.to have_many(:students) }
+    it { is_expected.to have_one(:final_project) }
   end
 
   describe 'custom validation for youtube' do

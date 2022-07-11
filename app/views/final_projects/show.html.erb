@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-sm-12">
+    <nav aria-label="breadcrumb" class="mt-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to t('courses.breadcrumb.home'), root_path %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{@course.name}", promo_course_path(@course) %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{t('courses.breadcrumb.lessons')}", course_lesson_path(@course, @course.lessons.last.id) %></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= t('final_project.name') %></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<h1><%= "#{t('final_project.welcome')} #{@course.name}" %></h1>
+<p><%= "#{t('final_project.execution_days')}: " %>
+  <% if @current_user_project.nil? %>
+    <%= @final_project.execution_days %>
+  <% else %>
+    <%= @current_user_project.student_time_left %>
+  <% end %>
+</p>
+
+<p><strong><%= t('final_project.description') %></strong></p>
+<% if @course.owner?(current_user) || @current_user_project.present? %>
+  <p> <%= @final_project.description %></p>
+<% else %>
+  <p> <%= @final_project.short_description %></p>
+<% end %>
+
+<%= render partial: 'attachments/attachments', locals: { resource: @final_project, with_destroy_links: @course.owner?(current_user) } %>
+
+<% if @course.owner?(current_user) %>
+  <h5 class="my-3"><%= t('reply.students') %></h5>
+  <% @user_projects.each do |user_project| %>
+    <%= render user_project.replies %> <!-- Рендер формы реплай -->
+  <% end %>
+<% elsif @current_user_project && !@current_user_project.time_is_over? %> <!-- от лица юзера -->
+  <h5 class="my-3"><%= t('reply.user_reply') %></h5>
+  <%= render @current_user_project.replies %>
+  <% if @current_user_project.replies.last&.status != "accepted" && @current_user_project.replies.last&.status != "verification" %>
+    <%= render partial: 'replies/form', locals: { course: @course, reply: @reply } %>
+  <% end %>
+<% elsif !@course.owner?(current_user) %>
+  <%= link_to "#{t('final_project.start')}", start_course_final_project_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+<% end %>
+</div>

@@ -14,6 +14,10 @@ en:
           attributes:
             address:
               is_not_uri: 'is not url'
+        user_project:
+          attributes:
+            final_project:
+              can_not_create_user_project: 'the author of the course cannot submit a diploma project for his course'
     attributes:
       course:
         name: 'Name'
@@ -43,6 +47,14 @@ en:
       feedback:
         body: 'Text'
         grade: 'Grade'
+      final_project:
+        description: 'Description'
+        short_description: 'Short description'
+        execution_days: 'Set a deadline, days'
+      reply:
+        user_reply: "Enter your reply"
+        teacher_comment: "Teacher reply"
+        status: 'Status'
   menu:
     sign_in: 'Sign in'
     sign_up: 'Sign up'
@@ -69,6 +81,8 @@ en:
       edit_course: 'Edit course'
       create_course: 'Create new course'
       create_order: 'Buy course'
+      create_fp: 'Create project'
+      edit_fp: 'Edit project'
     label:
       label_name: 'Cover image'
   lessons:
@@ -91,6 +105,7 @@ en:
       error: "Something was wrong"
   feedbacks:
     all_feedbacks: 'Feedbacks'
+    add_feedback: 'Add feedback'
     no_feedbacks: 'There are no feedbacks yet. Be first!'
     author_error: 'The author cant leave reviews'
     create:
@@ -102,6 +117,7 @@ en:
       success: "Welcome to the course!"
       error: "Something was wrong"
   exam:
+    name: 'Exam'
     head_create: 'Create exam for '
     head_edit: 'Edit exam for '
     create_button: 'Create exam'
@@ -137,10 +153,37 @@ en:
     remove: 'Remove answer'
     add: 'Add answer'
     correct: 'Correct answer?'
+  final_project:
+    name: 'Final project'
+    head_create: 'Create final project for '
+    head_edit: 'Edit final project for '
+    create: 'Final project created'
+    update: 'Final project updated'
+    pass: 'Final project '
+    welcome: 'Welcome to the course final project '
+    description: 'Description'
+    execution_days: 'Remaining days to complete the final project'
+    start: 'Start final project'
+    continue: 'Continue final project'
+  reply:
+    students: 'Students replies'
+    all_replies: 'Add yours reply'
+    create: 'The solution has been sent for verification'
+    update: 'The new solution has been sent for review'
+    reply: 'Reply '
+    from: 'from '
+    user_reply: 'Your solutions'
+    teacher_comment: 'Teacher comment:'
+    teacher_reply: 'A comment on the students decision has been sent'
+    status:
+      verification: 'Verification'
+      rejected: 'Rejected'
+      accepted: 'Accepted'
   buttons:
     create: 'Create'
     edit: 'Edit'
     confirm: 'Confirm'
+    send: 'Send'
     yes: 'Yes'
     no: 'No'
     continue: 'Continue'
@@ -162,5 +205,10 @@ en:
       not_create: 'The exam for the course has not been created yet'
       attempt_error: 'The number of exam attempts has been increased'
       end_time: 'Time to pass exam is over'
-
-
+    final_project:
+      change_error: 'You cannot edit or create the final project - you are not the author'
+      access_error: 'Access to final project denied'
+      not_create: 'The final project for the course has not been created yet'
+    reply:
+      create_error: 'You cannot create the replies - you are author of this course'
+      time_is_over: 'The time for completing the task is over'

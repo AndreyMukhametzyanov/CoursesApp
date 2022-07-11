@@ -5,7 +5,7 @@
         <li class="breadcrumb-item"><%= link_to t('courses.breadcrumb.home'), root_path %></li>
         <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{@course.name}", promo_course_path(@course) %></li>
         <li class="breadcrumb-item active" aria-current="page"><%= link_to "#{t('courses.breadcrumb.lessons')}", course_lesson_path(@course, @course.lessons.last.id) %></li>
-        <li class="breadcrumb-item active" aria-current="page">exam</li>
+        <li class="breadcrumb-item active" aria-current="page"><%= t('exam.name') %></li>
       </ol>
     </nav>
   </div>

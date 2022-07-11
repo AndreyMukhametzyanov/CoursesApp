@@ -10,6 +10,12 @@ Rails.application.routes.draw do
   root 'courses#index'
 
   resources :courses, concerns: :commentable do
+    resource :final_project do
+      member do
+        post 'start'
+      end
+      resources :replies, only: %i[create update]
+    end
     resources :lessons, except: :index, concerns: :commentable
     member do
       get 'promo'
@@ -23,6 +29,7 @@ Rails.application.routes.draw do
     end
     resources :feedbacks, only: %i[create update destroy]
   end
+
   resources :attachments, only: :destroy
   resources :examinations, only: :show do
     member do
