@@ -5,6 +5,7 @@
 # Table name: lessons
 #
 #  id               :bigint           not null, primary key
+#  complete         :boolean          default(FALSE)
 #  content          :text
 #  order_factor     :integer
 #  title            :string

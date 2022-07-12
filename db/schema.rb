@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_02_120955) do
+ActiveRecord::Schema.define(version: 2022_07_12_113208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(version: 2022_07_02_120955) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "title"
     t.integer "order_factor"
+    t.boolean "complete", default: false
     t.index ["course_id"], name: "index_lessons_on_course_id"
   end
 
@@ -191,7 +192,6 @@ ActiveRecord::Schema.define(version: 2022_07_02_120955) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["final_project_id", "user_id"], name: "index_user_project_final_project_id_and_user_id", unique: true
     t.index ["final_project_id"], name: "index_user_projects_on_final_project_id"
     t.index ["user_id"], name: "index_user_projects_on_user_id"
   end

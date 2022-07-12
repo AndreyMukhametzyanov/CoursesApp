@@ -194,6 +194,7 @@ en:
       change_error: 'You cannot edit or create the lesson - you are not the author'
       access_error: 'Access to lessons denied'
       blank_error: 'cant be blank'
+      lesson_not_create: "Lesson not create for this course yet"
     courses:
       change_error: 'You cannot edit or create the course - you are not the author'
       access_error: 'Access to course denied'
@@ -212,3 +213,4 @@ en:
     reply:
       create_error: 'You cannot create the replies - you are author of this course'
       time_is_over: 'The time for completing the task is over'
+

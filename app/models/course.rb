@@ -53,6 +53,20 @@ class Course < ApplicationRecord
     students.find_by(id: user.id).present?
   end
 
+  def parts_count
+    if lessons.any?
+      parts = lessons.count
+      if final_project.present? && exam.present?
+        parts + 2
+      elsif final_project.present? || exam.present?
+        parts + 1
+      end
+    else
+      flash[:alert] = I18n.t('errors.lessons.lesson_not_create')
+      redirect_to root_path
+    end
+  end
+
   private
 
   def take_video_id
@@ -72,3 +86,4 @@ class Course < ApplicationRecord
     errors.add(:cover_picture, :is_not_picture_type) unless cover_picture.content_type.in?(IMAGE_TYPE)
   end
 end
+

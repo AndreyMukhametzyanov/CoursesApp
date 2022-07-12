@@ -36,4 +36,16 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def progress_for(course)
+    if course.enrolled_in_course?(self)
+      {
+        completed_lessons_ids: course.lessons.where(complete: true).ids,
+        exam_complete: Examination.find_by(exam_id: course.exam.id, user_id: id).passed_exam,
+        project_complete: user_projects.find_by(final_project_id: course.final_project.id).complete
+      }
+    else
+      {}
+    end
+  end
 end
