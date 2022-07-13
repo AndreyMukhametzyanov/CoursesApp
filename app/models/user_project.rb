@@ -13,8 +13,9 @@
 #
 # Indexes
 #
-#  index_user_projects_on_final_project_id  (final_project_id)
-#  index_user_projects_on_user_id           (user_id)
+#  index_user_project_final_project_id_and_user_id  (final_project_id,user_id) UNIQUE
+#  index_user_projects_on_final_project_id          (final_project_id)
+#  index_user_projects_on_user_id                   (user_id)
 #
 # Foreign Keys
 #

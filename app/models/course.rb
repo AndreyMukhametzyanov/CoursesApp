@@ -54,15 +54,24 @@ class Course < ApplicationRecord
   end
 
   def parts_count
+    parts = 0
     if lessons.any?
-      parts = lessons.count
+      parts += lessons.count
       if final_project.present? && exam.present?
         parts + 2
       elsif final_project.present? || exam.present?
         parts + 1
+      else
+        parts
       end
     else
-      0
+      if final_project.present? && exam.present?
+        parts + 2
+      elsif final_project.present? || exam.present?
+        parts + 1
+      else
+        parts
+      end
     end
   end
 
