@@ -56,7 +56,9 @@ class CoursesController < ApplicationController
   end
 
   def order
-    @order = Order.new(user: current_user, course_id: params[:id])
+    @order = Order.new(user: current_user, course_id: params[:id], progress: { 'completed_lessons_ids' => [],
+                                                                               'exam_complete' => nil,
+                                                                               'project_complete' => nil })
 
     if @order.save
       redirect_with_notice(promo_course_path(params[:id]), I18n.t('orders.create_order.success'))

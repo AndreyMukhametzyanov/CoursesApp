@@ -62,8 +62,7 @@ class Course < ApplicationRecord
         parts + 1
       end
     else
-      flash[:alert] = I18n.t('errors.lessons.lesson_not_create')
-      redirect_to root_path
+      0
     end
   end
 

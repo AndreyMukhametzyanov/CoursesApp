@@ -5,6 +5,7 @@
 # Table name: orders
 #
 #  id         :bigint           not null, primary key
+#  progress   :json
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  course_id  :bigint

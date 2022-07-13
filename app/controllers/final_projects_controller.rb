@@ -66,6 +66,8 @@ class FinalProjectsController < ApplicationController
 
     if @course.final_project
       @user_project = UserProject.create(final_project: @course.final_project, user: current_user)
+      order = current_user.orders.find_by(course: @course)
+      order&.update(progress: { project_complete: false })
       redirect_to course_final_project_path(@course)
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.not_create'))
