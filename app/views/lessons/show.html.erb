@@ -32,9 +32,9 @@
   </div>
 </div>
 
-<%# until @order.progress["completed_lessons_ids"].include?(params[:id]) %>
+<% unless @completed_lessons_ids.include?(@lesson.id.to_i) %>
   <%= link_to t('lessons.lesson_end'), complete_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
-<%# end %>
+<% end %>
 
 <%= render partial: 'attachments/attachments', locals: { resource: @lesson, with_destroy_links: @course.owner?(current_user) } %>
 
