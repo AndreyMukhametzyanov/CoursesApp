@@ -53,28 +53,6 @@ class Course < ApplicationRecord
     students.find_by(id: user.id).present?
   end
 
-  def parts_count
-    parts = 0
-    if lessons.any?
-      parts += lessons.count
-      if final_project.present? && exam.present?
-        parts + 2
-      elsif final_project.present? || exam.present?
-        parts + 1
-      else
-        parts
-      end
-    else
-      if final_project.present? && exam.present?
-        parts + 2
-      elsif final_project.present? || exam.present?
-        parts + 1
-      else
-        parts
-      end
-    end
-  end
-
   private
 
   def take_video_id

@@ -90,6 +90,8 @@ ru:
     lesson_num: 'Лекция '
     lesson_edit: 'Редактировать лекцию'
     lesson_create: 'Создать лекцию'
+    lesson_end: 'Завершить лекцию'
+    lesson_end_msg: 'Лекция успешно пройдена!'
     label:
       label_name: 'Прикрепленные файлы'
   links:

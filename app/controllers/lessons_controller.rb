@@ -28,6 +28,7 @@ class LessonsController < ApplicationController
   def show
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       @lesson = @course.lessons.find(params[:id])
+      @order = Order.find_by(user_id: current_user.id, course: @course)
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.access_error'))
     end
@@ -53,6 +54,14 @@ class LessonsController < ApplicationController
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.change_error'))
     end
+  end
+
+  def complete
+    @lesson = @course.lessons.find(params[:id])
+    order = Order.find_by(user_id: current_user.id, course: @course)
+    order.progress['completed_lessons_ids'].push(params[:id].to_i)
+    order.save
+    redirect_with_notice(course_lesson_path(@course, @lesson), I18n.t('lessons.lesson_end_msg'))
   end
 
   def destroy; end

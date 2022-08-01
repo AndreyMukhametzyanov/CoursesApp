@@ -16,7 +16,11 @@ Rails.application.routes.draw do
       end
       resources :replies, only: %i[create update]
     end
-    resources :lessons, except: :index, concerns: :commentable
+    resources :lessons, except: :index, concerns: :commentable do
+      member do
+        post 'complete'
+      end
+    end
     member do
       get 'promo'
       get 'start'

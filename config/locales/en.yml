@@ -90,6 +90,8 @@ en:
     lesson_num: 'Lesson '
     lesson_edit: 'Edit lesson'
     lesson_create: 'Create lesson'
+    lesson_end: 'End lesson'
+    lesson_end_msg: 'Lesson complete!'
     label:
       label_name: 'Attachments'
   links:

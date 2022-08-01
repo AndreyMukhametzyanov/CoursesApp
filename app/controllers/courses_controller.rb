@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[start promo update edit]
+  before_action :set_course, only: %i[start promo update order edit]
 
   def index
     @courses = Course.all.order(:name)
@@ -56,9 +56,7 @@ class CoursesController < ApplicationController
   end
 
   def order
-    @order = Order.new(user: current_user, course_id: params[:id], progress: { 'completed_lessons_ids' => [],
-                                                                               'exam_complete' => nil,
-                                                                               'project_complete' => nil })
+    @order = Order.new(user: current_user, course_id: params[:id], progress: build_progress_hash)
 
     if @order.save
       redirect_with_notice(promo_course_path(params[:id]), I18n.t('orders.create_order.success'))
@@ -75,5 +73,14 @@ class CoursesController < ApplicationController
 
   def course_params
     permit_params(:course, :name, :level, :description, :video_link, :cover_picture, :short_description)
+  end
+
+  def build_progress_hash
+    progress = { 'total_lessons' => @course.lessons.count, 'completed_lessons_ids' => [] }
+
+    progress.tap do |h|
+      h['project_complete'] = false if @course.final_project.present?
+      h['exam_complete'] = false if @course.exam.present?
+    end
   end
 end
