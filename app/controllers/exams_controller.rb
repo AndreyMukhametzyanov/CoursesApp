@@ -81,8 +81,6 @@ class ExamsController < ApplicationController
         current_question: @course.exam.questions.first,
         next_question: @course.exam.questions.second
       )
-      order = current_user.orders.find_by(course: @course)
-      order&.update(progress: { exam_complete: false })
       redirect_to examination_path(@examination)
     else
       redirect_with_alert(promo_course_path, I18n.t('errors.exam.not_create'))

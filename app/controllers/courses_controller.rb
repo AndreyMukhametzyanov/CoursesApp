@@ -76,11 +76,11 @@ class CoursesController < ApplicationController
   end
 
   def build_progress_hash
-    progress = { 'total_lessons' => @course.lessons.count, 'completed_lessons_ids' => [] }
+    progress = { total_lessons: @course.lessons.count, completed_lessons_ids: [] }
 
     progress.tap do |h|
-      h['project_complete'] = false if @course.final_project.present?
-      h['exam_complete'] = false if @course.exam.present?
+      h[:project_complete] = false if @course.final_project.present?
+      h[:exam_complete] = false if @course.exam.present?
     end
   end
 end
