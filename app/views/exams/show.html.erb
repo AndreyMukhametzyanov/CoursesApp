@@ -21,7 +21,9 @@
     <% if @not_finished_exam %>
       <%= link_to "#{t('exam.continue')}", examination_path(@not_finished_exam), class: 'btn btn-outline-primary' %>
     <% else %>
-      <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+      <% until @full_finished_exam %>
+        <%= link_to "#{t('exam.start')}", start_course_exam_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+      <% end %>
     <% end %>
   <% end %>
 </div>

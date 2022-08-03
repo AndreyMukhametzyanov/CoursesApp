@@ -67,7 +67,11 @@ class LessonsController < ApplicationController
       order.save
     end
     if next_question.empty?
-      redirect_with_notice(promo_course_path(@course), I18n.t('lessons.lessons_all_end'))
+      if @course.final_project
+        redirect_with_notice(course_final_project_path(@course), I18n.t('final_project.complete'))
+      elsif @course.exam
+        redirect_with_notice(course_exam_path(@course), I18n.t('lessons.lessons_all_end'))
+      end
     else
       redirect_with_notice(course_lesson_path(@course, next_question.first.id), I18n.t('lessons.lesson_end_msg'))
     end

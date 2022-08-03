@@ -39,6 +39,8 @@
   <%= render @current_user_project.replies %>
   <% if @current_user_project.replies.last&.status != "accepted" && @current_user_project.replies.last&.status != "verification" %>
     <%= render partial: 'replies/form', locals: { course: @course, reply: @reply } %>
+  <%# elsif @current_user_project.replies.last&.status == "accepted"%>
+    <%#= link_to t('lessons.lesson_end'), complete_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
   <% end %>
 <% elsif !@course.owner?(current_user) %>
   <%= link_to "#{t('final_project.start')}", start_course_final_project_path(@course), method: :post, class: 'btn btn-outline-primary' %>

@@ -20,8 +20,8 @@
     <% @course.lessons.order_by_factor.each_with_index do |lesson, i| %>
       <div class="list-group">
         <% css_class = current_page?(course_lesson_path(@course, lesson)) ? "active" : "" %>
-        <% @order.lesson_complete?(lesson.id)  %>
-        <%= link_to "#{t('lessons.lesson_num')} #{i + 1}", course_lesson_path(@course, lesson), class: "list-group-item list-group-item-action my-1 #{css_class}" %>
+        <% css_complete = !@course.owner?(current_user) && @order.lesson_complete?(lesson.id) ? "success" : "action" %>
+        <%= link_to "#{t('lessons.lesson_num')} #{i + 1}", course_lesson_path(@course, lesson), class: "list-group-item list-group-item-#{css_complete} my-1 #{css_class}" %>
       </div>
     <% end %>
     <% if @course.final_project %>
@@ -33,7 +33,7 @@
   </div>
 </div>
 
-<% if @course.enrolled_in_course?(current_user) && @completed_lessons_ids.exclude?(@lesson.id.to_i)%>
+<% if @course.enrolled_in_course?(current_user) && @completed_lessons_ids.exclude?(@lesson.id.to_i) %>
   <%= link_to t('lessons.lesson_end'), complete_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
 <% end %>
 

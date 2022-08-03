@@ -65,6 +65,7 @@ en:
     remove: 'Remove'
     error: 'Something was wrong'
   courses:
+    complete: 'You have successfully completed the entire course! Keep it up!'
     breadcrumb:
       home: 'Home'
       lessons: 'Lessons'
@@ -168,6 +169,7 @@ en:
     execution_days: 'Remaining days to complete the final project'
     start: 'Start final project'
     continue: 'Continue final project'
+    complete: 'Final project successfully finished'
   reply:
     students: 'Students replies'
     all_replies: 'Add yours reply'
