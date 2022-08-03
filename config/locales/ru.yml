@@ -18,6 +18,11 @@ ru:
           attributes:
             final_project:
               can_not_create_user_project: 'автор курса не может сдать дипломный проект на свой курс'
+        lesson:
+          attributes:
+            order_factor:
+              is_not_uniq_type: 'лекция с такой очередностью уже существует'
+
     attributes:
       course:
         name: 'Название'
@@ -92,6 +97,7 @@ ru:
     lesson_create: 'Создать лекцию'
     lesson_end: 'Завершить лекцию'
     lesson_end_msg: 'Лекция успешно пройдена!'
+    lessons_all_end: 'Так держать! Все уроки успешно пройдены!'
     label:
       label_name: 'Прикрепленные файлы'
   links:

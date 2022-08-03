@@ -22,4 +22,8 @@ class Order < ApplicationRecord
   belongs_to :course
 
   validates :course_id, uniqueness: { scope: :user_id }
+
+  def lesson_complete?(lesson_id)
+    progress['completed_lessons_ids'].include?(lesson_id)
+  end
 end

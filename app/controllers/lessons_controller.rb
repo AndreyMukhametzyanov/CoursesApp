@@ -26,10 +26,12 @@ class LessonsController < ApplicationController
   end
 
   def show
-    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
+    if @course.owner?(current_user)
+      @lesson = @course.lessons.find(params[:id])
+    elsif @course.enrolled_in_course?(current_user)
       @lesson = @course.lessons.find(params[:id])
       @order = Order.find_by(user_id: current_user.id, course: @course)
-      @completed_lessons_ids = @order&.progress['completed_lessons_ids']
+      @completed_lessons_ids = @order.progress['completed_lessons_ids']
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.access_error'))
     end
@@ -58,14 +60,17 @@ class LessonsController < ApplicationController
   end
 
   def complete
-    lesson = @course.lessons.find(params[:id])
     order = Order.find_by(user_id: current_user.id, course: @course)
 
     if order.progress['completed_lessons_ids'].exclude?(params[:id].to_i)
       order.progress['completed_lessons_ids'] << params[:id].to_i
       order.save
     end
-    redirect_with_notice(course_lesson_path(@course, lesson), I18n.t('lessons.lesson_end_msg'))
+    if next_question.empty?
+      redirect_with_notice(promo_course_path(@course), I18n.t('lessons.lessons_all_end'))
+    else
+      redirect_with_notice(course_lesson_path(@course, next_question.first.id), I18n.t('lessons.lesson_end_msg'))
+    end
   end
 
   def destroy; end
@@ -82,5 +87,10 @@ class LessonsController < ApplicationController
       files: [],
       links_attributes: %i[id address _destroy]
     )
+  end
+
+  def next_question
+    lesson = @course.lessons.find(params[:id])
+    @course.lessons.where('order_factor > ?', lesson.order_factor)
   end
 end

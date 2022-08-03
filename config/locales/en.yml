@@ -92,6 +92,7 @@ en:
     lesson_create: 'Create lesson'
     lesson_end: 'End lesson'
     lesson_end_msg: 'Lesson complete!'
+    lessons_all_end: 'Good job! All lessons complete!'
     label:
       label_name: 'Attachments'
   links:
