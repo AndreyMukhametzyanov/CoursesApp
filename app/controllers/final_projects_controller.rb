@@ -41,10 +41,6 @@ class FinalProjectsController < ApplicationController
       @reply = Reply.new
       @current_user_project = UserProject.find_by(final_project: @final_project, user: current_user)
       @user_projects = @final_project.user_projects
-
-      # order = current_user.orders.find_by(course: @examination.exam.course)
-      # order.progress[:exam_complete] = true
-      # order.save
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.access_error'))
     end

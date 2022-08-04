@@ -21,7 +21,13 @@ class RepliesController < ApplicationController
       @reply = Reply.find(params[:id])
       ActiveRecord::Base.transaction do
         if @reply.update(teacher_replies_params)
-          @reply.user_project.complete! if @reply.accepted?
+           if @reply.accepted?
+             @reply.user_project.complete!
+             order = @reply.user.orders.find_by(course: @course)
+             order.progress[:project_complete] = true
+             order.save
+           end
+
           redirect_with_notice(course_final_project_path(@course), I18n.t('reply.teacher_reply'))
         else
           redirect_with_alert(course_final_project_path(@course), @reply.errors.full_messages.first)
