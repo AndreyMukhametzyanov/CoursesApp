@@ -25,10 +25,12 @@
       </div>
     <% end %>
     <% if @course.final_project %>
-      <%= link_to "#{t('final_project.pass')}", course_final_project_path(@course), class: "list-group-item list-group-item-action my-1" %>
+      <% css_complete = !@course.owner?(current_user) && @course.final_project ? "success" : "action" %>
+      <%= link_to "#{t('final_project.pass')}", course_final_project_path(@course), class: "list-group-item list-group-item-#{css_complete} my-1" %>
     <% end %>
     <% if @course.exam %>
-      <%= link_to "#{t('exam.pass_exam')}", course_exam_path(@course), class: "list-group-item list-group-item-action my-1" %>
+      <% css_complete = !@course.owner?(current_user) && @course.exam ? "success" : "action" %>
+      <%= link_to "#{t('exam.pass_exam')}", course_exam_path(@course), class: "list-group-item list-group-item-#{css_complete} my-1" %>
     <% end %>
   </div>
 </div>
