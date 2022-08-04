@@ -68,9 +68,9 @@ class LessonsController < ApplicationController
     end
     if next_question.empty?
       if @course.final_project
-        redirect_with_notice(course_final_project_path(@course), I18n.t('final_project.complete'))
+        redirect_to course_final_project_path(@course)
       elsif @course.exam
-        redirect_with_notice(course_exam_path(@course), I18n.t('lessons.lessons_all_end'))
+        redirect_to course_exam_path(@course)
       end
     else
       redirect_with_notice(course_lesson_path(@course, next_question.first.id), I18n.t('lessons.lesson_end_msg'))
