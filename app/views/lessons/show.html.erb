@@ -10,6 +10,14 @@
   </div>
 </div>
 
+<% if @order && !@course.owner?(current_user) %>
+  <div class="progress mb-2">
+    <div class="progress-bar" role="progressbar" style="width: <%= @percentage %>%" aria-valuemin="0" aria-valuemax="100">
+      <%= @percentage %> %
+    </div>
+  </div>
+<% end %>
+
 <div class="row">
   <div class="col-10">
     <%= @lesson.title %>
@@ -25,11 +33,11 @@
       </div>
     <% end %>
     <% if @course.final_project %>
-      <% css_complete = !@course.owner?(current_user) && @course.final_project ? "success" : "action" %>
+      <% css_complete = !@course.owner?(current_user) && @course.final_project && @complete_final_project ? "success" : "action" %>
       <%= link_to "#{t('final_project.pass')}", course_final_project_path(@course), class: "list-group-item list-group-item-#{css_complete} my-1" %>
     <% end %>
     <% if @course.exam %>
-      <% css_complete = !@course.owner?(current_user) && @course.exam ? "success" : "action" %>
+      <% css_complete = !@course.owner?(current_user) && @course.exam && @complete_exam ? "success" : "action" %>
       <%= link_to "#{t('exam.pass_exam')}", course_exam_path(@course), class: "list-group-item list-group-item-#{css_complete} my-1" %>
     <% end %>
   </div>

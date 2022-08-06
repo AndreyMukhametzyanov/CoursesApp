@@ -53,7 +53,8 @@ class ExamsController < ApplicationController
       @exam = @course.exam
       @examinations = Examination.where(user: current_user, exam: @exam).order(:created_at)
       @not_finished_exam = Examination.where(user: current_user, exam: @exam, finished_exam: false).first
-      @full_finished_exam = Examination.where(user: current_user, exam: @exam, finished_exam: true, percentage_passing: 100).first
+      @full_finished_exam = Examination.where(user: current_user, exam: @exam, finished_exam: true,
+                                              percentage_passing: 100).first
       @user_attempts = Examination.where(user: current_user, exam: @exam).count
       @attempts_of_exam = @exam.attempts_count
     else

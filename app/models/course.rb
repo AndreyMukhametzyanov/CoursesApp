@@ -53,6 +53,13 @@ class Course < ApplicationRecord
     students.find_by(id: user.id).present?
   end
 
+  def update_course_quantity
+    orders.each do |order|
+      order.progress['total_lessons'] = lessons.count
+      order.save
+    end
+  end
+
   private
 
   def take_video_id
@@ -72,4 +79,3 @@ class Course < ApplicationRecord
     errors.add(:cover_picture, :is_not_picture_type) unless cover_picture.content_type.in?(IMAGE_TYPE)
   end
 end
-

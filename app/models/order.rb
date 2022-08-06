@@ -26,4 +26,15 @@ class Order < ApplicationRecord
   def lesson_complete?(lesson_id)
     progress['completed_lessons_ids'].include?(lesson_id)
   end
+
+  def percentage_count
+    progress['completed_lessons_ids'].count * 100 / total_lessons_count
+  end
+
+  def total_lessons_count
+    total = progress['total_lessons']
+    total += 1 unless progress['exam_complete'].nil?
+    total += 1 unless progress['project_complete'].nil?
+    total
+  end
 end

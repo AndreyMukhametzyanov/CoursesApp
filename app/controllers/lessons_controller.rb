@@ -16,6 +16,7 @@ class LessonsController < ApplicationController
       @lesson = @course.lessons.build(lesson_params)
 
       if @lesson.save
+        @course.update_course_quantity
         redirect_to course_lesson_path(@course, @lesson)
       else
         render :new
@@ -31,7 +32,10 @@ class LessonsController < ApplicationController
     elsif @course.enrolled_in_course?(current_user)
       @lesson = @course.lessons.find(params[:id])
       @order = Order.find_by(user_id: current_user.id, course: @course)
+      @complete_exam = @order.progress['exam_complete']
+      @complete_final_project = @order.progress['project_complete']
       @completed_lessons_ids = @order.progress['completed_lessons_ids']
+      @percentage = @order.percentage_count
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.access_error'))
     end
@@ -71,6 +75,8 @@ class LessonsController < ApplicationController
         redirect_to course_final_project_path(@course)
       elsif @course.exam
         redirect_to course_exam_path(@course)
+      else
+        redirect_with_notice(promo_course_path(@course), I18n.t('lessons.lessons_all_end'))
       end
     else
       redirect_with_notice(course_lesson_path(@course, next_question.first.id), I18n.t('lessons.lesson_end_msg'))
