@@ -21,5 +21,12 @@ FactoryBot.define do
   factory :order do
     user
     course
+    progress {
+      { total_lessons: course.lessons.count,
+        completed_lessons_ids: [],
+        project_complete: false,
+        exam_complete: false
+      }
+    }
   end
 end
