@@ -30,4 +30,10 @@ RSpec.describe Order, type: :model do
   describe 'validations' do
     it { is_expected.to validate_uniqueness_of(:course_id).scoped_to(:user_id) }
   end
+
+  describe 'complete lessons' do
+    it 'sdasda' do
+      puts subject.inspect
+    end
+  end
 end

@@ -18,6 +18,10 @@ en:
           attributes:
             final_project:
               can_not_create_user_project: 'the author of the course cannot submit a diploma project for his course'
+        lesson:
+          attributes:
+            order_factor:
+              is_not_uniq_type: 'лекция с такой очередностью уже существует'
     attributes:
       course:
         name: 'Name'
