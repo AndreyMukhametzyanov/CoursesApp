@@ -85,12 +85,13 @@ RSpec.describe RepliesController, type: :controller do
   end
 
   describe '#update' do
-    let(:reply) { create :reply, user_project: user_project }
+    let!(:reply) { create :reply, user_project: user_project }
 
     context 'when user is owner' do
       context 'when data is correct'
       let(:teacher_comment) { 'test' }
       let(:notice) { I18n.t('reply.teacher_reply') }
+      let(:order) { reply.user.orders.find_by(course: course) }
 
       before do
         patch :update,
@@ -104,6 +105,7 @@ RSpec.describe RepliesController, type: :controller do
         expect(reply.teacher_comment).to eq(teacher_comment)
         expect(flash[:notice]).to eq(notice)
         expect(response).to redirect_to(course_final_project_path(course))
+        expect(order.project_complete).to be_truthy
       end
     end
 
@@ -120,4 +122,5 @@ RSpec.describe RepliesController, type: :controller do
       end
     end
   end
+
 end

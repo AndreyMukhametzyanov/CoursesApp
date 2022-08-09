@@ -24,7 +24,7 @@ class RepliesController < ApplicationController
           if @reply.accepted?
             @reply.user_project.complete!
             order = @reply.user.orders.find_by(course: @course)
-            order.progress[:project_complete] = true
+            order.project_complete = true
             order.save
           end
 

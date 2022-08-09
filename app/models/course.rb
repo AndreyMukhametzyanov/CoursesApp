@@ -55,7 +55,7 @@ class Course < ApplicationRecord
 
   def update_course_quantity
     orders.each do |order|
-      order.progress['total_lessons'] = lessons.count
+      order.total_lessons = lessons.count
       order.save
     end
   end

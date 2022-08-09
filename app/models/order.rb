@@ -21,20 +21,25 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :course
 
+  store_accessor :progress, :total_lessons
+  store_accessor :progress, :project_complete
+  store_accessor :progress, :exam_complete
+  store_accessor :progress, :completed_lessons_ids
+
   validates :course_id, uniqueness: { scope: :user_id }
 
   def lesson_complete?(lesson_id)
-    progress['completed_lessons_ids'].include?(lesson_id)
+    completed_lessons_ids.include?(lesson_id)
   end
 
   def percentage_count
-    progress['completed_lessons_ids'].count * 100 / total_lessons_count
+    completed_lessons_ids.count * 100 / total_lessons_count
   end
 
   def total_lessons_count
-    total = progress['total_lessons']
-    total += 1 unless progress['exam_complete'].nil?
-    total += 1 unless progress['project_complete'].nil?
+    total = total_lessons
+    total += 1 unless exam_complete.nil?
+    total += 1 unless project_complete.nil?
     total
   end
 end

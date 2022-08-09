@@ -34,7 +34,7 @@ class ExaminationsController < ApplicationController
       end
       @examination.save!
       order = current_user.orders.find_by(course: @examination.exam.course)
-      order.progress[:exam_complete] = true
+      order.exam_complete = true
       order.save
       redirect_to examination_path(@examination)
     end

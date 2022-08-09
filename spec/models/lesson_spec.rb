@@ -34,9 +34,9 @@ RSpec.describe Lesson, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:course) }
-    # it { is_expected.to have_many_attached(:files) }
-    # it { is_expected.to have_many(:links) }
-    # it { is_expected.to accept_nested_attributes_for :links }
+    it { is_expected.to have_many_attached(:files) }
+    it { is_expected.to have_many(:links) }
+    it { is_expected.to accept_nested_attributes_for :links }
   end
 
   describe 'owned by user' do

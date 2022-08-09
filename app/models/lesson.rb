@@ -42,8 +42,12 @@ class Lesson < ApplicationRecord
   end
 
   def unique_order_factor_of_course?
-    return if course.lessons.where(order_factor: order_factor).empty?
+    if course.nil?
+      errors.add(:course_id, :course_is_not_create)
+    else
+      return if course.lessons.where(order_factor: order_factor).empty?
 
-    errors.add(:order_factor, :is_not_uniq_type)
+      errors.add(:order_factor, :is_not_uniq_type)
+    end
   end
 end
