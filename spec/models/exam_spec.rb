@@ -47,7 +47,7 @@ RSpec.describe Exam, type: :model do
     let!(:exam) { create(:exam, course: course) }
 
     it 'return false' do
-      expect(exam.passed_by_user?(user)).to be_falsey
+      expect(exam).not_to be_passed_by_user(user)
     end
   end
 end

@@ -5,9 +5,16 @@ require 'spec_helper'
 
 RSpec.describe ExaminationsController, type: :controller do
   let!(:user) { create(:user) }
+  let!(:student) { create(:user) }
   let!(:examination) { create :examination, exam: exam }
   let(:exam) { create :exam, course: course }
   let!(:course) { create :course, author: user }
+  let(:create_order) do
+    Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
+                                                            completed_lessons_ids: [],
+                                                            project_complete: false,
+                                                            exam_complete: false })
+  end
 
   before { sign_in user }
 
@@ -73,6 +80,8 @@ RSpec.describe ExaminationsController, type: :controller do
       end
 
       before do
+        sign_in student
+        create_order
         post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }
       end
 
@@ -91,6 +100,8 @@ RSpec.describe ExaminationsController, type: :controller do
       let(:correct_answer) { examination.exam.questions.last.answers.where(correct_answer: true).ids }
 
       before do
+        sign_in student
+        create_order
         post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }
       end
 
@@ -105,6 +116,8 @@ RSpec.describe ExaminationsController, type: :controller do
       let(:correct_answer) { exam.questions.first.answers.where(correct_answer: true).ids }
 
       before do
+        sign_in student
+        create_order
         post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }
       end
 
@@ -121,6 +134,8 @@ RSpec.describe ExaminationsController, type: :controller do
       let(:incorrect_answer) { ['wow'] }
 
       before do
+        sign_in student
+        create_order
         post :check_answer, params: { id: examination.id, user_answers: { current_question: incorrect_answer } }
       end
 

@@ -122,5 +122,4 @@ RSpec.describe RepliesController, type: :controller do
       end
     end
   end
-
 end

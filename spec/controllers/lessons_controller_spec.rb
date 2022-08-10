@@ -177,10 +177,9 @@ RSpec.describe LessonsController, type: :controller do
         before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
 
         it 'updates course and check redirect to root' do
-          puts (assigns(:lesson).errors).inspect
-          # expect(assigns(:lesson).title).to eq(new_title)
-          # expect(response).to have_http_status(:found)
-          # expect(response).to redirect_to(course_lesson_path(course, lesson))
+          expect(assigns(:lesson).title).to eq(new_title)
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to(course_lesson_path(course, lesson))
         end
       end
 
@@ -322,5 +321,4 @@ RSpec.describe LessonsController, type: :controller do
       end
     end
   end
-
 end

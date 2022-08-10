@@ -20,12 +20,11 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  subject do
+  subject(:order) do
     build(:order, progress: { total_lessons: 2,
                               completed_lessons_ids: [1, 2],
                               project_complete: false,
-                              exam_complete: false
-    })
+                              exam_complete: false })
   end
 
   describe 'associations' do
@@ -39,34 +38,33 @@ RSpec.describe Order, type: :model do
 
   describe 'complete lessons' do
     it 'include complete lesson id' do
-      expect(subject.lesson_complete?(subject.completed_lessons_ids.first)).to be_truthy
+      expect(order).to be_lesson_complete(order.completed_lessons_ids.first)
     end
   end
 
   describe 'percentage count' do
-    let(:percent) { subject.completed_lessons_ids.count * 100 / subject.total_lessons_count }
+    let(:percent) { order.completed_lessons_ids.count * 100 / order.total_lessons_count }
 
     it 'count percentage' do
-      expect(subject.percentage_count).to eq(percent)
+      expect(order.percentage_count).to eq(percent)
     end
   end
 
   describe 'total lessons count' do
-    let(:check_exam) { subject.exam_complete.nil? ? 0 : 1 }
-    let(:check_project) { subject.exam_complete.nil? ? 0 : 1 }
-    let(:correct_number) { subject.total_lessons + check_exam + check_project }
+    let(:check_exam) { order.exam_complete.nil? ? 0 : 1 }
+    let(:check_project) { order.exam_complete.nil? ? 0 : 1 }
+    let(:correct_number) { order.total_lessons + check_exam + check_project }
 
     context 'when course have only lessons' do
       let(:only_lessons) do
         build(:order, progress: { total_lessons: 2,
                                   completed_lessons_ids: [1, 2],
                                   project_complete: nil,
-                                  exam_complete: nil
-        })
+                                  exam_complete: nil })
       end
 
       it 'return correct number of lessons of course' do
-        expect(subject.total_lessons_count).to eq(correct_number)
+        expect(order.total_lessons_count).to eq(correct_number)
       end
     end
 
@@ -75,21 +73,18 @@ RSpec.describe Order, type: :model do
         build(:order, progress: { total_lessons: 2,
                                   completed_lessons_ids: [1, 2],
                                   project_complete: nil,
-                                  exam_complete: false
-        })
+                                  exam_complete: false })
       end
 
       it 'return correct number of lessons of course' do
-        expect(subject.total_lessons_count).to eq(correct_number)
+        expect(order.total_lessons_count).to eq(correct_number)
       end
     end
 
     context 'when course have lessons, exam and project' do
       it 'return correct number of lessons of course' do
-        expect(subject.total_lessons_count).to eq(correct_number)
+        expect(order.total_lessons_count).to eq(correct_number)
       end
     end
-
   end
-
 end
