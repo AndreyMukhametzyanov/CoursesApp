@@ -34,20 +34,16 @@ class Lesson < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
   validates :order_factor, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
-  validate :unique_order_factor_of_course?
+  validate :unique_order_factor_of_course, if: :course
   scope :order_by_factor, -> { order(:order_factor) }
 
   def owner?(user)
     course.author == user
   end
 
-  def unique_order_factor_of_course?
-    if course.nil?
-      errors.add(:course_id, :course_is_not_create)
-    else
-      return if course.lessons.where(order_factor: order_factor).empty?
+  def unique_order_factor_of_course
+    return if course.lessons.where(order_factor: order_factor).empty?
 
-      errors.add(:order_factor, :is_not_uniq_type)
-    end
+    errors.add(:order_factor, :is_not_uniq_type)
   end
 end

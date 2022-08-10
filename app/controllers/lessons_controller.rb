@@ -70,7 +70,7 @@ class LessonsController < ApplicationController
       order.completed_lessons_ids << params[:id].to_i
       order.save
     end
-    if next_question.empty?
+    if next_lesson.empty?
       if @course.final_project
         redirect_to course_final_project_path(@course)
       elsif @course.exam
@@ -79,7 +79,7 @@ class LessonsController < ApplicationController
         redirect_with_notice(promo_course_path(@course), I18n.t('lessons.lessons_all_end'))
       end
     else
-      redirect_with_notice(course_lesson_path(@course, next_question.first.id), I18n.t('lessons.lesson_end_msg'))
+      redirect_with_notice(course_lesson_path(@course, next_lesson.first.id), I18n.t('lessons.lesson_end_msg'))
     end
   end
 
@@ -99,7 +99,7 @@ class LessonsController < ApplicationController
     )
   end
 
-  def next_question
+  def next_lesson
     lesson = @course.lessons.find(params[:id])
     @course.lessons.where('order_factor > ?', lesson.order_factor)
   end
