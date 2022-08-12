@@ -12,8 +12,8 @@
 
 <% if @order && !@course.owner?(current_user) %>
   <div class="progress mb-2">
-    <div class="progress-bar" role="progressbar" style="width: <%= @percentage %>%" aria-valuemin="0" aria-valuemax="100">
-      <%= @percentage %> %
+    <div class="progress-bar" role="progressbar" style="width: <%= @order.percentage_count %>%" aria-valuemin="0" aria-valuemax="100">
+      <%= @order.percentage_count %> %
     </div>
   </div>
 <% end %>
@@ -33,17 +33,17 @@
       </div>
     <% end %>
     <% if @course.final_project %>
-      <% css_complete = !@course.owner?(current_user) && @course.final_project && @complete_final_project ? "success" : "action" %>
+      <% css_complete = !@course.owner?(current_user) && @course.final_project && @order.project_complete ? "success" : "action" %>
       <%= link_to "#{t('final_project.pass')}", course_final_project_path(@course), class: "list-group-item list-group-item-#{css_complete} my-1" %>
     <% end %>
     <% if @course.exam %>
-      <% css_complete = !@course.owner?(current_user) && @course.exam && @complete_exam ? "success" : "action" %>
+      <% css_complete = !@course.owner?(current_user) && @course.exam && @order.exam_complete ? "success" : "action" %>
       <%= link_to "#{t('exam.pass_exam')}", course_exam_path(@course), class: "list-group-item list-group-item-#{css_complete} my-1" %>
     <% end %>
   </div>
 </div>
 
-<% if @course.enrolled_in_course?(current_user) && @completed_lessons_ids.exclude?(@lesson.id.to_i) %>
+<% if @course.enrolled_in_course?(current_user) && @order.completed_lessons_ids.exclude?(@lesson.id.to_i) %>
   <%= link_to t('lessons.lesson_end'), complete_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
 <% end %>
 

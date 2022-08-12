@@ -24,8 +24,7 @@ class RepliesController < ApplicationController
           if @reply.accepted?
             @reply.user_project.complete!
             order = @reply.user.orders.find_by(course: @course)
-            order.project_complete = true
-            order.save
+            order.project_complete!
           end
 
           redirect_with_notice(course_final_project_path(@course), I18n.t('reply.teacher_reply'))

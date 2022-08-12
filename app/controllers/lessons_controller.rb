@@ -32,10 +32,6 @@ class LessonsController < ApplicationController
     elsif @course.enrolled_in_course?(current_user)
       @lesson = @course.lessons.find(params[:id])
       @order = Order.find_by(user_id: current_user.id, course: @course)
-      @complete_exam = @order.exam_complete
-      @complete_final_project = @order.project_complete
-      @completed_lessons_ids = @order.completed_lessons_ids
-      @percentage = @order.percentage_count
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.access_error'))
     end
@@ -67,8 +63,7 @@ class LessonsController < ApplicationController
     order = Order.find_by(user_id: current_user.id, course: @course)
 
     if order.completed_lessons_ids.exclude?(params[:id].to_i)
-      order.completed_lessons_ids << params[:id].to_i
-      order.save
+      order.complete_lesson!(params[:id])
     end
     if next_lesson.empty?
       if @course.final_project

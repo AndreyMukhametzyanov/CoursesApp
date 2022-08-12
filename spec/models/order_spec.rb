@@ -22,9 +22,7 @@ require 'rails_helper'
 RSpec.describe Order, type: :model do
   subject(:order) do
     build(:order, progress: { total_lessons: 2,
-                              completed_lessons_ids: [1, 2],
-                              project_complete: false,
-                              exam_complete: false })
+                              completed_lessons_ids: [1, 2] })
   end
 
   describe 'associations' do
@@ -43,11 +41,28 @@ RSpec.describe Order, type: :model do
   end
 
   describe 'percentage count' do
-    let(:percent) { order.completed_lessons_ids.count * 100 / order.total_lessons_count }
-
-    it 'count percentage' do
-      expect(order.percentage_count).to eq(percent)
+    # let(:course) { create(:course) }
+    # let(:lesson) { create :lesson, course: course }
+    # let(:exam) { create :exam, course: course }
+    # let(:examination) { create(:examination, exam: exam) }
+    let(:percent) { order.completed_lessons_ids.count * 100 / order.total_course_parts }
+    let(:order) do
+      build(:order, progress: { total_lessons: 2,
+                                completed_lessons_ids: [1, 2],
+                                project_complete: true,
+                                exam_complete: true })
     end
+
+    context 'when only lessons' do
+      it 'count percentage' do
+        expect(order.percentage_count).to eq(percent)
+      end
+    end
+
+    context 'when all parts of exam' do
+
+    end
+
   end
 
   describe 'total lessons count' do
@@ -64,7 +79,7 @@ RSpec.describe Order, type: :model do
       end
 
       it 'return correct number of lessons of course' do
-        expect(order.total_lessons_count).to eq(correct_number)
+        expect(order.total_course_parts).to eq(correct_number)
       end
     end
 
@@ -77,13 +92,13 @@ RSpec.describe Order, type: :model do
       end
 
       it 'return correct number of lessons of course' do
-        expect(order.total_lessons_count).to eq(correct_number)
+        expect(order.total_course_parts).to eq(correct_number)
       end
     end
 
     context 'when course have lessons, exam and project' do
       it 'return correct number of lessons of course' do
-        expect(order.total_lessons_count).to eq(correct_number)
+        expect(order.total_course_parts).to eq(correct_number)
       end
     end
   end
