@@ -108,7 +108,7 @@ RSpec.describe CoursesController, type: :controller do
         before { patch :update, params: { id: course.id, course: { name: new_name } } }
 
         it 'returns errors' do
-          expect((assigns(:course).errors)[:name].first).to eq(error_msg)
+          expect(assigns(:course).errors[:name].first).to eq(error_msg)
           expect(response).to have_http_status(:ok)
           expect(response).to render_template('edit')
         end

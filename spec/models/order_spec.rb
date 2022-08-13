@@ -41,16 +41,10 @@ RSpec.describe Order, type: :model do
   end
 
   describe 'percentage count' do
-    # let(:course) { create(:course) }
-    # let(:lesson) { create :lesson, course: course }
-    # let(:exam) { create :exam, course: course }
-    # let(:examination) { create(:examination, exam: exam) }
-    let(:percent) { order.completed_lessons_ids.count * 100 / order.total_course_parts }
+    let(:percent) { 50 }
     let(:order) do
       build(:order, progress: { total_lessons: 2,
-                                completed_lessons_ids: [1, 2],
-                                project_complete: true,
-                                exam_complete: true })
+                                completed_lessons_ids: [1] })
     end
 
     context 'when only lessons' do
@@ -60,9 +54,17 @@ RSpec.describe Order, type: :model do
     end
 
     context 'when all parts of exam' do
+      let(:order) do
+        build(:order, progress: { total_lessons: 2,
+                                  completed_lessons_ids: [1],
+                                  project_complete: true,
+                                  exam_complete: false })
+      end
 
+      it 'count percentage' do
+        expect(order.percentage_count).to eq(percent)
+      end
     end
-
   end
 
   describe 'total lessons count' do
@@ -99,6 +101,35 @@ RSpec.describe Order, type: :model do
     context 'when course have lessons, exam and project' do
       it 'return correct number of lessons of course' do
         expect(order.total_course_parts).to eq(correct_number)
+      end
+    end
+  end
+
+  describe 'build progress hash' do
+    let(:hash) do
+      { 'completed_lessons_ids' => [], :exam_complete => false, :project_complete => false, 'total_lessons' => 1 }
+    end
+
+    context 'when course created' do
+      let!(:course) { create(:course) }
+      let!(:order) { build(:order, course: course) }
+
+      before do
+        create(:lesson, course: course)
+        create(:exam, course: course)
+        create(:final_project, course: course)
+      end
+
+      it 'return correct build hash' do
+        expect(order.build_progress_hash).to eq(hash)
+      end
+    end
+
+    context 'when course is not created' do
+      let!(:order) { build(:order, course: nil) }
+
+      it 'return correct build hash' do
+        expect(order.build_progress_hash).to eq({})
       end
     end
   end

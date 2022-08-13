@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<% if @order && !@course.owner?(current_user) %>
+<% if @order %>
   <div class="progress mb-2">
     <div class="progress-bar" role="progressbar" style="width: <%= @order.percentage_count %>%" aria-valuemin="0" aria-valuemax="100">
       <%= @order.percentage_count %> %

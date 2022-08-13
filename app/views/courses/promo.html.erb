@@ -72,7 +72,7 @@
 
 <% if @course.enrolled_in_course?(current_user) || @course.owner?(current_user) %>
   <% if @course.comments.empty? %>
-    <%= t('comments.no_comments') %>c
+    <%= t('comments.no_comments') %>
   <% end %>
   <%= render partial: 'comments/form', locals: { resources: [@course] } %>
 <% end %>

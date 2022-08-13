@@ -77,7 +77,7 @@ RSpec.describe RepliesController, type: :controller do
         end
 
         it 'returns alert and correct redirect' do
-          expect((assigns(:reply).errors)[:user_reply].first).to eq(error_msg)
+          expect(assigns(:reply).errors[:user_reply].first).to eq(error_msg)
           expect(response).to redirect_to(course_final_project_path(course))
         end
       end
@@ -117,7 +117,7 @@ RSpec.describe RepliesController, type: :controller do
       end
 
       it 'returns alert and correct redirect' do
-        expect((assigns(:reply).errors)[:status].first).to eq(error_msg)
+        expect(assigns(:reply).errors[:status].first).to eq(error_msg)
         expect(response).to redirect_to(course_final_project_path(course))
       end
     end

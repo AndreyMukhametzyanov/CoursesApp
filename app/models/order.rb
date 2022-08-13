@@ -28,6 +28,8 @@ class Order < ApplicationRecord
 
   validates :course_id, uniqueness: { scope: :user_id }
 
+  before_create :build_progress_hash
+
   def lesson_complete?(lesson_id)
     completed_lessons_ids.include?(lesson_id)
   end
@@ -60,4 +62,16 @@ class Order < ApplicationRecord
     save
   end
 
+  def build_progress_hash
+    if course.present?
+      self.progress = { total_lessons: course.lessons.count, completed_lessons_ids: [] }
+
+      progress.tap do |h|
+        h[:project_complete] = false if course.final_project.present?
+        h[:exam_complete] = false if course.exam.present?
+      end
+    else
+      self.progress = {}
+    end
+  end
 end

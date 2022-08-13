@@ -18,6 +18,7 @@ class ExamsController < ApplicationController
       @exam = @course.create_exam(exam_params)
 
       if @exam.save
+        @course.update_course_parts
         redirect_with_notice(promo_course_path(@course), I18n.t('exam.create'))
       else
         render :new

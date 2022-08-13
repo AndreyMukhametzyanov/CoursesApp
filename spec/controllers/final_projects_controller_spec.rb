@@ -83,7 +83,7 @@ RSpec.describe FinalProjectsController, type: :controller do
         end
 
         it 'returns alert and correct redirect' do
-          expect((assigns(:final_project).errors)[:description].first).to eq(error_msg)
+          expect(assigns(:final_project).errors[:description].first).to eq(error_msg)
           expect(response).to have_http_status(:ok)
           expect(response).to render_template('new')
         end
@@ -132,7 +132,7 @@ RSpec.describe FinalProjectsController, type: :controller do
         before { patch :update, params: { course_id: course.id, final_project: { execution_days: nil } } }
 
         it 'returns error' do
-          expect((assigns(:final_project).errors)[:execution_days].first).to eq(error_msg)
+          expect(assigns(:final_project).errors[:execution_days].first).to eq(error_msg)
           expect(response).to have_http_status(:ok)
           expect(response).to render_template('edit')
         end

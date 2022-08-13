@@ -75,7 +75,7 @@ RSpec.describe LessonsController, type: :controller do
         before { post :create, params: { course_id: course.id, lesson: { title: '' } } }
 
         it 'returns errors' do
-          expect((assigns(:lesson).errors)[:title].first).to eq(error_msg)
+          expect(assigns(:lesson).errors[:title].first).to eq(error_msg)
           expect(response).to have_http_status(:ok)
           expect(response).to render_template('new')
         end
@@ -192,7 +192,7 @@ RSpec.describe LessonsController, type: :controller do
         before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
 
         it 'returns error' do
-          expect((assigns(:lesson).errors)[:title].first).to eq(error_msg)
+          expect(assigns(:lesson).errors[:title].first).to eq(error_msg)
           expect(response).to have_http_status(:ok)
           expect(response).to render_template('edit')
         end

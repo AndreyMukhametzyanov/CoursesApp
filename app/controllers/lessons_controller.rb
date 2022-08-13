@@ -16,7 +16,7 @@ class LessonsController < ApplicationController
       @lesson = @course.lessons.build(lesson_params)
 
       if @lesson.save
-        @course.update_course_quantity
+        @course.update_course_parts
         redirect_to course_lesson_path(@course, @lesson)
       else
         render :new
@@ -62,9 +62,7 @@ class LessonsController < ApplicationController
   def complete
     order = Order.find_by(user_id: current_user.id, course: @course)
 
-    if order.completed_lessons_ids.exclude?(params[:id].to_i)
-      order.complete_lesson!(params[:id])
-    end
+    order.complete_lesson!(params[:id]) if order.completed_lessons_ids.exclude?(params[:id].to_i)
     if next_lesson.empty?
       if @course.final_project
         redirect_to course_final_project_path(@course)

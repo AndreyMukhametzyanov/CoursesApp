@@ -165,4 +165,36 @@ RSpec.describe Course, type: :model do
       end
     end
   end
+
+  describe 'update_course_parts' do
+    context 'when only lessons in course' do
+      before do
+        create(:lesson, course: course)
+        create(:order, course: course)
+      end
+
+      let(:result) { { 'completed_lessons_ids' => [], 'total_lessons' => 1 } }
+
+      it 'return correct course parts' do
+        expect(course.update_course_parts.first.progress).to eq(result)
+      end
+    end
+
+    context 'when all parts exists' do
+      before do
+        create(:lesson, course: course)
+        create(:exam, course: course)
+        create(:final_project, course: course)
+        create(:order, course: course)
+      end
+
+      let(:result) do
+        { 'completed_lessons_ids' => [], 'exam_complete' => false, 'project_complete' => false, 'total_lessons' => 1 }
+      end
+
+      it 'return correct course parts' do
+        expect(course.update_course_parts.first.progress).to eq(result)
+      end
+    end
+  end
 end

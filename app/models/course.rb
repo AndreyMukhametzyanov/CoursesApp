@@ -53,8 +53,10 @@ class Course < ApplicationRecord
     students.find_by(id: user.id).present?
   end
 
-  def update_course_quantity
+  def update_course_parts
     orders.each do |order|
+      order.project_complete = false if final_project.present?
+      order.exam_complete = false if exam.present?
       order.total_lessons = lessons.count
       order.save
     end
