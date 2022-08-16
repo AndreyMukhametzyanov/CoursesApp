@@ -83,6 +83,7 @@ en:
       description: 'Description'
       level: 'Level'
       continue: 'Continue'
+      owner_continue: 'See content'
       edit_course: 'Edit course'
       create_course: 'Create new course'
       create_order: 'Buy course'

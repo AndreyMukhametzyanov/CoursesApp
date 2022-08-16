@@ -84,6 +84,7 @@ ru:
       description: 'Описание курса:'
       level: 'Сложность:'
       continue: 'Продолжить обучение'
+      owner_continue: 'Контент курса'
       edit_course: 'Изменить курс'
       create_course: 'Создать новый курс'
       create_order: 'Записаться на курс'

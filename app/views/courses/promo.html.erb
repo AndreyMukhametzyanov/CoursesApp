@@ -43,7 +43,7 @@
     <% else %>
       <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
       <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
-      <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
+      <%= link_to t('courses.promo.owner_continue'), start_course_path, class: 'btn btn-outline-primary' %>
       <%= link_to @course.exam ? t('exam.edit_button') : t('exam.create_button'), new_course_exam_path(@course), class: 'btn btn-outline-primary' %>
       <%= link_to @course.final_project ? t('courses.promo.edit_fp') : t('courses.promo.create_fp'), new_course_final_project_path(@course), class: 'btn btn-outline-primary' %>
     <% end %>
