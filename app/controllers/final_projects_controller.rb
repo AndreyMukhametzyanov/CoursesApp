@@ -18,7 +18,6 @@ class FinalProjectsController < ApplicationController
       @final_project = @course.create_final_project(final_project_params)
 
       if @final_project.save
-        @course.update_course_parts
         redirect_with_notice(promo_course_path(@course), I18n.t('final_project.create'))
       else
         render :new

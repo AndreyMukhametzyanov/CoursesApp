@@ -16,7 +16,6 @@ class LessonsController < ApplicationController
       @lesson = @course.lessons.build(lesson_params)
 
       if @lesson.save
-        @course.update_course_parts
         redirect_to course_lesson_path(@course, @lesson)
       else
         render :new

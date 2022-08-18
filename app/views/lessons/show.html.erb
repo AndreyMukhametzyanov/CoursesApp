@@ -28,16 +28,16 @@
     <% @course.lessons.order_by_factor.each_with_index do |lesson, i| %>
       <div class="list-group">
         <% css_class = current_page?(course_lesson_path(@course, lesson)) ? "active" : "" %>
-        <% css_complete = !@course.owner?(current_user) && @order.lesson_complete?(lesson.id) ? "success" : "action" %>
+        <% css_complete = @order&.lesson_complete?(lesson.id) ? "success" : "action" %>
         <%= link_to "#{t('lessons.lesson_num')} #{i + 1}", course_lesson_path(@course, lesson), class: "list-group-item list-group-item-#{css_complete} my-1 #{css_class}" %>
       </div>
     <% end %>
     <% if @course.final_project %>
-      <% css_complete = !@course.owner?(current_user) && @course.final_project && @order.project_complete ? "success" : "action" %>
+      <% css_complete = @order&.project_complete ? "success" : "action" %>
       <%= link_to "#{t('final_project.pass')}", course_final_project_path(@course), class: "list-group-item list-group-item-#{css_complete} my-1" %>
     <% end %>
     <% if @course.exam %>
-      <% css_complete = !@course.owner?(current_user) && @course.exam && @order.exam_complete ? "success" : "action" %>
+      <% css_complete = @order&.exam_complete ? "success" : "action" %>
       <%= link_to "#{t('exam.pass_exam')}", course_exam_path(@course), class: "list-group-item list-group-item-#{css_complete} my-1" %>
     <% end %>
   </div>

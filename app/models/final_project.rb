@@ -30,4 +30,17 @@ class FinalProject < ApplicationRecord
   validates :execution_days, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
 
   delegate :owner?, to: :course
+
+  after_create :update_course_project
+
+  private
+
+  def update_course_project
+    return if new_record?
+
+    course.orders.each do |order|
+      order.project_complete = false
+      order.save
+    end
+  end
 end
