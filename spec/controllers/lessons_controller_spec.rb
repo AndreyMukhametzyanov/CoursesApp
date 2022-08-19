@@ -246,7 +246,6 @@ RSpec.describe LessonsController, type: :controller do
                                                                 project_complete: false,
                                                                 exam_complete: false })
       end
-      let(:order) { Order.find_by(user_id: student.id, course: course) }
 
       before do
         create_order
@@ -299,6 +298,24 @@ RSpec.describe LessonsController, type: :controller do
           expect(flash[:notice]).to eq(notice)
           expect(response).to redirect_to(promo_course_path(course))
         end
+      end
+    end
+
+    context 'when some lesson is not finished' do
+      let(:second_lesson) { create :lesson, course: course }
+      let(:third_lesson) { create :lesson, course: course }
+      let(:remaining_lesson) { (course.lessons.ids - order.completed_lessons_ids).first }
+
+      before do
+        second_lesson
+        third_lesson
+        create_order
+        post :complete, params: { course_id: course.id, id: second_lesson.id }
+        post :complete, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'redirect to next lesson page' do
+        expect(response).to redirect_to(course_lesson_path(course, remaining_lesson))
       end
     end
 

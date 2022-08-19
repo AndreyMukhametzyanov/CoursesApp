@@ -62,6 +62,7 @@ class LessonsController < ApplicationController
     order = Order.find_by(user_id: current_user.id, course: @course)
 
     order.complete_lesson!(params[:id]) if order.completed_lessons_ids.exclude?(params[:id].to_i)
+
     if next_lesson.empty?
       if @course.final_project
         redirect_to course_final_project_path(@course)
@@ -70,6 +71,9 @@ class LessonsController < ApplicationController
       else
         redirect_with_notice(promo_course_path(@course), I18n.t('lessons.lessons_all_end'))
       end
+    elsif remaining_lessons_ids(order).any?
+      redirect_with_notice(course_lesson_path(@course, remaining_lessons_ids(order).first),
+                           I18n.t('lessons.lesson_end_msg'))
     else
       redirect_with_notice(course_lesson_path(@course, next_lesson.first.id), I18n.t('lessons.lesson_end_msg'))
     end
@@ -94,5 +98,9 @@ class LessonsController < ApplicationController
   def next_lesson
     lesson = @course.lessons.find(params[:id])
     @course.lessons.where('order_factor > ?', lesson.order_factor)
+  end
+
+  def remaining_lessons_ids(order)
+    @course.lessons.ids - order.completed_lessons_ids
   end
 end

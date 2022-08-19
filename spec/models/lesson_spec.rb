@@ -60,4 +60,19 @@ RSpec.describe Lesson, type: :model do
       expect(new_lesson.errors.messages[:order_factor].to_sentence).to eq(error_message)
     end
   end
+
+  describe 'after create callback' do
+    let!(:course) { create :course }
+    let(:order) { create(:order, course: course) }
+    let(:result) { course.lessons.count }
+
+    before do
+      create(:lesson, course: course)
+      create(:lesson, course: course)
+    end
+
+    it 'return correct lessons count in order' do
+      expect(order.total_lessons).to eq(result)
+    end
+  end
 end
