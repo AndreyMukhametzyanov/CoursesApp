@@ -63,7 +63,7 @@ class ExamsController < ApplicationController
   end
 
   def start
-    unless @course.enrolled_in_course?(current_user) || @course.owner?(current_user)
+    unless @course.enrolled_in_course?(current_user)
       return redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
     end
 
