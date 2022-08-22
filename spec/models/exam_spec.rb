@@ -40,4 +40,22 @@ RSpec.describe Exam, type: :model do
     it { is_expected.to validate_numericality_of(:attempt_time).is_greater_than_or_equal_to(60) }
     it { is_expected.to allow_value('', nil).for(:attempt_time) }
   end
+
+  describe 'passed by user' do
+    let!(:user) { create(:user) }
+    let!(:course) { create(:course, students: [user]) }
+    let!(:exam) { create(:exam, course: course) }
+
+    it 'return false' do
+      expect(exam).not_to be_passed_by_user(user)
+    end
+  end
+
+  describe 'after create callback' do
+    let(:order) { create(:order, course: subject.course) }
+
+    it 'return correct lessons count in order' do
+      expect(order.exam_complete).to be_falsey
+    end
+  end
 end

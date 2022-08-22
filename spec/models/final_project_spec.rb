@@ -36,4 +36,12 @@ RSpec.describe FinalProject, type: :model do
     it { is_expected.to have_many(:user_projects) }
     it { is_expected.to delegate_method(:owner?).to(:course) }
   end
+
+  describe 'after create callback' do
+    let(:order) { create(:order, course: subject.course) }
+
+    it 'return correct lessons count in order' do
+      expect(order.project_complete).to be_falsey
+    end
+  end
 end

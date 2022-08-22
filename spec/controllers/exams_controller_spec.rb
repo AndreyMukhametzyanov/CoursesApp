@@ -84,7 +84,7 @@ RSpec.describe ExamsController, type: :controller do
         end
 
         it 'returns errors' do
-          expect((assigns(:exam).errors)[:title].first).to eq(error_msg)
+          expect(assigns(:exam).errors[:title].first).to eq(error_msg)
           expect(response).to have_http_status(:ok)
           expect(response).to render_template('new')
         end
@@ -137,7 +137,7 @@ RSpec.describe ExamsController, type: :controller do
         end
 
         it 'returns error' do
-          expect((assigns(:exam).errors)[:title].first).to eq(error_msg)
+          expect(assigns(:exam).errors[:title].first).to eq(error_msg)
           expect(response).to have_http_status(:ok)
           expect(response).to render_template('edit')
         end

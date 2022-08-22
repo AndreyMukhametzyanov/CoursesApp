@@ -34,4 +34,17 @@ class Exam < ApplicationRecord
   def passed_by_user?(user)
     Examination.where(user: user, exam: self, finished_exam: true).any?
   end
+
+  after_create :update_course_exam
+
+  private
+
+  def update_course_exam
+    return if new_record?
+
+    course.orders.each do |order|
+      order.exam_complete = false
+      order.save
+    end
+  end
 end

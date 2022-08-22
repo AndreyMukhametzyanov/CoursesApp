@@ -34,9 +34,27 @@ class Lesson < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
   validates :order_factor, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
+  validate :unique_order_factor_of_course, if: :course
   scope :order_by_factor, -> { order(:order_factor) }
+
+  after_create :update_course_lessons
 
   def owner?(user)
     course.author == user
+  end
+
+  def unique_order_factor_of_course
+    query = course.lessons.where(order_factor: order_factor)
+    query = query.where.not(id: id) if persisted?
+    errors.add(:order_factor, :is_not_uniq_type) unless query.empty?
+  end
+
+  private
+
+  def update_course_lessons
+    course.orders.each do |order|
+      order.total_lessons = course.lessons.count
+      order.save
+    end
   end
 end

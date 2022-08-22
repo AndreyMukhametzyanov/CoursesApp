@@ -36,4 +36,8 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def progress_for(course)
+    orders.find_by(course: course)&.progress || {}
+  end
 end

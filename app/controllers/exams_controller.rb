@@ -53,6 +53,8 @@ class ExamsController < ApplicationController
       @exam = @course.exam
       @examinations = Examination.where(user: current_user, exam: @exam).order(:created_at)
       @not_finished_exam = Examination.where(user: current_user, exam: @exam, finished_exam: false).first
+      @full_finished_exam = Examination.find_by(user: current_user, exam: @exam, finished_exam: true,
+                                                percentage_passing: 100)
       @user_attempts = Examination.where(user: current_user, exam: @exam).count
       @attempts_of_exam = @exam.attempts_count
     else
@@ -61,7 +63,7 @@ class ExamsController < ApplicationController
   end
 
   def start
-    unless @course.enrolled_in_course?(current_user) || @course.owner?(current_user)
+    unless @course.enrolled_in_course?(current_user)
       return redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
     end
 

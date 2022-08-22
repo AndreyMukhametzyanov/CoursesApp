@@ -5,9 +5,16 @@ require 'spec_helper'
 
 RSpec.describe ExaminationsController, type: :controller do
   let!(:user) { create(:user) }
+  let!(:student) { create(:user) }
   let!(:examination) { create :examination, exam: exam }
   let(:exam) { create :exam, course: course }
   let!(:course) { create :course, author: user }
+  let!(:student_order) do
+    Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
+                                                            completed_lessons_ids: [],
+                                                            project_complete: false,
+                                                            exam_complete: false })
+  end
 
   before { sign_in user }
 
@@ -73,10 +80,13 @@ RSpec.describe ExaminationsController, type: :controller do
       end
 
       before do
+        sign_in student
+        # student_order
         post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }
       end
 
       it 'returns true for finished and pass exam and and correct redirect to examination start page' do
+        expect(student_order.reload.exam_complete).to be_truthy
         expect(examination.reload.finished_exam).to be_truthy
         expect(examination.reload.passed_exam).to be_truthy
         expect(response).to redirect_to examination_path(examination.id)
@@ -91,10 +101,12 @@ RSpec.describe ExaminationsController, type: :controller do
       let(:correct_answer) { examination.exam.questions.last.answers.where(correct_answer: true).ids }
 
       before do
+        sign_in student
         post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }
       end
 
       it 'returns true for finished and pass exam and and correct redirect to examination start page' do
+        expect(student_order.reload.exam_complete).to be_falsey
         expect(examination.reload.finished_exam).to be_truthy
         expect(examination.reload.passed_exam).to be_falsy
         expect(response).to redirect_to examination_path(examination.id)
@@ -105,6 +117,7 @@ RSpec.describe ExaminationsController, type: :controller do
       let(:correct_answer) { exam.questions.first.answers.where(correct_answer: true).ids }
 
       before do
+        sign_in student
         post :check_answer, params: { id: examination.id, user_answers: { current_question: correct_answer } }
       end
 
@@ -121,6 +134,7 @@ RSpec.describe ExaminationsController, type: :controller do
       let(:incorrect_answer) { ['wow'] }
 
       before do
+        sign_in student
         post :check_answer, params: { id: examination.id, user_answers: { current_question: incorrect_answer } }
       end
 

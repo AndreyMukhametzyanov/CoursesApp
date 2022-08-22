@@ -15,7 +15,7 @@ gem 'jquery-rails'
 gem 'net-smtp', require: false
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
-gem 'rails', '~> 6.1.6'
+gem 'rails', '~> 6.1.6.1'
 gem 'rails-controller-testing'
 gem 'rails-i18n'
 gem 'redis'

@@ -108,7 +108,7 @@ RSpec.describe CoursesController, type: :controller do
         before { patch :update, params: { id: course.id, course: { name: new_name } } }
 
         it 'returns errors' do
-          expect((assigns(:course).errors)[:name].first).to eq(error_msg)
+          expect(assigns(:course).errors[:name].first).to eq(error_msg)
           expect(response).to have_http_status(:ok)
           expect(response).to render_template('edit')
         end
@@ -199,10 +199,16 @@ RSpec.describe CoursesController, type: :controller do
     context 'when order created' do
       let!(:course) { create :course, author: user }
       let(:success_message) { I18n.t 'orders.create_order.success' }
+      let(:order) { Order.find_by(user_id: user.id, course: course) }
 
       before { post :order, params: { id: course.id } }
 
       it 'renders success message and correct render form' do
+        expect(assigns(:order)).to eq(order)
+        expect(order.total_lessons).to eq(course.lessons.count)
+        expect(order.completed_lessons_ids).to be_empty
+        expect(order.exam_complete).to be_nil
+        expect(order.project_complete).to be_nil
         expect(response).to have_http_status(:found)
         expect(flash[:notice]).to eq(success_message)
         expect(response).to redirect_to promo_course_path(course.id)

@@ -18,6 +18,10 @@ en:
           attributes:
             final_project:
               can_not_create_user_project: 'the author of the course cannot submit a diploma project for his course'
+        lesson:
+          attributes:
+            order_factor:
+              is_not_uniq_type: 'лекция с такой очередностью уже существует'
     attributes:
       course:
         name: 'Name'
@@ -65,6 +69,7 @@ en:
     remove: 'Remove'
     error: 'Something was wrong'
   courses:
+    complete: 'You have successfully completed the entire course! Keep it up!'
     breadcrumb:
       home: 'Home'
       lessons: 'Lessons'
@@ -78,6 +83,7 @@ en:
       description: 'Description'
       level: 'Level'
       continue: 'Continue'
+      owner_continue: 'See content'
       edit_course: 'Edit course'
       create_course: 'Create new course'
       create_order: 'Buy course'
@@ -90,6 +96,9 @@ en:
     lesson_num: 'Lesson '
     lesson_edit: 'Edit lesson'
     lesson_create: 'Create lesson'
+    lesson_end: 'End lesson'
+    lesson_end_msg: 'Lesson complete!'
+    lessons_all_end: 'Good job! All lessons complete!'
     label:
       label_name: 'Attachments'
   links:
@@ -165,6 +174,7 @@ en:
     execution_days: 'Remaining days to complete the final project'
     start: 'Start final project'
     continue: 'Continue final project'
+    complete: 'Final project successfully finished'
   reply:
     students: 'Students replies'
     all_replies: 'Add yours reply'
@@ -194,11 +204,12 @@ en:
       change_error: 'You cannot edit or create the lesson - you are not the author'
       access_error: 'Access to lessons denied'
       blank_error: 'cant be blank'
+      lesson_not_create: "Lesson not create for this course yet"
     courses:
       change_error: 'You cannot edit or create the course - you are not the author'
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
-      enrolled_error: 'You not enrolled in course or you not course owner'
+      enrolled_error: 'You not enrolled in course'
     exam:
       change_error: 'You cannot edit or create the exam - you are not the author'
       access_error: 'Access to exam denied'
@@ -212,3 +223,4 @@ en:
     reply:
       create_error: 'You cannot create the replies - you are author of this course'
       time_is_over: 'The time for completing the task is over'
+

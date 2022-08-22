@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[start promo update edit]
+  before_action :set_course, only: %i[start promo update order edit]
 
   def index
     @courses = Course.all.order(:name)

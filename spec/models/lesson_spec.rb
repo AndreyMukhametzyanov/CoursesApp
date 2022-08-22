@@ -29,6 +29,7 @@ RSpec.describe Lesson, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:content) }
     it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_numericality_of(:order_factor).is_greater_than_or_equal_to(1) }
   end
 
   describe 'associations' do
@@ -44,6 +45,34 @@ RSpec.describe Lesson, type: :model do
 
     it 'is owner' do
       expect(lesson).to be_owner(course.author)
+    end
+  end
+
+  describe 'unique order factor for course' do
+    let!(:course) { create :course }
+    let!(:lesson) { create :lesson, course: course }
+    let!(:new_lesson) { build :lesson, course: course, order_factor: lesson.order_factor }
+    let(:error_message) { I18n.t('activerecord.errors.models.lesson.attributes.order_factor.is_not_uniq_type') }
+
+    before { new_lesson.save }
+
+    it 'not unique' do
+      expect(new_lesson.errors.messages[:order_factor].to_sentence).to eq(error_message)
+    end
+  end
+
+  describe 'after create callback' do
+    let!(:course) { create :course }
+    let(:order) { create(:order, course: course) }
+    let(:result) { course.lessons.count }
+
+    before do
+      create(:lesson, course: course)
+      create(:lesson, course: course)
+    end
+
+    it 'return correct lessons count in order' do
+      expect(order.total_lessons).to eq(result)
     end
   end
 end
