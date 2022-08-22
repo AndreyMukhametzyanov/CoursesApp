@@ -33,8 +33,11 @@ class ExaminationsController < ApplicationController
         @examination.next_question = next_question
       end
       @examination.save!
-      order = current_user.orders.find_by(course: @examination.exam.course)
-      order.exam_complete!
+
+      if @examination.passed_exam
+        order = current_user.orders.find_by(course: @examination.exam.course)
+        order.exam_complete!
+      end
       redirect_to examination_path(@examination)
     end
   end
