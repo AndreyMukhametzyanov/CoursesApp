@@ -20,6 +20,7 @@
 class Order < ApplicationRecord
   belongs_to :user
   belongs_to :course
+  has_many :certificates, dependent: :destroy
 
   store_accessor :progress, :total_lessons
   store_accessor :progress, :project_complete

@@ -64,6 +64,7 @@ en:
     sign_up: 'Sign up'
     sign_out: 'Sign out'
     create_course: 'Create course'
+    certificates: 'Certificates'
   attachment:
     delete: 'Attachment was deleted'
     remove: 'Remove'

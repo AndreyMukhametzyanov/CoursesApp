@@ -65,6 +65,7 @@ ru:
     sign_up: 'Зарегистрироваться'
     sign_out: 'Выйти'
     create_course: 'Создать курс'
+    certificates: 'Сертификаты'
   attachment:
     delete: 'Вложение удалено'
     remove: 'Удалить'

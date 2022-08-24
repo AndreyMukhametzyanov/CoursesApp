@@ -9,6 +9,12 @@ Rails.application.routes.draw do
 
   root 'courses#index'
 
+  resources :certificates, only: :index do
+    member do
+      post 'find'
+    end
+  end
+
   resources :courses, concerns: :commentable do
     resource :final_project do
       member do
