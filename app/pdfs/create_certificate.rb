@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class CreateCertificate < Prawn::Document
-  UNIQ_CODE_LENGTH = 50
   BACKGROUND_PATH = Rails.root.join('app', 'assets', 'images', 'certificate.jpg')
 
-  def initialize(date:, order_id:)
+  def initialize(date:, course_part:, user_name:, course_name:, uniq_code:)
     super
+
     @date = date
-    @order = Order.find(order_id)
-    @uniq_code = SecureRandom.alphanumeric(UNIQ_CODE_LENGTH)
+    @course_part = course_part
+    @course_name = course_name
+    @user_name = user_name
+    @uniq_code = uniq_code
 
     create_pdf
   end
@@ -30,13 +32,13 @@ class CreateCertificate < Prawn::Document
                size: 16,
                style: :bold
 
-      text_box @order.user.first_name.to_s,
+      text_box @user_name,
                at: [0, 385],
                align: :center,
                size: 36,
                style: :bold
 
-      text_box "successfully completed #{} on the course \n " "#{@order.course.name}",
+      text_box "successfully completed #{@course_part} on the course \n " "#{@course_name}",
                at: [0, 285],
                align: :center,
                size: 16,
