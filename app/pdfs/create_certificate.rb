@@ -3,11 +3,10 @@
 class CreateCertificate < Prawn::Document
   BACKGROUND_PATH = Rails.root.join('app', 'assets', 'images', 'certificate.jpg')
 
-  def initialize(date:, course_part:, user_name:, course_name:, uniq_code:)
+  def initialize(date:, user_name:, course_name:, uniq_code:)
     super
 
     @date = date
-    @course_part = course_part
     @course_name = course_name
     @user_name = user_name
     @uniq_code = uniq_code
@@ -38,7 +37,7 @@ class CreateCertificate < Prawn::Document
                size: 36,
                style: :bold
 
-      text_box "successfully completed #{@course_part} on the course \n " "#{@course_name}",
+      text_box "successfully completed course \n " "#{@course_name}",
                at: [0, 285],
                align: :center,
                size: 16,

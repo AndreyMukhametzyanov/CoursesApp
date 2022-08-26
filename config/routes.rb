@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   concern :commentable do
     resources :comments, only: %i[create edit destroy]
   end
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 
   root 'courses#index'
 

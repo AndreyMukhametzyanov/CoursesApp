@@ -13,7 +13,7 @@
 #  index_certificates_on_order_id  (order_id)
 #
 class Certificate < ApplicationRecord
-  UNIQ_CODE_LENGTH = 50
+
 
   belongs_to :order
 end
