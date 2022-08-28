@@ -20,7 +20,7 @@
 class Order < ApplicationRecord
   belongs_to :user
   belongs_to :course
-  has_many :certificates, dependent: :destroy
+  has_one :certificate, dependent: :destroy
 
   store_accessor :progress, :total_lessons
   store_accessor :progress, :project_complete
@@ -78,9 +78,9 @@ class Order < ApplicationRecord
   end
 
   def create_certificate
-    return unless order.percentage_count == 100
+    return unless percentage_count == 100
 
-    jid = ReleaseCertificateWorker.perform_async(id)
+    jid = ReleaseCertificateWorker.perform_at(5.seconds, id)
     Rails.logger.info("ReleaseCertificateWorker started with jid = #{jid}")
   end
 end

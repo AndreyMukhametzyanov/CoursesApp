@@ -36,3 +36,4 @@ node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+dump.rdb

@@ -2,6 +2,7 @@
 
 class CreateCertificate < Prawn::Document
   BACKGROUND_PATH = Rails.root.join('app', 'assets', 'images', 'certificate.jpg')
+  FONT_WALSHEIM_PATH = Rails.root.join('app', 'assets', 'fonts', 'GT-WalsheimPro.ttf')
 
   def initialize(date:, user_name:, course_name:, uniq_code:)
     super
@@ -15,10 +16,12 @@ class CreateCertificate < Prawn::Document
   end
 
   def create_pdf
+    font(FONT_WALSHEIM_PATH) do
+      draw_text @date, at: [400, 625]
+    end
+
     bounding_box([100, 730], width: 540, height: 730) do
       image BACKGROUND_PATH, width: 540, height: 730
-      font 'Times-Roman'
-
       text_box 'Certificate',
                at: [0, 600],
                align: :center,
@@ -54,7 +57,6 @@ class CreateCertificate < Prawn::Document
                align: :center,
                size: 16,
                style: :bold
-      stroke_bounds
     end
   end
 end
