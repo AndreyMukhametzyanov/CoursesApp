@@ -2,6 +2,7 @@
 
 class ReleaseCertificateWorker
   include Sidekiq::Worker
+  sidekiq_options :retry => false
 
   UNIQ_CODE_LENGTH = 50
 
@@ -12,13 +13,17 @@ class ReleaseCertificateWorker
 
     if order
       logger.info 'Create certificate start'
+      logger.info "#{Order.all.inspect}"
 
       pdf = CreateCertificate.new(date: Date.today.strftime('%d.%m.%Y'),
                                   user_name: order.user.first_name,
                                   course_name: order.course.name,
                                   uniq_code: uniq_code).render
 
-      Certificate.create(order: order, uniq_code: uniq_code, pdf: pdf)
+      certificate = order.build_certificate
+      certificate.pdf.attach(io: StringIO.new(pdf), filename: "order:#{order.id}_certificate.pdf")
+      certificate.uniq_code = uniq_code
+      order.save
 
       logger.info 'Certificate successfully created'
     else

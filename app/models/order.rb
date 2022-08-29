@@ -30,7 +30,7 @@ class Order < ApplicationRecord
   validates :course_id, uniqueness: { scope: :user_id }
 
   before_create :build_progress_hash
-  after_save :create_certificate
+  after_commit :create_certificate
 
   def lesson_complete?(lesson_id)
     completed_lessons_ids.include?(lesson_id)
@@ -78,7 +78,8 @@ class Order < ApplicationRecord
   end
 
   def create_certificate
-    return unless percentage_count == 100
+    return if certificate&.persisted?
+    return if percentage_count != 100
 
     jid = ReleaseCertificateWorker.perform_at(5.seconds, id)
     Rails.logger.info("ReleaseCertificateWorker started with jid = #{jid}")
