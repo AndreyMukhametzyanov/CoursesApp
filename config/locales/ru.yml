@@ -191,6 +191,9 @@ ru:
       verification: 'На проверке'
       rejected: 'Отклонено'
       accepted: 'Принято'
+  certificate:
+    head: 'Ваши сертификаты'
+    download: 'Сохранить'
   buttons:
     create: 'Создать'
     edit: 'Изменить'

@@ -21,6 +21,7 @@ gem 'rails', '~> 6.1.6.1'
 gem 'rails-controller-testing'
 gem 'rails-i18n'
 gem 'redis'
+gem "rqrcode", "~> 2.0"
 gem 'sass-rails', '>= 6'
 gem 'sidekiq'
 gem 'simple_form'

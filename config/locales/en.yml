@@ -190,6 +190,9 @@ en:
       verification: 'Verification'
       rejected: 'Rejected'
       accepted: 'Accepted'
+  certificate:
+    head: 'Your certificates'
+    download: 'Download'
   buttons:
     create: 'Create'
     edit: 'Edit'

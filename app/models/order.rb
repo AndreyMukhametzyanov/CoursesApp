@@ -81,7 +81,7 @@ class Order < ApplicationRecord
     return if certificate&.persisted?
     return if percentage_count != 100
 
-    jid = ReleaseCertificateWorker.perform_at(5.seconds, id)
+    jid = ReleaseCertificateWorker.perform_at(10.seconds, id)
     Rails.logger.info("ReleaseCertificateWorker started with jid = #{jid}")
   end
 end

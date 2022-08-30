@@ -2,7 +2,6 @@
 
 class ReleaseCertificateWorker
   include Sidekiq::Worker
-  sidekiq_options :retry => false
 
   UNIQ_CODE_LENGTH = 50
 
@@ -11,9 +10,10 @@ class ReleaseCertificateWorker
 
     uniq_code = SecureRandom.alphanumeric(UNIQ_CODE_LENGTH)
 
+    uniq_code = SecureRandom.alphanumeric(UNIQ_CODE_LENGTH) until uniq_code?(uniq_code)
+
     if order
       logger.info 'Create certificate start'
-      logger.info "#{Order.all.inspect}"
 
       pdf = CreateCertificate.new(date: Date.today.strftime('%d.%m.%Y'),
                                   user_name: order.user.first_name,
@@ -29,5 +29,11 @@ class ReleaseCertificateWorker
     else
       logger.error("There is no orders with #{order_id} exists!")
     end
+  end
+
+  private
+
+  def uniq_code?(code)
+    Certificate.all.where(uniq_code: code).empty?
   end
 end

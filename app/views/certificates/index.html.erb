@@ -1,1 +1,6 @@
-OP OP
+<h2 style="text-align: center;"><%= t('certificate.head') %> </h2>
+
+<%= @certificate.order.course.name %>
+<p class="card-text mt-3">
+  <%= link_to t('certificate.download'), rails_blob_path(@certificate.pdf, disposition: :attachment), class: 'btn btn-outline-primary' %>
+</p>
