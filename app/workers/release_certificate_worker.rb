@@ -13,7 +13,7 @@ class ReleaseCertificateWorker
     uniq_code = SecureRandom.alphanumeric(UNIQ_CODE_LENGTH) until uniq_code?(uniq_code)
 
     if order
-      logger.info 'Create certificate start'
+      logger.info "Create certificate start at #{Date.today.strftime('%d.%m.%Y')}"
 
       pdf = CreateCertificate.new(date: Date.today.strftime('%d.%m.%Y'),
                                   user_name: order.user.first_name,

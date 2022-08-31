@@ -15,6 +15,7 @@ gem 'jquery-rails'
 gem 'matrix'
 gem 'net-smtp', require: false
 gem 'pg', '~> 1.1'
+gem 'prawn-svg'
 gem 'prawn'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.6.1'

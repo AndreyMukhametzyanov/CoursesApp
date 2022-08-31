@@ -11,9 +11,9 @@ Rails.application.routes.draw do
 
   root 'courses#index'
 
-  resources :certificates, only: :index do
-    member do
-      post 'find'
+  resources :certificates, only: [:index] do
+    collection do
+      get 'check_certificate'
     end
   end
 
