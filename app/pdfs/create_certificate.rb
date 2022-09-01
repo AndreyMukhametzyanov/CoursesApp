@@ -5,13 +5,13 @@ class CreateCertificate < Prawn::Document
   BACKGROUND_PATH = Rails.root.join('app', 'assets', 'images', 'certificate.jpg')
   FONT_WALSHEIM_PATH = Rails.root.join('app', 'assets', 'fonts', 'GT-WalsheimPro.ttf')
 
-  def initialize(date:, user_name:, course_name:, uniq_code:)
+  def initialize(date:, user_name:, course_name:, path:)
     super
 
     @date = date
     @course_name = course_name
     @user_name = user_name
-    @uniq_code = uniq_code
+    @path = path
 
     create_pdf
   end
@@ -50,7 +50,7 @@ class CreateCertificate < Prawn::Document
                style: :bold,
                font: FONT_WALSHEIM_PATH
 
-      svg create_qr, width: 70, height: 70, at: [235, 180]
+      svg create_qr(@path), width: 70, height: 70, at: [235, 180]
 
       text_box @date.to_s,
                at: [0, 80],
@@ -63,8 +63,8 @@ class CreateCertificate < Prawn::Document
 
   private
 
-  def create_qr
-    qrcode = RQRCode::QRCode.new("http://github.com/")
+  def create_qr(path)
+    qrcode = RQRCode::QRCode.new(path)
 
     qrcode.as_svg(
       color: "000",

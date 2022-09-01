@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CoursesApp</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+<div class="container">
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-3 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal" style="margin-right: auto;"><%= link_to 'IT', root_path %></h5>
+
+    <div class="dropdown">
+      <button class="btn btn-outline-primary mx-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <%= I18n.locale%>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <% I18n.available_locales.each do |locale| %>
+          <li><%= link_to t(locale), url_for(locale: locale), class: 'dropdown-item' %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <% if user_signed_in? %>
+      <%= link_to t('menu.sign_out'), destroy_user_session_path, method: :delete, class: 'btn btn-outline-primary my-1' %>
+      <%= link_to current_user.first_name, edit_user_registration_path, class: 'btn btn-outline-primary my-1 mx-2' %>
+      <%= link_to t('menu.create_course'), new_course_path, class: 'btn btn-outline-primary my-1' %>
+      <%= link_to t('menu.certificates'), certificates_path, class: 'btn btn-outline-primary mx-2 my-1' %>
+
+    <% else %>
+      <div style="margin-left: 30px;"><%= link_to t('menu.sign_up'), new_user_registration_path, class: 'btn btn-outline-primary' %></div>
+      <div style="margin-left: 30px;"><%= link_to t('menu.sign_in'), new_user_session_path, class: 'btn btn-outline-primary' %></div>
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <%= render partial: 'shared/messages' %>
+
+  <%= yield %>
+</div>
+</body>
+<div class="mb-5"></div>
+</html>

@@ -15,10 +15,12 @@ class ReleaseCertificateWorker
     if order
       logger.info "Create certificate start at #{Date.today.strftime('%d.%m.%Y')}"
 
+      path = Rails.application.routes.url_helpers.check_certificate_certificates_url(code: uniq_code)
+
       pdf = CreateCertificate.new(date: Date.today.strftime('%d.%m.%Y'),
                                   user_name: order.user.first_name,
                                   course_name: order.course.name,
-                                  uniq_code: uniq_code).render
+                                  path: path).render
 
       certificate = order.build_certificate
       certificate.pdf.attach(io: StringIO.new(pdf), filename: "order:#{order.id}_certificate.pdf")
