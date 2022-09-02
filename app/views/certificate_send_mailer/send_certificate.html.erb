@@ -1,0 +1,25 @@
+<div class="container">
+  <table class="table">
+    <thead>
+    <tr class="table_primary">
+      <th scope="col">Уважаемый <%= @certificate.order.user.first_name %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">
+        <div>Поздравляем Вас с успешным прохождением курса
+          <p> <%= @certificate.order.course.name %></p>
+          <p> Ваш сертификат находится во вложении письма.</p>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <th scope="row">
+        С уважением администрация CoursePlatform
+      </th>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

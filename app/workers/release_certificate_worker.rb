@@ -14,7 +14,6 @@ class ReleaseCertificateWorker
 
     if order
       logger.info "Create certificate start at #{Date.today.strftime('%d.%m.%Y')}"
-
       path = Rails.application.routes.url_helpers.check_certificate_certificates_url(code: uniq_code)
 
       pdf = CreateCertificate.new(date: Date.today.strftime('%d.%m.%Y'),
@@ -28,6 +27,10 @@ class ReleaseCertificateWorker
       order.save
 
       logger.info 'Certificate successfully created'
+
+      CertificateSendMailer.with(user: order.user).send_certificate.deliver_later
+
+      logger.info 'Certificate successfully sent to user email'
     else
       logger.error("There is no orders with #{order_id} exists!")
     end

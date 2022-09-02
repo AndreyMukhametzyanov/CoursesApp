@@ -3,10 +3,19 @@ require "rqrcode"
 
 class CreateCertificate < Prawn::Document
   BACKGROUND_PATH = Rails.root.join('app', 'assets', 'images', 'certificate.jpg')
-  FONT_WALSHEIM_PATH = Rails.root.join('app', 'assets', 'fonts', 'GT-WalsheimPro.ttf')
+  # FONT_WALSHEIM_PATH = Rails.root.join('app', 'assets', 'fonts', 'GT-WalsheimPro.ttf')
 
   def initialize(date:, user_name:, course_name:, path:)
     super
+
+    self.font_families.update("OpenSans" => {
+      :normal => Rails.root.join("app/assets/fonts/OpenSans/OpenSans-Regular.ttf"),
+      :italic => Rails.root.join("app/assets/fonts/OpenSans/OpenSans-Italic.ttf"),
+      :bold => Rails.root.join("app/assets/fonts/OpenSans/OpenSans-Bold.ttf"),
+      :bold_italic => Rails.root.join("app/assets/fonts/OpenSans/OpenSans-BoldItalic.ttf")
+    })
+
+    font "OpenSans"
 
     @date = date
     @course_name = course_name
@@ -26,29 +35,25 @@ class CreateCertificate < Prawn::Document
                at: [0, 600],
                align: :center,
                size: 48,
-               style: :bold,
-               font: FONT_WALSHEIM_PATH
+               style: :bold
 
       text_box 'This certificate confirms that ',
                at: [0, 465],
                align: :center,
                size: 16,
-               style: :bold,
-               font: FONT_WALSHEIM_PATH
+               style: :bold
 
       text_box @user_name,
                at: [0, 385],
                align: :center,
                size: 36,
-               style: :bold,
-               font: FONT_WALSHEIM_PATH
+               style: :bold
 
       text_box "successfully completed course \n " "#{@course_name}",
                at: [0, 285],
                align: :center,
                size: 16,
-               style: :bold,
-               font: FONT_WALSHEIM_PATH
+               style: :bold
 
       svg create_qr(@path), width: 70, height: 70, at: [235, 180]
 
@@ -56,8 +61,7 @@ class CreateCertificate < Prawn::Document
                at: [0, 80],
                align: :center,
                size: 12,
-               style: :bold,
-               font: FONT_WALSHEIM_PATH
+               style: :bold
     end
   end
 

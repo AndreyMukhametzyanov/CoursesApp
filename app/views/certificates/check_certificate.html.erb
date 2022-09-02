@@ -1,1 +1,17 @@
-YO
+<h5>Проверить подлинность сертификата</h5>
+<form action="" method="get">
+  <input class="form-control" name="code" placeholder="Введите униальный код" type="text" value=<%= params[:code] if params[:code] %>>
+  <button class="btn btn-outline-primary mt-2" type="submit">Поиск</button>
+</form>
+<div class="container mt-2">
+  <div class="row">
+    <% unless params[:code].nil? %>
+      <% if @certificate %>
+        <h5 class="px-0 mt-3 mb-3">Сертификат найден</h5>
+        <div class="px-0"><%= link_to t('certificate.download'), rails_blob_path(@certificate.pdf, disposition: :attachment), class: 'btn btn-outline-primary' %></div>
+      <% else %>
+        <h5 class="px-0">Сертификат не найден</h5>
+      <% end %>
+    <% end %>
+  </div>
+</div>
