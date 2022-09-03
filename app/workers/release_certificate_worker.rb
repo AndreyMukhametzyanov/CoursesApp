@@ -19,7 +19,8 @@ class ReleaseCertificateWorker
       pdf = CreateCertificate.new(date: Date.today.strftime('%d.%m.%Y'),
                                   user_name: order.user.first_name,
                                   course_name: order.course.name,
-                                  path: path).render
+                                  path: path,
+                                  course_part: order.check_part_of_course).render
 
       certificate = order.build_certificate
       certificate.pdf.attach(io: StringIO.new(pdf), filename: "order:#{order.id}_certificate.pdf")

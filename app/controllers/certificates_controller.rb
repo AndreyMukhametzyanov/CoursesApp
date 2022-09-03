@@ -7,7 +7,7 @@ class CertificatesController < ApplicationController
     if @orders_by_user
       @certificate = Certificate.find_by(uniq_code: params[:code])
     else
-      redirect_with_alert(root_path, 'Сертификаты не найдены')
+      redirect_with_alert(root_path, I18n.t('certificate.certificates_not_received'))
     end
   end
 

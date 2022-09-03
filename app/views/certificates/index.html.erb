@@ -1,4 +1,4 @@
-<h1 class="text-center my-4">Ваши сертификаты</h1>
+<h1 class="text-center my-4"><%= t('certificate.head') %></h1>
 
 <div>
   <div class="row">
@@ -8,8 +8,8 @@
           <div class="col mb-4">
             <div class="card, text-center">
               <div class="card-body">
-                <h5 class="card-title mb-4">Сертификат по курсу</h5>
-                  <%= order.course.name %>
+                <h5 class="card-title mb-4"><%= t('certificate.for_course') %></h5>
+                <%= order.course.name %>
                 </h5>
                 <p class="card- mt-3">
                   <%= link_to t('certificate.download'), rails_blob_path(order.certificate.pdf, disposition: :attachment), class: 'btn btn-outline-primary' %>

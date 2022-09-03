@@ -65,6 +65,9 @@ en:
     sign_out: 'Sign out'
     create_course: 'Create course'
     certificates: 'Certificates'
+  layouts:
+    main: 'Course Platform'
+    check_certificate: 'Check certificate'
   attachment:
     delete: 'Attachment was deleted'
     remove: 'Remove'
@@ -193,6 +196,13 @@ en:
   certificate:
     head: 'Your certificates'
     download: 'Download'
+    for_course: 'Certificate for the course '
+    check_certificates: 'Verify the authenticity of the certificate'
+    found: 'Certificate was found'
+    not_found: 'Certificate was not found'
+    placeholder: 'Enter a unique code'
+    subject: 'Certificate of completion of the course | Course Platform'
+    certificates_not_received: 'Certificates is not received'
   buttons:
     create: 'Create'
     edit: 'Edit'
@@ -201,6 +211,7 @@ en:
     yes: 'Yes'
     no: 'No'
     continue: 'Continue'
+    search: 'Search'
   attentions:
     really_delete: 'Are you sure?'
   errors:
@@ -220,6 +231,8 @@ en:
       not_create: 'The exam for the course has not been created yet'
       attempt_error: 'The number of exam attempts has been increased'
       end_time: 'Time to pass exam is over'
+    examination:
+      start_error: 'You can not pass the exam - you are the author'
     final_project:
       change_error: 'You cannot edit or create the final project - you are not the author'
       access_error: 'Access to final project denied'
@@ -227,4 +240,3 @@ en:
     reply:
       create_error: 'You cannot create the replies - you are author of this course'
       time_is_over: 'The time for completing the task is over'
-

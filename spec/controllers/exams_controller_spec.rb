@@ -225,4 +225,102 @@ RSpec.describe ExamsController, type: :controller do
       end
     end
   end
+
+  describe '#start' do
+    let!(:course) { create :course, author: user }
+    let!(:lesson) { create :lesson, course: course }
+    let(:exam) { create :exam, course: course }
+
+    context 'when user is owner' do
+      let(:error_msg) { I18n.t 'errors.examination.start_error' }
+
+      before do
+        post :start, params: { course_id: course.id }
+      end
+
+      it 'returns alert and correct redirect' do
+        expect(flash[:alert]).to eq(error_msg)
+        expect(response).to redirect_to course_lesson_path(course, lesson)
+      end
+    end
+
+    context 'when user is not enrolled in course' do
+      let(:error_msg) { I18n.t('errors.courses.enrolled_error') }
+      let(:new_user) { create :user }
+
+      before do
+        sign_in new_user
+        post :start, params: { course_id: course.id }
+      end
+
+      it 'returns alert and correct redirect' do
+        expect(flash[:alert]).to eq(error_msg)
+        expect(response).to redirect_to promo_course_path(course)
+      end
+    end
+
+    context 'when start examination' do
+      let(:student) { create :user }
+      let(:student_order) do
+        Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
+                                                                completed_lessons_ids: [],
+                                                                project_complete: false,
+                                                                exam_complete: false })
+      end
+      #доработать
+      describe 'when the number of attempts is exceeded' do
+        let!(:examination) { create :examination, exam: exam }
+        let(:error_msg) { I18n.t('errors.exam.attempt_error') }
+
+        before do
+          sign_in student
+          student_order
+          post :start, params: { course_id: course.id }
+        end
+
+        it 'should ' do
+          puts Examination.where(user: student, exam: exam).inspect
+          expect(flash[:alert]).to eq(error_msg)
+          expect(response).to redirect_to course_exam_path(exam)
+        end
+      end
+
+      describe 'when everything ok' do
+        let!(:exam) { create :exam, course: course }
+        let(:examination) { Examination.find_by(exam: exam) }
+
+        before do
+          sign_in student
+          student_order
+          post :start, params: { course_id: course.id }
+        end
+
+        it 'returns alert and correct redirect' do
+          expect(assigns(:examination)).to eq(examination)
+          expect(response).to redirect_to examination_path(examination)
+        end
+
+      end
+
+      #доработать
+      describe 'when exam is not create' do
+        let!(:course) { create :course, author: user }
+        let!(:lesson) { create :lesson, course: course }
+        let(:error_msg) { I18n.t('errors.exam.not_create') }
+
+        before do
+          sign_in student
+          student_order
+          post :start, params: { course_id: course.id }
+        end
+
+        it 'returns alert and correct redirect' do
+          puts course.exam.inspect
+          expect(flash[:alert]).to eq(error_msg)
+          expect(response).to redirect_to promo_course_path(course)
+        end
+      end
+
+    end
+  end
 end

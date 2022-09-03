@@ -63,6 +63,11 @@ class ExamsController < ApplicationController
   end
 
   def start
+    if @course.owner?(current_user)
+      lesson = @course.lessons.first
+      return redirect_with_alert(course_lesson_path(@course, lesson), I18n.t('errors.examination.start_error'))
+    end
+
     unless @course.enrolled_in_course?(current_user)
       return redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
     end

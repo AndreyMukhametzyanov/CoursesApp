@@ -84,4 +84,17 @@ class Order < ApplicationRecord
     jid = ReleaseCertificateWorker.perform_at(10.seconds, id)
     Rails.logger.info("ReleaseCertificateWorker started with jid = #{jid}")
   end
+
+  def check_part_of_course
+    if project_complete & exam_complete
+      "успешно прошел курс: \n"
+    elsif project_complete
+      "успешно закончил финальный проект по курсу: \n"
+    elsif exam_complete
+      examination = Examination.find_by(exam: course.exam)
+      "успешно сдал экзамен на #{examination.percentage_passing.to_s}% по курсу: \n"
+    else
+      "успешно прошел курс: \n"
+    end
+  end
 end

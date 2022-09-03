@@ -5,7 +5,7 @@ class CreateCertificate < Prawn::Document
   BACKGROUND_PATH = Rails.root.join('app', 'assets', 'images', 'certificate.jpg')
   # FONT_WALSHEIM_PATH = Rails.root.join('app', 'assets', 'fonts', 'GT-WalsheimPro.ttf')
 
-  def initialize(date:, user_name:, course_name:, path:)
+  def initialize(date:, user_name:, course_name:, path:, course_part:)
     super
 
     self.font_families.update("OpenSans" => {
@@ -21,6 +21,7 @@ class CreateCertificate < Prawn::Document
     @course_name = course_name
     @user_name = user_name
     @path = path
+    @course_part = course_part
 
     create_pdf
   end
@@ -49,7 +50,7 @@ class CreateCertificate < Prawn::Document
                size: 36,
                style: :bold
 
-      text_box "successfully completed course \n " "#{@course_name}",
+      text_box "#{@course_part}" "#{@course_name}",
                at: [0, 285],
                align: :center,
                size: 16,

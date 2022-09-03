@@ -9,6 +9,6 @@ class CertificateSendMailer < ApplicationMailer
       content: @certificate.pdf.blob.download }
 
     mail to: @user.email,
-         subject: 'Сертификат о прохождении курса | CoursePlatform '
+         subject: I18n.t('certificate.subject')
   end
 end
