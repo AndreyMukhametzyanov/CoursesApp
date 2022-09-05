@@ -235,6 +235,7 @@ RSpec.describe ExamsController, type: :controller do
       let(:error_msg) { I18n.t 'errors.examination.start_error' }
 
       before do
+        exam
         post :start, params: { course_id: course.id }
       end
 
@@ -249,6 +250,7 @@ RSpec.describe ExamsController, type: :controller do
       let(:new_user) { create :user }
 
       before do
+        exam
         sign_in new_user
         post :start, params: { course_id: course.id }
       end
@@ -289,9 +291,8 @@ RSpec.describe ExamsController, type: :controller do
                                                                 exam_complete: false })
       end
 
-      #доработать
       describe 'when the number of attempts is exceeded' do
-        let!(:examination) { create :examination, exam: exam }
+        let!(:examination) { create :examination, exam: exam, user: student,  finished_exam: true }
         let(:error_msg) { I18n.t('errors.exam.attempt_error') }
 
         before do
@@ -300,8 +301,7 @@ RSpec.describe ExamsController, type: :controller do
           post :start, params: { course_id: course.id }
         end
 
-        it 'should ' do
-          puts Examination.where(user: student, exam: exam).inspect
+        it 'return alert and correct redirect' do
           expect(flash[:alert]).to eq(error_msg)
           expect(response).to redirect_to course_exam_path(exam)
         end
@@ -324,10 +324,7 @@ RSpec.describe ExamsController, type: :controller do
 
       end
 
-      #доработать
       describe 'when exam is not create' do
-        let!(:course) { create :course, author: user }
-        let!(:lesson) { create :lesson, course: course }
         let(:error_msg) { I18n.t('errors.exam.not_create') }
 
         before do
@@ -337,7 +334,6 @@ RSpec.describe ExamsController, type: :controller do
         end
 
         it 'returns alert and correct redirect' do
-          puts course.exam.inspect
           expect(flash[:alert]).to eq(error_msg)
           expect(response).to redirect_to promo_course_path(course)
         end

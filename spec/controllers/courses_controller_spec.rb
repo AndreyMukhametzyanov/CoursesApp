@@ -183,7 +183,6 @@ RSpec.describe CoursesController, type: :controller do
         let(:alert_message) { I18n.t('errors.lessons.access_error') }
 
         before do
-          create :order, user: user, course: course
           get :start, params: { id: course.id }
         end
 
@@ -198,10 +197,14 @@ RSpec.describe CoursesController, type: :controller do
   describe '#order' do
     context 'when order created' do
       let!(:course) { create :course, author: user }
+      let(:student) { create :user }
       let(:success_message) { I18n.t 'orders.create_order.success' }
       let(:order) { Order.find_by(user_id: user.id, course: course) }
 
-      before { post :order, params: { id: course.id } }
+      before do
+        sign_in student
+        post :order, params: { id: course.id }
+      end
 
       it 'renders success message and correct render form' do
         expect(assigns(:order)).to eq(order)
