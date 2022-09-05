@@ -131,8 +131,8 @@ ru:
       success: "Доброе пожаловать на курс!"
       error: "Что-то пошло не так"
     certificate_parts:
-      exam: "успешно сдал экзамен на %{percentage} % "
-      project: 'успешно закончил финальный проект: '
+      exam: "экзамен завершен на %{percentage} % "
+      project: 'закончен финальный проект'
       lessons: 'успешно прошел курс: '
   exam:
     name: 'Экзамен'
@@ -210,6 +210,7 @@ ru:
     certificates_not_received: 'У вас нет сертификатов'
     certificate: 'Сертификат'
     confirm: 'Данный сертификат подтверждает, что'
+    finished: '%{user} успешно освоил курс:'
   buttons:
     create: 'Создать'
     edit: 'Изменить'

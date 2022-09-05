@@ -88,7 +88,6 @@ class Order < ApplicationRecord
   def check_part_of_course
     result_text = []
     examination = Examination&.find_by(exam_id: course.exam, user_id: user_id)
-
     result_text << I18n.t('orders.certificate_parts.project') if project_complete
     result_text << I18n.t('orders.certificate_parts.exam', percentage: examination.percentage_passing) if exam_complete
 

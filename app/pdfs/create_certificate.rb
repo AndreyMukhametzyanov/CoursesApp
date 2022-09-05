@@ -26,7 +26,7 @@ class CreateCertificate < Prawn::Document
   end
 
   def create_pdf
-    # stroke_axis
+    stroke_axis
 
     bounding_box([0, 740], width: 540, height: 730) do
 
@@ -37,19 +37,19 @@ class CreateCertificate < Prawn::Document
                size: 48,
                style: :bold
 
-      text_box I18n.t('certificate.confirm'),
+      text_box "#{I18n.t('certificate.confirm')}\n #{I18n.t('certificate.finished', user: @user_name)}",
                at: [0, 465],
                align: :center,
                size: 16,
                style: :bold
 
-      text_box @user_name,
+      text_box @course_name,
                at: [0, 385],
                align: :center,
-               size: 36,
+               size: 26,
                style: :bold
 
-      text_box "#{@course_part}\n#{@course_name}",
+      text_box @course_part,
                at: [0, 285],
                align: :center,
                size: 16,
