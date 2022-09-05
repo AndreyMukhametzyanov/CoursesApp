@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class CertificateSendMailer < ApplicationMailer
   def send_certificate
     @user = params[:user]
-    @order = Order.find_by(user_id: @user)
+    @order = params[:order]
     @certificate = Certificate.find_by(order: @order)
 
     attachments["order-#{@order.id}_certificate.pdf"] = {

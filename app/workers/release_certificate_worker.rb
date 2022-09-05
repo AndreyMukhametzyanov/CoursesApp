@@ -8,8 +8,6 @@ class ReleaseCertificateWorker
   def perform(order_id)
     order = Order.find(order_id)
 
-    uniq_code = SecureRandom.alphanumeric(UNIQ_CODE_LENGTH)
-
     uniq_code = SecureRandom.alphanumeric(UNIQ_CODE_LENGTH) until uniq_code?(uniq_code)
 
     if order
@@ -29,7 +27,7 @@ class ReleaseCertificateWorker
 
       logger.info 'Certificate successfully created'
 
-      CertificateSendMailer.with(user: order.user).send_certificate.deliver_later
+      CertificateSendMailer.with(user: order.user, order: order).send_certificate.deliver_later
 
       logger.info 'Certificate successfully sent to user email'
     else
@@ -40,6 +38,6 @@ class ReleaseCertificateWorker
   private
 
   def uniq_code?(code)
-    Certificate.all.where(uniq_code: code).empty?
+    Certificate.where(uniq_code: code).empty?
   end
 end

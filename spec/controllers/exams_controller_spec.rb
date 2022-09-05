@@ -259,6 +259,27 @@ RSpec.describe ExamsController, type: :controller do
       end
     end
 
+    context 'when examination exists and not finished' do
+      let(:student) { create :user }
+      let!(:examination) { create :examination, exam: exam, user: student }
+      let(:student_order) do
+        Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
+                                                                completed_lessons_ids: [],
+                                                                project_complete: false,
+                                                                exam_complete: false })
+      end
+
+      before do
+        sign_in student
+        student_order
+        post :start, params: { course_id: course.id }
+      end
+
+      it 'return bad request error' do
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
     context 'when start examination' do
       let(:student) { create :user }
       let(:student_order) do
@@ -267,6 +288,7 @@ RSpec.describe ExamsController, type: :controller do
                                                                 project_complete: false,
                                                                 exam_complete: false })
       end
+
       #доработать
       describe 'when the number of attempts is exceeded' do
         let!(:examination) { create :examination, exam: exam }

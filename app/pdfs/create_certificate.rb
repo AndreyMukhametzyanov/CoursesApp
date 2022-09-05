@@ -1,21 +1,20 @@
 # frozen_string_literal: true
-require "rqrcode"
+require 'rqrcode'
 
 class CreateCertificate < Prawn::Document
   BACKGROUND_PATH = Rails.root.join('app', 'assets', 'images', 'certificate.jpg')
-  # FONT_WALSHEIM_PATH = Rails.root.join('app', 'assets', 'fonts', 'GT-WalsheimPro.ttf')
 
   def initialize(date:, user_name:, course_name:, path:, course_part:)
     super
 
-    self.font_families.update("OpenSans" => {
-      :normal => Rails.root.join("app/assets/fonts/OpenSans/OpenSans-Regular.ttf"),
-      :italic => Rails.root.join("app/assets/fonts/OpenSans/OpenSans-Italic.ttf"),
-      :bold => Rails.root.join("app/assets/fonts/OpenSans/OpenSans-Bold.ttf"),
-      :bold_italic => Rails.root.join("app/assets/fonts/OpenSans/OpenSans-BoldItalic.ttf")
+    self.font_families.update('OpenSans' => {
+      normal: Rails.root.join('app/assets/fonts/OpenSans/OpenSans-Regular.ttf'),
+      italic: Rails.root.join('app/assets/fonts/OpenSans/OpenSans-Italic.ttf'),
+      bold: Rails.root.join('app/assets/fonts/OpenSans/OpenSans-Bold.ttf'),
+      bold_italic: Rails.root.join('app/assets/fonts/OpenSans/OpenSans-BoldItalic.ttf')
     })
 
-    font "OpenSans"
+    font 'OpenSans'
 
     @date = date
     @course_name = course_name
@@ -32,13 +31,13 @@ class CreateCertificate < Prawn::Document
     bounding_box([0, 740], width: 540, height: 730) do
 
       image BACKGROUND_PATH, width: 540, height: 730
-      text_box 'Certificate',
+      text_box I18n.t('certificate.certificate'),
                at: [0, 600],
                align: :center,
                size: 48,
                style: :bold
 
-      text_box 'This certificate confirms that ',
+      text_box I18n.t('certificate.confirm'),
                at: [0, 465],
                align: :center,
                size: 16,
@@ -50,7 +49,7 @@ class CreateCertificate < Prawn::Document
                size: 36,
                style: :bold
 
-      text_box "#{@course_part}" "#{@course_name}",
+      text_box "#{@course_part}\n#{@course_name}",
                at: [0, 285],
                align: :center,
                size: 16,
@@ -72,8 +71,8 @@ class CreateCertificate < Prawn::Document
     qrcode = RQRCode::QRCode.new(path)
 
     qrcode.as_svg(
-      color: "000",
-      shape_rendering: "crispEdges",
+      color: '000',
+      shape_rendering: 'crispEdges',
       module_size: 11,
       standalone: true,
       use_path: true

@@ -73,7 +73,7 @@ class ExamsController < ApplicationController
     end
 
     if Examination.where(user: current_user, exam: @course.exam, finished_exam: false).any?
-      raise ActionController::BadRequest
+      return head :bad_request
     end
 
     if Examination.where(user: current_user,

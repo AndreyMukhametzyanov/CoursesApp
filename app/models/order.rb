@@ -86,15 +86,12 @@ class Order < ApplicationRecord
   end
 
   def check_part_of_course
-    if project_complete & exam_complete
-      "успешно прошел курс: \n"
-    elsif project_complete
-      "успешно закончил финальный проект по курсу: \n"
-    elsif exam_complete
-      examination = Examination.find_by(exam: course.exam)
-      "успешно сдал экзамен на #{examination.percentage_passing.to_s}% по курсу: \n"
-    else
-      "успешно прошел курс: \n"
-    end
+    result_text = []
+    examination = Examination&.find_by(exam_id: course.exam, user_id: user_id)
+
+    result_text << I18n.t('orders.certificate_parts.project') if project_complete
+    result_text << I18n.t('orders.certificate_parts.exam', percentage: examination.percentage_passing) if exam_complete
+
+    result_text.join("\n")
   end
 end

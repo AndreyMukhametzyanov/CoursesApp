@@ -1,23 +1,17 @@
 class CertificatesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[check_certificate]
-  layout 'check_certificate', :only => :check_certificate
+  layout 'check_certificate', only: :check_certificate
 
   def index
-    @orders_by_user = Order.where(user_id: current_user.id)
-    if @orders_by_user
-      @certificate = Certificate.find_by(uniq_code: params[:code])
-    else
+    @current_user_orders = Order.where(user_id: current_user.id)
+    if @current_user_orders.nil?
       redirect_with_alert(root_path, I18n.t('certificate.certificates_not_received'))
+    else
+      @certificate = Certificate.find_by(uniq_code: params[:code])
     end
   end
 
   def check_certificate
     @certificate = Certificate.find_by(uniq_code: params[:code])
-  end
-
-  private
-
-  def certificate_params
-    permit_params(:certificate, :uniq_code)
   end
 end

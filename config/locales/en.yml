@@ -129,6 +129,10 @@ en:
     create_order:
       success: "Welcome to the course!"
       error: "Something was wrong"
+    certificate_parts:
+      exam: 'successfully passed the exam for %{percentage} % '
+      project: 'successfully completed the final project on the course: '
+      lessons: 'successfully completed the course: '
   exam:
     name: 'Exam'
     head_create: 'Create exam for '
@@ -203,6 +207,8 @@ en:
     placeholder: 'Enter a unique code'
     subject: 'Certificate of completion of the course | Course Platform'
     certificates_not_received: 'Certificates is not received'
+    certificate: 'Certificate'
+    confirm: 'This certificate confirms that '
   buttons:
     create: 'Create'
     edit: 'Edit'
