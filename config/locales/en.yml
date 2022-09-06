@@ -206,7 +206,6 @@ en:
     not_found: 'Certificate was not found'
     placeholder: 'Enter a unique code'
     subject: 'Certificate of completion of the course | Course Platform'
-    certificates_not_received: 'Certificates is not received'
     certificate: 'Certificate'
     confirm: 'This certificate confirms that '
   buttons:

@@ -223,7 +223,7 @@ RSpec.describe FinalProjectsController, type: :controller do
     end
 
     context 'when final project not exist' do
-      let(:new_course) { create :course, author: user }
+      let(:new_course) { create :course, author: user, lessons: [(create :lesson)] }
       let(:alert) { I18n.t('errors.final_project.not_create') }
 
       before do

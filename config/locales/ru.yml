@@ -207,7 +207,6 @@ ru:
     not_found: 'Сертификат не найден'
     placeholder: 'Введите униальный код'
     subject: 'Сертификат о прохождении курса | Course Platform'
-    certificates_not_received: 'У вас нет сертификатов'
     certificate: 'Сертификат'
     confirm: 'Данный сертификат подтверждает, что'
     finished: '%{user} успешно освоил курс:'
