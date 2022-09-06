@@ -31,6 +31,7 @@ RSpec.describe Order, type: :model do
   end
 
   describe 'validations' do
+    before { create :lesson, course: order.course }
     it { is_expected.to validate_uniqueness_of(:course_id).scoped_to(:user_id) }
   end
 

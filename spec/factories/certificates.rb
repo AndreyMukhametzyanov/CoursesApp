@@ -14,6 +14,6 @@
 #
 FactoryBot.define do
   factory :certificate do
-    
+    uniq_code { SecureRandom.alphanumeric(30) }
   end
 end

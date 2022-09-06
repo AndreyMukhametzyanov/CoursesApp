@@ -222,6 +222,7 @@ en:
     really_delete: 'Are you sure?'
   errors:
     lessons:
+      empty_lessons: 'Not a single lecture has been created yet'
       change_error: 'You cannot edit or create the lesson - you are not the author'
       access_error: 'Access to lessons denied'
       blank_error: 'cant be blank'

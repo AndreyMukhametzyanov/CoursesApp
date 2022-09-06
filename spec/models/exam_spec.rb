@@ -24,7 +24,7 @@
 require 'rails_helper'
 
 RSpec.describe Exam, type: :model do
-  subject { build(:exam) }
+  subject(:exam) { build(:exam) }
 
   describe 'associations' do
     it { is_expected.to belong_to(:course) }
@@ -42,12 +42,12 @@ RSpec.describe Exam, type: :model do
   end
 
   describe 'passed by user' do
-    let!(:user) { create(:user) }
-    let!(:course) { create(:course, students: [user]) }
-    let!(:exam) { create(:exam, course: course) }
+    let(:examination) { create :examination, exam: subject }
+
+    before { create(:order, course: subject.course) }
 
     it 'return false' do
-      expect(exam).not_to be_passed_by_user(user)
+      expect(subject.passed_by_user?(subject.course.students.first)).to be_falsy
     end
   end
 

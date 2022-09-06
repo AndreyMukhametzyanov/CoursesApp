@@ -15,5 +15,9 @@
 require 'rails_helper'
 
 RSpec.describe Certificate, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build(:certificate) }
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:order) }
+  end
 end

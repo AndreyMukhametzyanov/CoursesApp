@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CertificatesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[check_certificate]
   layout 'check_certificate', only: :check_certificate
