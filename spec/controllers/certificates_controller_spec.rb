@@ -30,22 +30,16 @@ RSpec.describe CertificatesController, type: :controller do
         expect(response).to redirect_to root_path
       end
     end
-
-    context 'when user orders is not nil and find certificate' do
-
-      before do
-        sign_in student
-        student_order
-        get :index
-      end
-
-      it 'find certificate' do
-        puts Certificate.all
-      end
-    end
   end
 
   describe '#check_certificate' do
+    let(:certificate) { create :certificate, order: student_order }
+    let(:result) { Certificate.find_by(uniq_code: certificate.uniq_code).uniq_code }
 
+    before { get :check_certificate }
+
+    it 'return error and redirect to root' do
+      expect(result).to eq(certificate.uniq_code)
+    end
   end
 end

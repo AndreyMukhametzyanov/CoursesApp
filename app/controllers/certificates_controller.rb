@@ -6,11 +6,7 @@ class CertificatesController < ApplicationController
 
   def index
     @current_user_orders = Order.where(user_id: current_user.id)
-    if @current_user_orders.empty?
-      redirect_with_alert(root_path, I18n.t('errors.courses.enrolled_error'))
-    else
-      @certificate = Certificate.find_by(uniq_code: params[:code])
-    end
+    redirect_with_alert(root_path, I18n.t('errors.courses.enrolled_error')) if @current_user_orders.empty?
   end
 
   def check_certificate
