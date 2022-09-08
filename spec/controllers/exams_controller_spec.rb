@@ -263,7 +263,7 @@ RSpec.describe ExamsController, type: :controller do
 
     context 'when examination exists and not finished' do
       let(:student) { create :user }
-      let!(:examination) { create :examination, exam: exam, user: student }
+      let(:examination) { create :examination, exam: exam, user: student }
       let(:student_order) do
         Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
                                                                 completed_lessons_ids: [],
@@ -273,6 +273,7 @@ RSpec.describe ExamsController, type: :controller do
 
       before do
         sign_in student
+        examination
         student_order
         post :start, params: { course_id: course.id }
       end
@@ -292,11 +293,12 @@ RSpec.describe ExamsController, type: :controller do
       end
 
       describe 'when the number of attempts is exceeded' do
-        let!(:examination) { create :examination, exam: exam, user: student,  finished_exam: true }
+        let(:examination) { create :examination, exam: exam, user: student, finished_exam: true }
         let(:error_msg) { I18n.t('errors.exam.attempt_error') }
 
         before do
           sign_in student
+          examination
           student_order
           post :start, params: { course_id: course.id }
         end
@@ -321,7 +323,6 @@ RSpec.describe ExamsController, type: :controller do
           expect(assigns(:examination)).to eq(examination)
           expect(response).to redirect_to examination_path(examination)
         end
-
       end
 
       describe 'when exam is not create' do
@@ -338,7 +339,6 @@ RSpec.describe ExamsController, type: :controller do
           expect(response).to redirect_to promo_course_path(course)
         end
       end
-
     end
   end
 end

@@ -42,17 +42,17 @@ RSpec.describe Exam, type: :model do
   end
 
   describe 'passed by user' do
-    let(:examination) { create :examination, exam: subject }
+    let(:examination) { create :examination, exam: exam }
 
-    before { create(:order, course: subject.course) }
+    before { create(:order, course: exam.course) }
 
     it 'return false' do
-      expect(subject.passed_by_user?(subject.course.students.first)).to be_falsy
+      expect(exam).not_to be_passed_by_user(exam.course.students.first)
     end
   end
 
   describe 'after create callback' do
-    let(:order) { create(:order, course: subject.course) }
+    let(:order) { create(:order, course: exam.course) }
 
     it 'return correct lessons count in order' do
       expect(order.exam_complete).to be_falsey

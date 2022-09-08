@@ -8,18 +8,19 @@ class ReleaseCertificateWorker
   def perform(order_id)
     order = Order.find(order_id)
 
+    uniq_code = SecureRandom.alphanumeric(UNIQ_CODE_LENGTH)
+
     uniq_code = SecureRandom.alphanumeric(UNIQ_CODE_LENGTH) until uniq_code?(uniq_code)
 
     if order
-      logger.info "Create certificate start at #{Date.today.strftime('%d.%m.%Y')}"
+      logger.info "Create certificate start at #{Time.zone.today.strftime('%d.%m.%Y')}"
       path = Rails.application.routes.url_helpers.check_certificate_certificates_url(code: uniq_code)
 
-      pdf = CreateCertificate.new(date: Date.today.strftime('%d.%m.%Y'),
+      pdf = CreateCertificate.new(date: Time.zone.today.strftime('%d.%m.%Y'),
                                   user_name: order.user.first_name,
                                   course_name: order.course.name,
                                   path: path,
                                   course_part: order.check_part_of_course).render
-
       certificate = order.build_certificate
       certificate.pdf.attach(io: StringIO.new(pdf), filename: "order:#{order.id}_certificate.pdf")
       certificate.uniq_code = uniq_code

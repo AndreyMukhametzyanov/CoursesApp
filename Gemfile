@@ -15,14 +15,14 @@ gem 'jquery-rails'
 gem 'matrix'
 gem 'net-smtp', require: false
 gem 'pg', '~> 1.1'
-gem 'prawn-svg'
 gem 'prawn'
+gem 'prawn-svg'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.6.1'
 gem 'rails-controller-testing'
 gem 'rails-i18n'
 gem 'redis'
-gem "rqrcode", "~> 2.0"
+gem 'rqrcode', '~> 2.0'
 gem 'sass-rails', '>= 6'
 gem 'sidekiq'
 gem 'simple_form'
@@ -36,6 +36,7 @@ group :development, :test do
   gem 'letter_opener'
   gem 'letter_opener_web', '~> 2.0'
   gem 'rspec-rails'
+  gem 'rspec-sidekiq'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
@@ -46,7 +47,6 @@ group :development do
   gem 'annotate'
   gem 'brakeman'
   gem 'bundler-audit'
-  gem 'foreman'
   gem 'listen'
   gem 'rack-mini-profiler'
   gem 'spring'

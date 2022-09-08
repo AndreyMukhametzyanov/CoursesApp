@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 require 'spec_helper'
-require 'sidekiq/testing'
 
 RSpec.describe ReleaseCertificateWorker, type: :worker do
   let!(:user) { create(:user) }
@@ -14,14 +13,24 @@ RSpec.describe ReleaseCertificateWorker, type: :worker do
                                                             project_complete: false,
                                                             exam_complete: false })
   end
-  let(:job) { described_class.perform_at(10.seconds, order.id) }
 
-  it 'should ' do
-    Sidekiq::Testing.inline! do
+  describe 'that have enqueued sidekiq job' do
+    let(:job) { described_class.perform_at(time, order.id) }
+    let(:time) { 10.seconds.from_now }
+
+    it 'that have enqueued at time' do
       job
+      expect(described_class).to have_enqueued_sidekiq_job(order.id).at(time)
     end
-    puts Certificate.last
-    # assert_equal true, described_class.jobs.last['jid'].include?(job)
-    # expect(described_class).to have_enqueued_sidekiq_job(id)
+  end
+
+  describe 'worker' do
+    let(:job) { described_class.new.perform(order.id) }
+
+    it 'return that certificate was create and pdf file was attached' do
+      job
+      expect(Certificate.all).not_to be_empty
+      expect(Certificate.last.pdf).to be_attached
+    end
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rqrcode'
 
 class CreateCertificate < Prawn::Document
@@ -7,12 +8,12 @@ class CreateCertificate < Prawn::Document
   def initialize(date:, user_name:, course_name:, path:, course_part:)
     super
 
-    self.font_families.update('OpenSans' => {
-      normal: Rails.root.join('app/assets/fonts/OpenSans/OpenSans-Regular.ttf'),
-      italic: Rails.root.join('app/assets/fonts/OpenSans/OpenSans-Italic.ttf'),
-      bold: Rails.root.join('app/assets/fonts/OpenSans/OpenSans-Bold.ttf'),
-      bold_italic: Rails.root.join('app/assets/fonts/OpenSans/OpenSans-BoldItalic.ttf')
-    })
+    font_families.update('OpenSans' => {
+                           normal: Rails.root.join('app', 'assets', 'fonts', 'OpenSans', 'OpenSans-Regular.ttf'),
+                           italic: Rails.root.join('app', 'assets', 'fonts', 'OpenSans', 'OpenSans-Italic.ttf'),
+                           bold: Rails.root.join('app', 'assets', 'fonts', 'OpenSans', 'OpenSans-Bold.ttf'),
+                           bold_italic: Rails.root.join('app', 'assets', 'fonts', 'OpenSans', 'OpenSans-BoldItalic.ttf')
+                         })
 
     font 'OpenSans'
 
@@ -29,7 +30,6 @@ class CreateCertificate < Prawn::Document
     stroke_axis
 
     bounding_box([0, 740], width: 540, height: 730) do
-
       image BACKGROUND_PATH, width: 540, height: 730
       text_box I18n.t('certificate.certificate'),
                at: [0, 600],

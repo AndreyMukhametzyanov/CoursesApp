@@ -74,9 +74,7 @@ class ExamsController < ApplicationController
       return redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
     end
 
-    if Examination.where(user: current_user, exam: @course.exam, finished_exam: false).any?
-      return head :bad_request
-    end
+    return head :bad_request if Examination.where(user: current_user, exam: @course.exam, finished_exam: false).any?
 
     if Examination.where(user: current_user,
                          exam: @course.exam).count >= @course.exam.attempts_count
