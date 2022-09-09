@@ -31,6 +31,7 @@ class User < ApplicationRecord
   has_many :developed_courses, class_name: 'Course', dependent: :destroy
   has_many :feedbacks, dependent: :destroy
   has_many :user_projects, dependent: :destroy
+  has_many :certificates, through: :orders, dependent: :destroy
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true

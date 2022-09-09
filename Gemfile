@@ -36,7 +36,7 @@ group :development, :test do
   gem 'letter_opener'
   gem 'letter_opener_web', '~> 2.0'
   gem 'rspec-rails'
-  gem 'rspec-sidekiq'
+  gem 'rspec-sidekiq', require: false
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false

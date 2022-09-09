@@ -5,8 +5,7 @@ class CertificatesController < ApplicationController
   layout 'check_certificate', only: :check_certificate
 
   def index
-    @current_user_orders = Order.where(user_id: current_user.id)
-    redirect_with_alert(root_path, I18n.t('errors.courses.enrolled_error')) if @current_user_orders.empty?
+    @certificates = current_user.certificates
   end
 
   def check_certificate

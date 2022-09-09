@@ -18,16 +18,14 @@ RSpec.describe CertificatesController, type: :controller do
 
   describe '#index' do
     context 'when user orders is nil' do
-      let(:alert_message) { I18n.t('errors.courses.enrolled_error') }
-
       before do
         sign_in student
         get :index
       end
 
       it 'return error and redirect to root' do
-        expect(flash[:alert]).to eq(alert_message)
-        expect(response).to redirect_to root_path
+        expect(response).to have_http_status(:ok)
+        expect(response).to render_template('index')
       end
     end
   end
