@@ -26,6 +26,9 @@ class ReleaseCertificateWorker
       certificate.uniq_code = uniq_code
       order.save
 
+      logger.info certificate.errors.inspect.to_s
+
+      logger.info Certificate.all.inspect.to_s
       logger.info 'Certificate successfully created'
 
       CertificateSendMailer.with(user: order.user, order: order).send_certificate.deliver_later

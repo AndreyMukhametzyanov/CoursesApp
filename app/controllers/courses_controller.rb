@@ -74,6 +74,7 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    permit_params(:course, :name, :level, :description, :video_link, :cover_picture, :short_description)
+    permit_params(:course, :name, :level, :description, :video_link,
+                  :cover_picture, :short_description, :create_certificate)
   end
 end

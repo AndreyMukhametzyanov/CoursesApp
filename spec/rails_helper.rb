@@ -7,7 +7,7 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
-
+require 'rspec-sidekiq'
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
@@ -30,13 +30,13 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
-# RSpec::Sidekiq.configure do |config|
-#   # Clears all job queues before each example
-#   config.clear_all_enqueued_jobs = true # default => true
-#
-#   # Whether to use terminal colours when outputting messages
-#   config.enable_terminal_colours = false # default => true
-#
-#   # Warn when jobs are not enqueued to Redis but to a job array
-#   config.warn_when_jobs_not_processed_by_sidekiq = false # default => true
-# end
+RSpec::Sidekiq.configure do |config|
+  # Clears all job queues before each example
+  config.clear_all_enqueued_jobs = true # default => true
+
+  # Whether to use terminal colours when outputting messages
+  config.enable_terminal_colours = false # default => true
+
+  # Warn when jobs are not enqueued to Redis but to a job array
+  config.warn_when_jobs_not_processed_by_sidekiq = false # default => true
+end

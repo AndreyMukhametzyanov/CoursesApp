@@ -45,6 +45,7 @@ class Course < ApplicationRecord
   validate :correct_picture_type, if: :cover_picture
 
   before_save :take_video_id
+  after_commit :create_certificates
 
   def owner?(user)
     author == user
@@ -71,5 +72,9 @@ class Course < ApplicationRecord
     return unless cover_picture.attached?
 
     errors.add(:cover_picture, :is_not_picture_type) unless cover_picture.content_type.in?(IMAGE_TYPE)
+  end
+
+  def create_certificates
+    orders.each(&:create_certificate)
   end
 end

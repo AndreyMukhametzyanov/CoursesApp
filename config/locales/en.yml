@@ -30,6 +30,7 @@ en:
         video_link: 'Video link'
         cover_picture: 'File '
         short_description: 'Short description'
+        create_certificate: 'Allow creation of certificates?'
       lesson:
         title: 'Title'
         content: 'Content'
@@ -230,7 +231,7 @@ en:
       change_error: 'You cannot edit or create the course - you are not the author'
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
-      enrolled_error: 'You not enrolled in course'
+      enrolled_error: 'You are not enrolled in the course'
     exam:
       change_error: 'You cannot edit or create the exam - you are not the author'
       access_error: 'Access to exam denied'
@@ -247,4 +248,5 @@ en:
       create_error: 'You cannot create the replies - you are author of this course'
       time_is_over: 'The time for completing the task is over'
     certificate:
+      empty: 'No certificates'
       not_yet: "There are no certificates yet"

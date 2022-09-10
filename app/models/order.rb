@@ -78,6 +78,7 @@ class Order < ApplicationRecord
   end
 
   def create_certificate
+    return unless course.create_certificate
     return if certificate&.persisted?
     return if percentage_count != 100
 

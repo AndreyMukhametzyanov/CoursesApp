@@ -31,6 +31,7 @@ ru:
         video_link: 'Ссылка'
         cover_picture: 'Файл'
         short_description: 'Краткое описание'
+        create_certificate: 'Разрешить создание сертификатов?'
       lesson:
         title: 'Название'
         content: 'Текст'
@@ -249,4 +250,5 @@ ru:
       create_error: 'Вы не можете создавать отзывы - вы являетесь автором этого курса'
       time_is_over: 'Время на выполнения задания вышло'
     certificate:
+      empty: 'Сертификатов пока нет'
       not_yet: "Сертификатов пока нет"
