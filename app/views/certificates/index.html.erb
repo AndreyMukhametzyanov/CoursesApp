@@ -1,0 +1,26 @@
+<h1 class="text-center my-4"><%= t('certificate.head') %></h1>
+<% if @certificates.empty? %>
+  <h5 class="text-center my-4"><%= I18n.t('errors.certificate.not_yet') %></h5>
+<% end %>
+<div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% @certificates.each do |certificate| %>
+          <div class="col mb-4">
+            <div class="card, text-center">
+              <div class="card-body">
+                <h5 class="card-title mb-4"><%= t('certificate.for_course') %></h5>
+                <%= certificate.order.course.name %>
+                </h5>
+                <p class="card- mt-3">
+                  <%= link_to t('certificate.download'), rails_blob_path(certificate.pdf, disposition: :attachment), class: 'btn btn-outline-primary' %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

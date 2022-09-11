@@ -6,8 +6,16 @@ Rails.application.routes.draw do
   concern :commentable do
     resources :comments, only: %i[create edit destroy]
   end
-
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
   root 'courses#index'
+
+  resources :certificates, only: [:index] do
+    collection do
+      get 'check_certificate'
+    end
+  end
 
   resources :courses, concerns: :commentable do
     resource :final_project do

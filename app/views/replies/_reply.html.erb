@@ -10,9 +10,9 @@
     <p class="card-text">
       <%= reply.user_reply %>
       <% if reply.teacher_comment.present? %>
-        <h6><%= I18n.t('reply.teacher_comment') %></h6>
-        <%= reply.teacher_comment %>
-      <% end %>
+      <h6><%= I18n.t('reply.teacher_comment') %></h6>
+      <%= reply.teacher_comment %>
+    <% end %>
     <% reply.files.each do |file| %>
       <div class="col-sm-8">
         <%= I18n.t('lessons.label.label_name') %>

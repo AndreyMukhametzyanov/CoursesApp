@@ -4,15 +4,16 @@
 #
 # Table name: courses
 #
-#  id                :bigint           not null, primary key
-#  description       :string
-#  level             :integer
-#  name              :string
-#  short_description :string
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  user_id           :bigint           not null
-#  youtube_video_id  :text
+#  id                 :bigint           not null, primary key
+#  create_certificate :boolean          default(FALSE)
+#  description        :string
+#  level              :integer
+#  name               :string
+#  short_description  :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  user_id            :bigint           not null
+#  youtube_video_id   :text
 #
 # Indexes
 #
@@ -44,6 +45,7 @@ class Course < ApplicationRecord
   validate :correct_picture_type, if: :cover_picture
 
   before_save :take_video_id
+  after_commit :create_certificates
 
   def owner?(user)
     author == user
@@ -70,5 +72,9 @@ class Course < ApplicationRecord
     return unless cover_picture.attached?
 
     errors.add(:cover_picture, :is_not_picture_type) unless cover_picture.content_type.in?(IMAGE_TYPE)
+  end
+
+  def create_certificates
+    orders.each(&:create_certificate)
   end
 end

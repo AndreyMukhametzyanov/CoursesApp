@@ -1,0 +1,17 @@
+<h5><%= t('certificate.check_certificates') %></h5>
+<form action="" method="get">
+  <input class="form-control" name="code" placeholder=<%= t('certificate.placeholder') %> type="text" value=<%= params[:code] if params[:code] %>>
+  <button class="btn btn-outline-primary mt-2" type="submit"><%= t('buttons.search') %></button>
+</form>
+<div class="container mt-2">
+  <div class="row">
+    <% unless params[:code].nil? %>
+      <% if @certificate %>
+        <h5 class="px-0 mt-3 mb-3"><%= t('certificate.found') %></h5>
+        <div class="px-0"><%= link_to t('certificate.download'), rails_blob_path(@certificate.pdf, disposition: :attachment), class: 'btn btn-outline-primary' %></div>
+      <% else %>
+        <h5 class="px-0"><%= t('certificate.not_found') %></h5>
+      <% end %>
+    <% end %>
+  </div>
+</div>

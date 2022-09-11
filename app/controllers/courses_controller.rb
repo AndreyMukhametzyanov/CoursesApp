@@ -56,6 +56,8 @@ class CoursesController < ApplicationController
   end
 
   def order
+    return redirect_with_alert(root_path, I18n.t('errors.lessons.empty_lessons')) if @course.lessons.empty?
+
     @order = Order.new(user: current_user, course_id: params[:id])
 
     if @order.save
@@ -72,6 +74,7 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    permit_params(:course, :name, :level, :description, :video_link, :cover_picture, :short_description)
+    permit_params(:course, :name, :level, :description, :video_link,
+                  :cover_picture, :short_description, :create_certificate)
   end
 end

@@ -6,7 +6,7 @@ require 'spec_helper'
 RSpec.describe RepliesController, type: :controller do
   let(:user) { create :user }
   let(:student) { create :user }
-  let(:course) { create :course, author: user, students: [student] }
+  let(:course) { create :course, author: user, students: [student], lessons: [(create :lesson)] }
   let(:final_project) { create :final_project, course: course }
   let!(:user_project) { create :user_project, final_project: final_project, user: student }
 

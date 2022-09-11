@@ -225,4 +225,120 @@ RSpec.describe ExamsController, type: :controller do
       end
     end
   end
+
+  describe '#start' do
+    let!(:course) { create :course, author: user }
+    let!(:lesson) { create :lesson, course: course }
+    let(:exam) { create :exam, course: course }
+
+    context 'when user is owner' do
+      let(:error_msg) { I18n.t 'errors.examination.start_error' }
+
+      before do
+        exam
+        post :start, params: { course_id: course.id }
+      end
+
+      it 'returns alert and correct redirect' do
+        expect(flash[:alert]).to eq(error_msg)
+        expect(response).to redirect_to course_lesson_path(course, lesson)
+      end
+    end
+
+    context 'when user is not enrolled in course' do
+      let(:error_msg) { I18n.t('errors.courses.enrolled_error') }
+      let(:new_user) { create :user }
+
+      before do
+        exam
+        sign_in new_user
+        post :start, params: { course_id: course.id }
+      end
+
+      it 'returns alert and correct redirect' do
+        expect(flash[:alert]).to eq(error_msg)
+        expect(response).to redirect_to promo_course_path(course)
+      end
+    end
+
+    context 'when examination exists and not finished' do
+      let(:student) { create :user }
+      let(:examination) { create :examination, exam: exam, user: student }
+      let(:student_order) do
+        Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
+                                                                completed_lessons_ids: [],
+                                                                project_complete: false,
+                                                                exam_complete: false })
+      end
+
+      before do
+        sign_in student
+        examination
+        student_order
+        post :start, params: { course_id: course.id }
+      end
+
+      it 'return bad request error' do
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context 'when start examination' do
+      let(:student) { create :user }
+      let(:student_order) do
+        Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
+                                                                completed_lessons_ids: [],
+                                                                project_complete: false,
+                                                                exam_complete: false })
+      end
+
+      describe 'when the number of attempts is exceeded' do
+        let(:examination) { create :examination, exam: exam, user: student, finished_exam: true }
+        let(:error_msg) { I18n.t('errors.exam.attempt_error') }
+
+        before do
+          sign_in student
+          examination
+          student_order
+          post :start, params: { course_id: course.id }
+        end
+
+        it 'return alert and correct redirect' do
+          expect(flash[:alert]).to eq(error_msg)
+          expect(response).to redirect_to course_exam_path(exam)
+        end
+      end
+
+      describe 'when everything ok' do
+        let!(:exam) { create :exam, course: course }
+        let(:examination) { Examination.find_by(exam: exam) }
+
+        before do
+          sign_in student
+          student_order
+          post :start, params: { course_id: course.id }
+        end
+
+        it 'returns alert and correct redirect' do
+          expect(assigns(:examination)).to eq(examination)
+          expect(response).to redirect_to examination_path(examination)
+        end
+      end
+
+      describe 'when exam is not create' do
+        let(:error_msg) { I18n.t('errors.exam.not_create') }
+
+        before do
+          sign_in student
+          student_order
+          post :start, params: { course_id: course.id }
+        end
+
+        it 'returns alert and correct redirect' do
+          expect(flash[:alert]).to eq(error_msg)
+          expect(response).to redirect_to promo_course_path(course)
+        end
+      end
+    end
+  end
 end

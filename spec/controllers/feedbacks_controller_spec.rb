@@ -5,7 +5,7 @@ require 'spec_helper'
 
 RSpec.describe FeedbacksController, type: :controller do
   let(:user) { create :user }
-  let(:course) { create :course }
+  let(:course) { create :course, lessons: [(create :lesson)] }
 
   describe '#create' do
     context 'when sign in' do

@@ -66,3 +66,6 @@ RSpec/NestedGroups:
 
 RSpec/ExampleLength:
   Max: 15
+
+Rails/FilePath:
+  Enabled: false

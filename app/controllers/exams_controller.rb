@@ -63,16 +63,21 @@ class ExamsController < ApplicationController
   end
 
   def start
+    return redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.not_create')) unless @course.exam
+
+    if @course.owner?(current_user)
+      lesson = @course.lessons.first
+      return redirect_with_alert(course_lesson_path(@course, lesson), I18n.t('errors.examination.start_error'))
+    end
+
     unless @course.enrolled_in_course?(current_user)
       return redirect_with_alert(promo_course_path(@course), I18n.t('errors.courses.enrolled_error'))
     end
 
-    if Examination.where(user: current_user, exam: @course.exam, finished_exam: false).any?
-      raise ActionController::BadRequest
-    end
+    return head :bad_request if Examination.where(user: current_user, exam: @course.exam, finished_exam: false).any?
 
     if Examination.where(user: current_user,
-                         exam: @course.exam).count >= Exam.where(course: @course).first.attempts_count
+                         exam: @course.exam).count >= @course.exam.attempts_count
       redirect_with_alert(course_exam_path(@course.exam), I18n.t('errors.exam.attempt_error'))
     elsif @course.exam
       @examination = Examination.create(
@@ -84,8 +89,6 @@ class ExamsController < ApplicationController
         next_question: @course.exam.questions.second
       )
       redirect_to examination_path(@examination)
-    else
-      redirect_with_alert(promo_course_path, I18n.t('errors.exam.not_create'))
     end
   end
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CoursesApp</title>
+  <title><%= I18n.t('layouts.main') %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -17,7 +17,7 @@
 
     <div class="dropdown">
       <button class="btn btn-outline-primary mx-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-        <%= I18n.locale%>
+        <%= I18n.locale %>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
         <% I18n.available_locales.each do |locale| %>
@@ -30,6 +30,8 @@
       <%= link_to t('menu.sign_out'), destroy_user_session_path, method: :delete, class: 'btn btn-outline-primary my-1' %>
       <%= link_to current_user.first_name, edit_user_registration_path, class: 'btn btn-outline-primary my-1 mx-2' %>
       <%= link_to t('menu.create_course'), new_course_path, class: 'btn btn-outline-primary my-1' %>
+      <%= link_to t('menu.certificates'), certificates_path, class: 'btn btn-outline-primary mx-2 my-1' %>
+
     <% else %>
       <div style="margin-left: 30px;"><%= link_to t('menu.sign_up'), new_user_registration_path, class: 'btn btn-outline-primary' %></div>
       <div style="margin-left: 30px;"><%= link_to t('menu.sign_in'), new_user_session_path, class: 'btn btn-outline-primary' %></div>

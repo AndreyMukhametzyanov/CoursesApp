@@ -183,7 +183,6 @@ RSpec.describe CoursesController, type: :controller do
         let(:alert_message) { I18n.t('errors.lessons.access_error') }
 
         before do
-          create :order, user: user, course: course
           get :start, params: { id: course.id }
         end
 
@@ -196,12 +195,34 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#order' do
-    context 'when order created' do
-      let!(:course) { create :course, author: user }
-      let(:success_message) { I18n.t 'orders.create_order.success' }
-      let(:order) { Order.find_by(user_id: user.id, course: course) }
+    let!(:course) { create :course, author: user }
 
-      before { post :order, params: { id: course.id } }
+    context 'when lesson is not created yet' do
+      let(:error_message) { I18n.t('errors.lessons.empty_lessons') }
+      let(:student) { create :user }
+
+      before do
+        sign_in student
+        post :order, params: { id: course.id }
+      end
+
+      it 'renders error message and redirect' do
+        expect(flash[:alert]).to eq(error_message)
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'when order created' do
+      let(:lesson) { create :lesson, course: course }
+      let(:student) { create :user }
+      let(:success_message) { I18n.t 'orders.create_order.success' }
+      let(:order) { Order.find_by(user_id: student.id, course: course) }
+
+      before do
+        lesson
+        sign_in student
+        post :order, params: { id: course.id }
+      end
 
       it 'renders success message and correct render form' do
         expect(assigns(:order)).to eq(order)
@@ -216,10 +237,11 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context 'when order is not created' do
-      let!(:course) { create :course, author: user }
+      let(:lesson) { create :lesson, course: course }
       let(:error_message) { I18n.t 'orders.create_order.error' }
 
       before do
+        lesson
         create :order, user: user, course: course
         post :order, params: { id: course.id }
       end

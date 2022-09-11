@@ -30,6 +30,7 @@ en:
         video_link: 'Video link'
         cover_picture: 'File '
         short_description: 'Short description'
+        create_certificate: 'Allow creation of certificates?'
       lesson:
         title: 'Title'
         content: 'Content'
@@ -64,6 +65,10 @@ en:
     sign_up: 'Sign up'
     sign_out: 'Sign out'
     create_course: 'Create course'
+    certificates: 'Certificates'
+  layouts:
+    main: 'Course Platform'
+    check_certificate: 'Check certificate'
   attachment:
     delete: 'Attachment was deleted'
     remove: 'Remove'
@@ -125,6 +130,10 @@ en:
     create_order:
       success: "Welcome to the course!"
       error: "Something was wrong"
+    certificate_parts:
+      exam: 'successfully passed the exam for %{percentage} % '
+      project: 'successfully completed the final project on the course: '
+      lessons: 'successfully completed the course: '
   exam:
     name: 'Exam'
     head_create: 'Create exam for '
@@ -189,6 +198,17 @@ en:
       verification: 'Verification'
       rejected: 'Rejected'
       accepted: 'Accepted'
+  certificate:
+    head: 'Your certificates'
+    download: 'Download'
+    for_course: 'Certificate for the course '
+    check_certificates: 'Verify the authenticity of the certificate'
+    found: 'Certificate was found'
+    not_found: 'Certificate was not found'
+    placeholder: 'Enter a unique code'
+    subject: 'Certificate of completion of the course | Course Platform'
+    certificate: 'Certificate'
+    confirm: 'This certificate confirms that '
   buttons:
     create: 'Create'
     edit: 'Edit'
@@ -197,10 +217,12 @@ en:
     yes: 'Yes'
     no: 'No'
     continue: 'Continue'
+    search: 'Search'
   attentions:
     really_delete: 'Are you sure?'
   errors:
     lessons:
+      empty_lessons: 'Not a single lecture has been created yet'
       change_error: 'You cannot edit or create the lesson - you are not the author'
       access_error: 'Access to lessons denied'
       blank_error: 'cant be blank'
@@ -209,13 +231,15 @@ en:
       change_error: 'You cannot edit or create the course - you are not the author'
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
-      enrolled_error: 'You not enrolled in course'
+      enrolled_error: 'You are not enrolled in the course'
     exam:
       change_error: 'You cannot edit or create the exam - you are not the author'
       access_error: 'Access to exam denied'
       not_create: 'The exam for the course has not been created yet'
       attempt_error: 'The number of exam attempts has been increased'
       end_time: 'Time to pass exam is over'
+    examination:
+      start_error: 'You can not pass the exam - you are the author'
     final_project:
       change_error: 'You cannot edit or create the final project - you are not the author'
       access_error: 'Access to final project denied'
@@ -223,4 +247,6 @@ en:
     reply:
       create_error: 'You cannot create the replies - you are author of this course'
       time_is_over: 'The time for completing the task is over'
-
+    certificate:
+      empty: 'No certificates'
+      not_yet: "There are no certificates yet"

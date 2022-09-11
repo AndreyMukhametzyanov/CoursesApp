@@ -40,7 +40,7 @@ RSpec.describe UserProject, type: :model do
   describe 'custom validation' do
     let(:user) { create :user }
     let(:student) { create :user }
-    let(:course) { create :course, author: user, students: [student] }
+    let(:course) { create :course, author: user, students: [student], lessons: [(create :lesson)] }
     let(:final_project) { create :final_project, course: course }
 
     context 'when user is owner' do
