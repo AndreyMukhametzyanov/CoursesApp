@@ -135,4 +135,73 @@ RSpec.describe Order, type: :model do
       end
     end
   end
+
+  describe 'check part of course' do
+    let!(:user) { create(:user) }
+    let!(:course) { create(:course, students: [user], lessons: [create(:lesson)]) }
+
+    context 'when final project create' do
+      let!(:order) { build(:order, course: course, project_complete: true) }
+      let(:result_text) { I18n.t('orders.certificate_parts.project') }
+
+      before do
+        create(:final_project, course: course)
+      end
+
+      it 'return result text with final project' do
+        expect(order.check_part_of_course).to eq(result_text)
+      end
+    end
+
+    context 'when exam create' do
+      let!(:exam) { create(:exam, course: course) }
+      let!(:order) { build(:order, user: user, course: course, exam_complete: true) }
+      let!(:examination) { create(:examination, user: user, exam: exam, percentage_passing: 100) }
+      let(:result) { examination.percentage_passing }
+      let(:result_text) { I18n.t('orders.certificate_parts.exam', percentage: result) }
+
+      it 'return result text with exam' do
+        expect(order.check_part_of_course).to eq(result_text)
+      end
+    end
+
+    context 'when all parts of course is create' do
+      let!(:exam) { create(:exam, course: course) }
+      let(:final_project) { create(:final_project, course: course) }
+      let(:order) { build(:order, user: user, course: course, project_complete: true, exam_complete: true) }
+      let(:examination) { create(:examination, user: user, exam: exam, percentage_passing: 100) }
+      let(:result) { examination.percentage_passing }
+      let(:result_text) do
+        "#{I18n.t('orders.certificate_parts.project')}\n#{I18n.t('orders.certificate_parts.exam', percentage: result)}"
+      end
+
+      before do
+        final_project
+        order
+        examination
+      end
+
+      it 'return result full text' do
+        expect(order.check_part_of_course).to eq(result_text)
+      end
+    end
+  end
+
+  describe 'create certificate' do
+    context 'when create certificate true,certificate not created and percentage count 100' do
+      let!(:course) { create(:course, create_certificate: true) }
+      let!(:lesson) { create(:lesson, course: course) }
+      let!(:order) do
+        build(:order, course: course, progress: { total_lessons: course.lessons.count,
+                                                  completed_lessons_ids: [lesson.id],
+                                                  percentage_count: 100 })
+      end
+      let(:time) { 10.seconds.from_now }
+
+      it 'return of method' do
+        order.create_certificate
+        expect(ReleaseCertificateWorker).to have_enqueued_sidekiq_job(order.id).at(time)
+      end
+    end
+  end
 end
