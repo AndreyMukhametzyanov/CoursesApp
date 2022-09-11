@@ -1,7 +1,7 @@
 <div class='nested-fields'>
   <%= f.input :body %>
   <div>
-    <%= f.input :correct_answer, as: :boolean , label: "#{t('answer.correct')}"%>
+    <%= f.input :correct_answer, as: :boolean, label: "#{t('answer.correct')}" %>
   </div>
   <%= link_to_remove_association "#{I18n.t('answer.remove')}", f %>
 </div>

@@ -24,12 +24,12 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "#{t('edit.update')}"%>
+    <%= f.button :submit, "#{t('edit.update')}" %>
   </div>
 <% end %>
 
-<h3><%=t('edit.destroy_acc')%></h3>
+<h3><%= t('edit.destroy_acc') %></h3>
 
-<p><%= link_to "#{t('edit.destroy_acc')}", registration_path(resource_name), data: { confirm: "#{t('edit.warning')}"}, method: :delete %></p>
+<p><%= link_to "#{t('edit.destroy_acc')}", registration_path(resource_name), data: { confirm: "#{t('edit.warning')}" }, method: :delete %></p>
 
 <%= link_to "#{t('buttons.back')}", :back %>
