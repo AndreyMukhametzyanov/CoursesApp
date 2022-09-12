@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       get 'promo'
       get 'start'
       post 'order'
+      post 'change_state'
     end
     resource :exam do
       member do

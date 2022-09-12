@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_24_105411) do
+ActiveRecord::Schema.define(version: 2022_09_12_121945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 2022_08_24_105411) do
     t.text "youtube_video_id"
     t.string "short_description"
     t.boolean "create_certificate", default: false
+    t.text "status"
     t.index ["name"], name: "index_courses_on_name", unique: true
     t.index ["user_id"], name: "index_courses_on_user_id"
   end

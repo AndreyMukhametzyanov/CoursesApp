@@ -67,6 +67,16 @@ class CoursesController < ApplicationController
     end
   end
 
+  def change_state
+    if @course.owner?(current_user)
+      if @course.update(course_params)
+        redirect_to root_path
+      end
+    else
+      redirect_with_alert(courses_path, I18n.t('errors.courses.change_error'))
+    end
+  end
+
   private
 
   def set_course
@@ -75,6 +85,6 @@ class CoursesController < ApplicationController
 
   def course_params
     permit_params(:course, :name, :level, :description, :video_link,
-                  :cover_picture, :short_description, :create_certificate)
+                  :cover_picture, :short_description, :create_certificate, :status)
   end
 end
