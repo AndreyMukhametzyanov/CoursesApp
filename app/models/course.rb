@@ -54,12 +54,18 @@ class Course < ApplicationRecord
     state :published, display: 'Опубликовать'
     state :archived, display: 'В архив'
 
-    event :publish do
-      transitions from: %i[archived drafted], to: :published
-    end
+    # event :publish do
+    #   transitions from: %i[archived drafted], to: :published
+    # end
+    #
+    # event :archive do
+    #   transitions from: :published, to: :archived
+    # end
 
-    event :archive do
+    event :next do
+      transitions from: :drafted, to: :published
       transitions from: :published, to: :archived
+      transitions from: :archived, to: :drafted
     end
   end
 
@@ -67,12 +73,24 @@ class Course < ApplicationRecord
     author == user
   end
 
+  def next_state
+    self.next
+    save
+  end
+
   def enrolled_in_course?(user)
     students.find_by(id: user.id).present?
   end
 
-  def available_statuses_for_select
-    aasm.states.map { |s| [s.display_name, s.name] }
+  def next_state_status
+    case status
+    when 'drafted'
+      'published'
+    when 'published'
+      'archived'
+    else
+      'drafted'
+    end
   end
 
   private

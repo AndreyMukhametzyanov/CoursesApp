@@ -68,10 +68,10 @@ class CoursesController < ApplicationController
   end
 
   def change_state
+    @course = Course.find(params[:id])
     if @course.owner?(current_user)
-      if @course.update(course_params)
-        redirect_to root_path
-      end
+      @course.next_state
+      redirect_to root_path
     else
       redirect_with_alert(courses_path, I18n.t('errors.courses.change_error'))
     end
