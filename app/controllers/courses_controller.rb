@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[start promo update order edit]
+  before_action :set_course, only: %i[start promo update order edit change_state]
 
   def index
-    @courses = Course.all.order(:name)
+    @courses = Course.all.where(status: :published).order(:name)
   end
 
   def new
@@ -40,8 +40,12 @@ class CoursesController < ApplicationController
   end
 
   def promo
-    @feedback = Feedback.find_or_initialize_by(course: @course, user: current_user)
-    @feedbacks = @course.feedbacks.includes(:user)
+    if @course.owner?(current_user) || (!@course.owner?(current_user) && @course.published?)
+      @feedback = Feedback.find_or_initialize_by(course: @course, user: current_user)
+      @feedbacks = @course.feedbacks.includes(:user)
+    else
+      redirect_with_alert(root_path, I18n.t('errors.courses.access_error'))
+    end
   end
 
   def start
@@ -58,6 +62,8 @@ class CoursesController < ApplicationController
   def order
     return redirect_with_alert(root_path, I18n.t('errors.lessons.empty_lessons')) if @course.lessons.empty?
 
+    return redirect_with_alert(root_path, I18n.t('errors.courses.not_published')) unless @course.published?
+
     @order = Order.new(user: current_user, course_id: params[:id])
 
     if @order.save
@@ -68,10 +74,10 @@ class CoursesController < ApplicationController
   end
 
   def change_state
-    @course = Course.find(params[:id])
     if @course.owner?(current_user)
       @course.next_state
-      redirect_to root_path
+      redirect_with_notice(promo_course_path(params[:id]), I18n.t('orders.change_state.change',
+                                                                  status: @course.aasm.human_state))
     else
       redirect_with_alert(courses_path, I18n.t('errors.courses.change_error'))
     end

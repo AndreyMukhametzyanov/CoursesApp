@@ -22,7 +22,6 @@ ru:
           attributes:
             order_factor:
               is_not_uniq_type: 'лекция с такой очередностью уже существует'
-
     attributes:
       course:
         name: 'Название'
@@ -32,6 +31,10 @@ ru:
         cover_picture: 'Файл'
         short_description: 'Краткое описание'
         create_certificate: 'Разрешить создание сертификатов?'
+        status: 'Изменить статус видимости курса на'
+        status/drafted: 'Черновик'
+        status/published: 'Опубликовано'
+        status/archived: 'В архиве'
       lesson:
         title: 'Название'
         content: 'Текст'
@@ -131,6 +134,8 @@ ru:
     create_order:
       success: "Доброе пожаловать на курс!"
       error: "Что-то пошло не так"
+    change_state:
+      change: 'Статус успешно изменен на "%{status}"'
     certificate_parts:
       exam: "экзамен завершен на %{percentage} % "
       project: 'закончен финальный проект'
@@ -234,6 +239,7 @@ ru:
       access_error: 'Доступ к курсу запрещен'
       blank_error: 'не может быть пустым'
       enrolled_error: 'Вы не записаны на курс'
+      not_published: 'Курс еще не опубликован автором. Пожалуйста подождите.'
     exam:
       change_error: 'Вы не можете создавать или редактировать экзамен - вы не являетесь автором'
       access_error: 'Доступ к экзамену запрещен'

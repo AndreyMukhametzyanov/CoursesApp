@@ -54,14 +54,6 @@ class Course < ApplicationRecord
     state :published, display: 'Опубликовать'
     state :archived, display: 'В архив'
 
-    # event :publish do
-    #   transitions from: %i[archived drafted], to: :published
-    # end
-    #
-    # event :archive do
-    #   transitions from: :published, to: :archived
-    # end
-
     event :next do
       transitions from: :drafted, to: :published
       transitions from: :published, to: :archived
@@ -85,11 +77,11 @@ class Course < ApplicationRecord
   def next_state_status
     case status
     when 'drafted'
-      'published'
+      I18n.t('activerecord.attributes.course.status/published')
     when 'published'
-      'archived'
+      I18n.t('activerecord.attributes.course.status/archived')
     else
-      'drafted'
+      I18n.t('activerecord.attributes.course.status/drafted')
     end
   end
 
