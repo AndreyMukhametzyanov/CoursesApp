@@ -87,6 +87,7 @@ en:
       short_description: 'Short description'
       detailed: 'More detailed'
       author: 'Author'
+      status: 'Status'
     promo:
       head: 'Promo video of the course: '
       description: 'Description'
@@ -238,7 +239,7 @@ en:
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
       enrolled_error: 'You are not enrolled in the course'
-      not_published: 'The course has not been published yet. Please wait.'
+      not_published: 'The course has not been published or it was archived.'
     exam:
       change_error: 'You cannot edit or create the exam - you are not the author'
       access_error: 'Access to exam denied'

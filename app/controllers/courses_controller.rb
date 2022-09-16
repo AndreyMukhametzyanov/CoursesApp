@@ -4,7 +4,8 @@ class CoursesController < ApplicationController
   before_action :set_course, only: %i[start promo update order edit change_state]
 
   def index
-    @courses = Course.all.where(status: :published).order(:name)
+    @courses = Course.all.where('user_id = ? OR (status = ? OR status = ?)',
+                                current_user.id, :published, :archived).order(:name)
   end
 
   def new
@@ -40,7 +41,7 @@ class CoursesController < ApplicationController
   end
 
   def promo
-    if @course.owner?(current_user) || (!@course.owner?(current_user) && @course.published?)
+    if @course.owner?(current_user) || (!@course.owner?(current_user) && @course.published?) || @course.archived?
       @feedback = Feedback.find_or_initialize_by(course: @course, user: current_user)
       @feedbacks = @course.feedbacks.includes(:user)
     else

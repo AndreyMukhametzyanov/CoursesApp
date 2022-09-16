@@ -167,4 +167,19 @@ RSpec.describe Course, type: :model do
       end
     end
   end
+
+  describe 'next state' do
+    it 'return next state' do
+      course.next_state
+      expect(course).to be_published
+    end
+  end
+
+  describe 'next state status' do
+    let(:result) { I18n.t('activerecord.attributes.course.status/published') }
+
+    it 'return next state' do
+      expect(course.next_state_status).to eq(result)
+    end
+  end
 end
