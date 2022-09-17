@@ -101,6 +101,10 @@ en:
       edit_fp: 'Edit project'
     label:
       label_name: 'Cover image'
+    status:
+      drafted: 'Drafted'
+      published: 'Published'
+      archived: 'Archived'
   lessons:
     lesson_list: 'Available lessons'
     lesson_num: 'Lesson '

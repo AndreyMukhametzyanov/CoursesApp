@@ -170,7 +170,7 @@ RSpec.describe Course, type: :model do
 
   describe 'next state' do
     it 'return next state' do
-      course.next_state
+      course.next!
       expect(course).to be_published
     end
   end

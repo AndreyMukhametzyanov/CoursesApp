@@ -4,8 +4,7 @@ class CoursesController < ApplicationController
   before_action :set_course, only: %i[start promo update order edit change_state]
 
   def index
-    @courses = Course.all.where('user_id = ? OR (status = ? OR status = ?)',
-                                current_user.id, :published, :archived).order(:name)
+    @courses = Course.where(user_id: current_user.id).or(Course.where.not(status: :drafted)).order(:name)
   end
 
   def new
@@ -41,7 +40,7 @@ class CoursesController < ApplicationController
   end
 
   def promo
-    if @course.owner?(current_user) || (!@course.owner?(current_user) && @course.published?) || @course.archived?
+    if @course.owner?(current_user) || !@course.drafted?
       @feedback = Feedback.find_or_initialize_by(course: @course, user: current_user)
       @feedbacks = @course.feedbacks.includes(:user)
     else
@@ -76,7 +75,7 @@ class CoursesController < ApplicationController
 
   def change_state
     if @course.owner?(current_user)
-      @course.next_state
+      @course.next!
       redirect_with_notice(promo_course_path(params[:id]), I18n.t('orders.change_state.change',
                                                                   status: @course.aasm.human_state))
     else

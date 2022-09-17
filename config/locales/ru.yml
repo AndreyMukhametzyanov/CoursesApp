@@ -101,8 +101,12 @@ ru:
       edit_fp: 'Изменить дипломный проект'
     label:
       label_name: 'Изображение для обложки'
+    status:
+      drafted: 'Черновик'
+      published: 'Опубликовать'
+      archived: 'В архив'
   lessons:
-    lesson_list: 'Cписок лекций'
+    lesson_list: 'Список лекций'
     lesson_num: 'Лекция '
     lesson_edit: 'Редактировать лекцию'
     lesson_create: 'Создать лекцию'

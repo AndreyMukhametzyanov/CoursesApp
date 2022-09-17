@@ -11,12 +11,45 @@ RSpec.describe CoursesController, type: :controller do
   describe '#index' do
     let!(:courses) { create_list :course, 3, author: user }
 
-    before { get :index }
+    context 'when user is owner' do
+      before { get :index }
 
-    it 'returns correct renders for #index' do
-      expect(response).to have_http_status(:ok)
-      expect(assigns(:courses)).to match_array(courses)
-      expect(response).to render_template('index')
+      it 'returns correct renders for #index' do
+        expect(response).to have_http_status(:ok)
+        expect(assigns(:courses)).to match_array(courses)
+        expect(response).to render_template('index')
+      end
+    end
+
+    context 'when user is student and status not drafted' do
+      let!(:student) { create :user }
+      let!(:courses) { create_list :course, 3, author: user, status: :published }
+
+      before do
+        sign_in student
+        get :index
+      end
+
+      it 'returns correct renders for #index' do
+        expect(response).to have_http_status(:ok)
+        expect(assigns(:courses)).to match_array(courses)
+        expect(response).to render_template('index')
+      end
+    end
+
+    context 'when user is student and status drafted' do
+      let!(:student) { create :user }
+
+      before do
+        sign_in student
+        get :index
+      end
+
+      it 'returns correct renders for #index' do
+        expect(response).to have_http_status(:ok)
+        expect(assigns(:courses)).to be_empty
+        expect(response).to render_template('index')
+      end
     end
   end
 
@@ -318,6 +351,18 @@ RSpec.describe CoursesController, type: :controller do
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to root_path
       end
+    end
+  end
+
+  describe '#change_state' do
+    let!(:course) { create :course, author: user }
+    let(:notice) { I18n.t('orders.change_state.change', status: course.reload.aasm.human_state) }
+
+    before { post :change_state, params: { id: course.id } }
+
+    it 'change status of course' do
+      expect(flash[:notice]).to eq(notice)
+      expect(response).to redirect_to promo_course_path(course.reload)
     end
   end
 end

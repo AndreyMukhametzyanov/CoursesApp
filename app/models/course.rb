@@ -50,9 +50,9 @@ class Course < ApplicationRecord
   after_commit :create_certificates
 
   aasm column: :status do
-    state :drafted, initial: true, display: 'Черновик'
-    state :published, display: 'Опубликовать'
-    state :archived, display: 'В архив'
+    state :drafted, initial: true, display: I18n.t('courses.status.drafted')
+    state :published, display: I18n.t('courses.status.published')
+    state :archived, display: I18n.t('courses.status.archived')
 
     event :next do
       transitions from: :drafted, to: :published
@@ -65,24 +65,13 @@ class Course < ApplicationRecord
     author == user
   end
 
-  def next_state
-    self.next
-    save
-  end
-
   def enrolled_in_course?(user)
     students.find_by(id: user.id).present?
   end
 
   def next_state_status
-    case status
-    when 'drafted'
-      I18n.t('activerecord.attributes.course.status/published')
-    when 'published'
-      I18n.t('activerecord.attributes.course.status/archived')
-    else
-      I18n.t('activerecord.attributes.course.status/drafted')
-    end
+    self.next
+    aasm.human_state
   end
 
   private
