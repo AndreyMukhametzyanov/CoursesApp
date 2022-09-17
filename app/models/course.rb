@@ -10,6 +10,7 @@
 #  level              :integer
 #  name               :string
 #  short_description  :string
+#  status             :text
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  user_id            :bigint           not null
@@ -23,6 +24,7 @@
 class Course < ApplicationRecord
   CORRECT_URL_PART = 'https://www.youtube.com/watch?v'
 
+  include AASM
   include Commentable
 
   belongs_to :author, class_name: 'User', foreign_key: 'user_id', inverse_of: :developed_courses
@@ -47,12 +49,29 @@ class Course < ApplicationRecord
   before_save :take_video_id
   after_commit :create_certificates
 
+  aasm column: :status do
+    state :drafted, initial: true, display: I18n.t('courses.status.drafted')
+    state :published, display: I18n.t('courses.status.published')
+    state :archived, display: I18n.t('courses.status.archived')
+
+    event :next do
+      transitions from: :drafted, to: :published
+      transitions from: :published, to: :archived
+      transitions from: :archived, to: :drafted
+    end
+  end
+
   def owner?(user)
     author == user
   end
 
   def enrolled_in_course?(user)
     students.find_by(id: user.id).present?
+  end
+
+  def next_state_status
+    self.next
+    aasm.human_state
   end
 
   private

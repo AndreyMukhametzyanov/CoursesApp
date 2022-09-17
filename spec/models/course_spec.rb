@@ -10,6 +10,7 @@
 #  level              :integer
 #  name               :string
 #  short_description  :string
+#  status             :text
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  user_id            :bigint           not null
@@ -164,6 +165,21 @@ RSpec.describe Course, type: :model do
       it 'is owner' do
         expect(course).to be_owner(my_user)
       end
+    end
+  end
+
+  describe 'next state' do
+    it 'return next state' do
+      course.next!
+      expect(course).to be_published
+    end
+  end
+
+  describe 'next state status' do
+    let(:result) { I18n.t('activerecord.attributes.course.status/published') }
+
+    it 'return next state' do
+      expect(course.next_state_status).to eq(result)
     end
   end
 end

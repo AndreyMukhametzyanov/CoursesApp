@@ -31,6 +31,10 @@ en:
         cover_picture: 'File '
         short_description: 'Short description'
         create_certificate: 'Allow creation of certificates?'
+        status: 'Change visibility status of course on: '
+        status/drafted: 'drafted'
+        status/published: 'published'
+        status/archived: 'archived'
       lesson:
         title: 'Title'
         content: 'Content'
@@ -83,6 +87,7 @@ en:
       short_description: 'Short description'
       detailed: 'More detailed'
       author: 'Author'
+      status: 'Status'
     promo:
       head: 'Promo video of the course: '
       description: 'Description'
@@ -96,6 +101,10 @@ en:
       edit_fp: 'Edit project'
     label:
       label_name: 'Cover image'
+    status:
+      drafted: 'Drafted'
+      published: 'Published'
+      archived: 'Archived'
   lessons:
     lesson_list: 'Available lessons'
     lesson_num: 'Lesson '
@@ -130,6 +139,8 @@ en:
     create_order:
       success: "Welcome to the course!"
       error: "Something was wrong"
+    change_state:
+      change: 'Status was change to "%{status}"'
     certificate_parts:
       exam: 'successfully passed the exam for %{percentage} % '
       project: 'successfully completed the final project on the course: '
@@ -232,6 +243,7 @@ en:
       access_error: 'Access to course denied'
       blank_error: 'cant be blank'
       enrolled_error: 'You are not enrolled in the course'
+      not_published: 'The course has not been published or it was archived.'
     exam:
       change_error: 'You cannot edit or create the exam - you are not the author'
       access_error: 'Access to exam denied'

@@ -9,14 +9,47 @@ RSpec.describe CoursesController, type: :controller do
   before { sign_in user }
 
   describe '#index' do
-    let!(:courses) { create_list :course, 3 }
+    let!(:courses) { create_list :course, 3, author: user }
 
-    before { get :index }
+    context 'when user is owner' do
+      before { get :index }
 
-    it 'returns correct renders for #index' do
-      expect(response).to have_http_status(:ok)
-      expect(assigns(:courses)).to match_array(courses)
-      expect(response).to render_template('index')
+      it 'returns correct renders for #index' do
+        expect(response).to have_http_status(:ok)
+        expect(assigns(:courses)).to match_array(courses)
+        expect(response).to render_template('index')
+      end
+    end
+
+    context 'when user is student and status not drafted' do
+      let!(:student) { create :user }
+      let!(:courses) { create_list :course, 3, author: user, status: :published }
+
+      before do
+        sign_in student
+        get :index
+      end
+
+      it 'returns correct renders for #index' do
+        expect(response).to have_http_status(:ok)
+        expect(assigns(:courses)).to match_array(courses)
+        expect(response).to render_template('index')
+      end
+    end
+
+    context 'when user is student and status drafted' do
+      let!(:student) { create :user }
+
+      before do
+        sign_in student
+        get :index
+      end
+
+      it 'returns correct renders for #index' do
+        expect(response).to have_http_status(:ok)
+        expect(assigns(:courses)).to be_empty
+        expect(response).to render_template('index')
+      end
     end
   end
 
@@ -134,13 +167,63 @@ RSpec.describe CoursesController, type: :controller do
 
   describe '#promo' do
     let!(:course) { create :course, author: user }
+    let(:student) { create :user }
 
-    before { get :promo, params: { id: course.id } }
+    context 'when user is owner and course has published or archived status for students' do
+      describe 'when user is owner of course' do
+        before { get :promo, params: { id: course.id } }
 
-    it 'returnses correct renders for #promo' do
-      expect(assigns(:course)).to eq(course)
-      expect(response).to have_http_status(:ok)
-      expect(response).to render_template('promo')
+        it 'returns correct renders for #promo' do
+          expect(assigns(:course)).to eq(course)
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template('promo')
+        end
+      end
+
+      describe 'when user is not owner of course and course has published status' do
+        let!(:course) { create :course, author: user, status: :published }
+
+        before do
+          sign_in student
+          get :promo, params: { id: course.id }
+        end
+
+        it 'returns correct renders for #promo' do
+          expect(assigns(:course)).to eq(course)
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template('promo')
+        end
+      end
+
+      describe 'when user is not owner of course and course has archived status' do
+        let!(:course) { create :course, author: user, status: :archived }
+
+        before do
+          sign_in student
+          get :promo, params: { id: course.id }
+        end
+
+        it 'returns correct renders for #promo' do
+          expect(assigns(:course)).to eq(course)
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template('promo')
+        end
+      end
+
+      describe 'when user is not owner of course and course has drafted status' do
+        let!(:course) { create :course, author: user, status: :drafted }
+        let(:alert) { I18n.t('errors.courses.access_error') }
+
+        before do
+          sign_in student
+          get :promo, params: { id: course.id }
+        end
+
+        it 'returns correct renders for #promo' do
+          expect(flash[:alert]).to eq(alert)
+          expect(response).to redirect_to(root_path)
+        end
+      end
     end
   end
 
@@ -195,11 +278,26 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#order' do
-    let!(:course) { create :course, author: user }
-
     context 'when lesson is not created yet' do
       let(:error_message) { I18n.t('errors.lessons.empty_lessons') }
       let(:student) { create :user }
+      let!(:course) { create :course, author: user }
+
+      before do
+        sign_in student
+        post :order, params: { id: course.id }
+      end
+
+      it 'renders error message and redirect' do
+        expect(flash[:alert]).to eq(error_message)
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'when course has not published status' do
+      let(:error_message) { I18n.t('errors.courses.not_published') }
+      let(:student) { create :user }
+      let!(:course) { create :course, author: user, lessons: [(create :lesson)] }
 
       before do
         sign_in student
@@ -213,6 +311,7 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context 'when order created' do
+      let!(:course) { create :course, author: user, status: :published }
       let(:lesson) { create :lesson, course: course }
       let(:student) { create :user }
       let(:success_message) { I18n.t 'orders.create_order.success' }
@@ -237,6 +336,7 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context 'when order is not created' do
+      let!(:course) { create :course, author: user, status: :published }
       let(:lesson) { create :lesson, course: course }
       let(:error_message) { I18n.t 'orders.create_order.error' }
 
@@ -251,6 +351,20 @@ RSpec.describe CoursesController, type: :controller do
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to root_path
       end
+    end
+  end
+
+  describe '#change_state' do
+    let!(:course) { create :course, author: user }
+    let(:notice) { I18n.t('orders.change_state.change', status: course.reload.aasm.human_state) }
+    let(:new_status) { 'published' }
+
+    before { post :change_state, params: { id: course.id } }
+
+    it 'change status of course' do
+      expect(flash[:notice]).to eq(notice)
+      expect(course.status).to eq(new_status)
+      expect(response).to redirect_to promo_course_path(course)
     end
   end
 end

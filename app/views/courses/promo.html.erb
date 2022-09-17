@@ -46,17 +46,19 @@
       <%= link_to t('courses.promo.owner_continue'), start_course_path, class: 'btn btn-outline-primary' %>
       <%= link_to @course.exam ? t('exam.edit_button') : t('exam.create_button'), new_course_exam_path(@course), class: 'btn btn-outline-primary' %>
       <%= link_to @course.final_project ? t('courses.promo.edit_fp') : t('courses.promo.create_fp'), new_course_final_project_path(@course), class: 'btn btn-outline-primary' %>
-    <% end %>
-  <% else %>
-    <% if @course.enrolled_in_course?(current_user) %>
-      <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
-    <% else %>
-      <%= link_to t('courses.promo.create_order'), order_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
-    <% end %>
+    <div>
+      <h6><%= I18n.t('activerecord.attributes.course.status') %></h6>
+      <%= link_to "#{@course.next_state_status}", change_state_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+    </div>
   <% end %>
+<% else %>
+  <% if @course.enrolled_in_course?(current_user) %>
+    <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
+  <% else %>
+    <%= link_to t('courses.promo.create_order'), order_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
+  <% end %>
+<% end %>
 </p>
-
-
 
 <h5 class="my-3"><%= t('feedbacks.all_feedbacks') %></h5>
 
