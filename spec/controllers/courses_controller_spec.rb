@@ -357,12 +357,14 @@ RSpec.describe CoursesController, type: :controller do
   describe '#change_state' do
     let!(:course) { create :course, author: user }
     let(:notice) { I18n.t('orders.change_state.change', status: course.reload.aasm.human_state) }
+    let(:new_status) { 'published' }
 
     before { post :change_state, params: { id: course.id } }
 
     it 'change status of course' do
       expect(flash[:notice]).to eq(notice)
-      expect(response).to redirect_to promo_course_path(course.reload)
+      expect(course.status).to eq(new_status)
+      expect(response).to redirect_to promo_course_path(course)
     end
   end
 end

@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
   before_action :set_course, only: %i[start promo update order edit change_state]
 
   def index
-    @courses = Course.where(user_id: current_user.id).or(Course.where.not(status: :drafted)).order(:name)
+    @courses = Course.all.where('user_id = ? OR status != ?', current_user, :drafted)
   end
 
   def new
