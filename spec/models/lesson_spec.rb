@@ -23,7 +23,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Lesson, type: :model do
+RSpec.describe Lesson do
   subject { build(:lesson) }
 
   describe 'validations' do
@@ -40,8 +40,8 @@ RSpec.describe Lesson, type: :model do
   end
 
   describe 'owned by user' do
-    let!(:course) { create :course }
-    let!(:lesson) { create :lesson, course: course }
+    let!(:course) { create(:course) }
+    let!(:lesson) { create(:lesson, course: course) }
 
     it 'is owner' do
       expect(lesson).to be_owner(course.author)
@@ -49,9 +49,9 @@ RSpec.describe Lesson, type: :model do
   end
 
   describe 'unique order factor for course' do
-    let!(:course) { create :course }
-    let!(:lesson) { create :lesson, course: course }
-    let!(:new_lesson) { build :lesson, course: course, order_factor: lesson.order_factor }
+    let!(:course) { create(:course) }
+    let!(:lesson) { create(:lesson, course: course) }
+    let!(:new_lesson) { build(:lesson, course: course, order_factor: lesson.order_factor) }
     let(:error_message) { I18n.t('activerecord.errors.models.lesson.attributes.order_factor.is_not_uniq_type') }
 
     before { new_lesson.save }
@@ -62,7 +62,7 @@ RSpec.describe Lesson, type: :model do
   end
 
   describe 'after create callback' do
-    let!(:course) { create :course }
+    let!(:course) { create(:course) }
     let(:order) { create(:order, course: course) }
     let(:result) { course.lessons.count }
 

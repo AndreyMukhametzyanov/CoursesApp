@@ -3,11 +3,30 @@
 class FinalProjectsController < ApplicationController
   before_action :set_course
 
+  def show
+    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
+      @final_project = @course.final_project
+      @reply = Reply.new
+      @current_user_project = UserProject.find_by(final_project: @final_project, user: current_user)
+      @user_projects = @final_project.user_projects
+    else
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.access_error'))
+    end
+  end
+
   def new
     if @course.owner?(current_user)
       return redirect_to(edit_course_final_project_path(@course)) if @course.final_project.present?
 
       @final_project = @course.build_final_project
+    else
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.change_error'))
+    end
+  end
+
+  def edit
+    if @course.owner?(current_user)
+      @final_project = @course.final_project
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.change_error'))
     end
@@ -24,25 +43,6 @@ class FinalProjectsController < ApplicationController
       end
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.change_error'))
-    end
-  end
-
-  def edit
-    if @course.owner?(current_user)
-      @final_project = @course.final_project
-    else
-      redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.change_error'))
-    end
-  end
-
-  def show
-    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
-      @final_project = @course.final_project
-      @reply = Reply.new
-      @current_user_project = UserProject.find_by(final_project: @final_project, user: current_user)
-      @user_projects = @final_project.user_projects
-    else
-      redirect_with_alert(promo_course_path(@course), I18n.t('errors.final_project.access_error'))
     end
   end
 

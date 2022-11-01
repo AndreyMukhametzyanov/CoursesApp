@@ -3,12 +3,12 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe CertificatesController, type: :controller do
+RSpec.describe CertificatesController do
   let!(:user) { create(:user) }
   let!(:student) { create(:user) }
-  let!(:course) { create :course, author: user, lessons: [(create :lesson)] }
-  let(:exam) { create :exam, course: course }
-  let(:examination) { create :examination, exam: exam }
+  let!(:course) { create(:course, author: user, lessons: [create(:lesson)]) }
+  let(:exam) { create(:exam, course: course) }
+  let(:examination) { create(:examination, exam: exam) }
   let(:student_order) do
     Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
                                                             completed_lessons_ids: [course.lessons.first&.id],
@@ -31,7 +31,7 @@ RSpec.describe CertificatesController, type: :controller do
   end
 
   describe '#check_certificate' do
-    let(:certificate) { create :certificate, order: student_order }
+    let(:certificate) { create(:certificate, order: student_order) }
     let(:result) { Certificate.find_by(uniq_code: certificate.uniq_code).uniq_code }
 
     before { get :check_certificate }

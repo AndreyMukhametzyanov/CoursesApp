@@ -3,16 +3,16 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe LessonsController, type: :controller do
-  let(:user) { create :user }
+RSpec.describe LessonsController do
+  let(:user) { create(:user) }
 
   before { sign_in user }
 
   describe '#new' do
     context 'when user not owner of course' do
-      let!(:course) { create :course, author: user }
+      let!(:course) { create(:course, author: user) }
       let(:alert_message) { I18n.t('errors.lessons.change_error') }
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
 
       before do
         sign_in new_user
@@ -26,7 +26,7 @@ RSpec.describe LessonsController, type: :controller do
     end
 
     context 'when user is owner of course' do
-      let!(:course) { create :course, author: user }
+      let!(:course) { create(:course, author: user) }
 
       before { get :new, params: { course_id: course.id } }
 
@@ -39,7 +39,7 @@ RSpec.describe LessonsController, type: :controller do
 
   describe '#create' do
     context 'when user is owner' do
-      let!(:course) { create :course, author: user }
+      let!(:course) { create(:course, author: user) }
 
       context 'when lesson is valid' do
         let!(:title) { 'Lesson' }
@@ -83,8 +83,8 @@ RSpec.describe LessonsController, type: :controller do
     end
 
     context 'when user is not owner' do
-      let!(:course) { create :course, author: user }
-      let(:new_user) { create :user }
+      let!(:course) { create(:course, author: user) }
+      let(:new_user) { create(:user) }
       let(:alert_message) { I18n.t('errors.lessons.change_error') }
 
       before do
@@ -102,12 +102,12 @@ RSpec.describe LessonsController, type: :controller do
   end
 
   describe '#show' do
-    let!(:course) { create :course, author: user }
-    let!(:lesson) { create :lesson, course: course }
+    let!(:course) { create(:course, author: user) }
+    let!(:lesson) { create(:lesson, course: course) }
 
     context 'when user is enrolled in course' do
       before do
-        create :order, user: user, course: course
+        create(:order, user: user, course: course)
         get :show, params: { course_id: course.id, id: lesson.id }
       end
 
@@ -120,7 +120,7 @@ RSpec.describe LessonsController, type: :controller do
     end
 
     context 'when user is not enrolled in course' do
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
       let(:error_msg) { I18n.t 'errors.lessons.access_error' }
 
       before do
@@ -137,8 +137,8 @@ RSpec.describe LessonsController, type: :controller do
 
   describe '#edit' do
     context 'when user is owner' do
-      let!(:course) { create :course, author: user }
-      let!(:lesson) { create :lesson, course: course }
+      let!(:course) { create(:course, author: user) }
+      let!(:lesson) { create(:lesson, course: course) }
 
       before { get :edit, params: { course_id: course.id, id: lesson.id } }
 
@@ -150,10 +150,10 @@ RSpec.describe LessonsController, type: :controller do
     end
 
     context 'when user is not owner' do
-      let!(:course) { create :course, author: user }
-      let!(:lesson) { create :lesson, course: course }
+      let!(:course) { create(:course, author: user) }
+      let!(:lesson) { create(:lesson, course: course) }
       let(:alert_message) { I18n.t('errors.lessons.change_error') }
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
 
       before do
         sign_in new_user
@@ -171,8 +171,8 @@ RSpec.describe LessonsController, type: :controller do
     context 'when user is owner' do
       context 'when data is correct' do
         let(:new_title) { 'new lesson' }
-        let!(:course) { create :course, author: user }
-        let!(:lesson) { create :lesson, course: course }
+        let!(:course) { create(:course, author: user) }
+        let!(:lesson) { create(:lesson, course: course) }
 
         before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
 
@@ -185,8 +185,8 @@ RSpec.describe LessonsController, type: :controller do
 
       context 'when data does not correct' do
         let(:new_title) { '' }
-        let!(:course) { create :course, author: user }
-        let!(:lesson) { create :lesson, course: course }
+        let!(:course) { create(:course, author: user) }
+        let!(:lesson) { create(:lesson, course: course) }
         let(:error_msg) { I18n.t('errors.lessons.blank_error') }
 
         before { patch :update, params: { course_id: course.id, id: lesson.id, lesson: { title: new_title } } }
@@ -199,9 +199,9 @@ RSpec.describe LessonsController, type: :controller do
       end
 
       context 'when user is not owner' do
-        let!(:course) { create :course, author: user }
-        let!(:lesson) { create :lesson, course: course }
-        let(:new_user) { create :user }
+        let!(:course) { create(:course, author: user) }
+        let!(:lesson) { create(:lesson, course: course) }
+        let(:new_user) { create(:user) }
         let(:alert_message) { I18n.t('errors.lessons.change_error') }
         let(:new_title) { '' }
 
@@ -219,9 +219,9 @@ RSpec.describe LessonsController, type: :controller do
   end
 
   describe '#complete' do
-    let(:student) { create :user }
-    let!(:course) { create :course, author: user }
-    let!(:lesson) { create :lesson, course: course }
+    let(:student) { create(:user) }
+    let!(:course) { create(:course, author: user) }
+    let!(:lesson) { create(:lesson, course: course) }
     let(:final_project) do
       FinalProject.create(course_id: course.id, description: 'test', short_description: 'test', execution_days: 10)
     end
@@ -302,8 +302,8 @@ RSpec.describe LessonsController, type: :controller do
     end
 
     context 'when some lesson is not finished' do
-      let(:second_lesson) { create :lesson, course: course }
-      let(:third_lesson) { create :lesson, course: course }
+      let(:second_lesson) { create(:lesson, course: course) }
+      let(:third_lesson) { create(:lesson, course: course) }
       let(:remaining_lesson) { (course.lessons.ids - order.completed_lessons_ids).first }
 
       before do
@@ -321,7 +321,7 @@ RSpec.describe LessonsController, type: :controller do
 
     context 'when next lesson is not empty' do
       let(:next_lesson) { course.lessons.where('order_factor > ?', lesson.order_factor) }
-      let(:new_lesson) { create :lesson, course: course }
+      let(:new_lesson) { create(:lesson, course: course) }
       let(:create_order) do
         Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
                                                                 completed_lessons_ids: [] })

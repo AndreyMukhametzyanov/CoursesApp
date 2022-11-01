@@ -24,7 +24,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe UserProject, type: :model do
+RSpec.describe UserProject do
   subject { build(:user_project) }
 
   describe 'validations' do
@@ -38,16 +38,16 @@ RSpec.describe UserProject, type: :model do
   end
 
   describe 'custom validation' do
-    let(:user) { create :user }
-    let(:student) { create :user }
-    let(:course) { create :course, author: user, students: [student], lessons: [(create :lesson)] }
-    let(:final_project) { create :final_project, course: course }
+    let(:user) { create(:user) }
+    let(:student) { create(:user) }
+    let(:course) { create(:course, author: user, students: [student], lessons: [create(:lesson)]) }
+    let(:final_project) { create(:final_project, course: course) }
 
     context 'when user is owner' do
       let(:error_msg) do
         I18n.t('activerecord.errors.models.user_project.attributes.final_project.can_not_create_user_project')
       end
-      let(:user_project) { build :user_project, final_project: final_project, user: user }
+      let(:user_project) { build(:user_project, final_project: final_project, user: user) }
 
       before { user_project.save }
 

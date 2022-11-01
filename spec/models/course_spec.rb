@@ -23,7 +23,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Course, type: :model do
+RSpec.describe Course do
   subject(:course) { build(:course) }
 
   describe 'validations' do
@@ -160,7 +160,7 @@ RSpec.describe Course, type: :model do
     end
 
     context 'when user is owner' do
-      let(:course) { create :course, author: my_user }
+      let(:course) { create(:course, author: my_user) }
 
       it 'is owner' do
         expect(course).to be_owner(my_user)

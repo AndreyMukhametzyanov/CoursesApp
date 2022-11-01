@@ -3,13 +3,13 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe CommentsController, type: :controller do
-  let(:user) { create :user }
+RSpec.describe CommentsController do
+  let(:user) { create(:user) }
 
   before { sign_in user }
 
   describe '#create' do
-    let!(:course) { create :course, author: user }
+    let!(:course) { create(:course, author: user) }
 
     context 'when the comment for course is valid' do
       let(:new_comment) { 'test' }
@@ -27,7 +27,7 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     context 'when the comment for lesson is valid' do
-      let!(:lesson) { create :lesson, course: course }
+      let!(:lesson) { create(:lesson, course: course) }
       let(:new_body) { 'test' }
       let(:one_comment) { lesson.comments.last }
       let(:notice) { I18n.t 'comments.create.success' }
@@ -57,7 +57,7 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     context 'when the comment for lesson is not valid' do
-      let!(:lesson) { create :lesson, course: course }
+      let!(:lesson) { create(:lesson, course: course) }
       let(:new_body) { 't' }
       let(:comments) { lesson.comments }
 

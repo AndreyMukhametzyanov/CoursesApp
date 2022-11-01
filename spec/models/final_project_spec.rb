@@ -22,7 +22,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe FinalProject, type: :model do
+RSpec.describe FinalProject do
   subject { build(:final_project) }
 
   describe 'validations' do

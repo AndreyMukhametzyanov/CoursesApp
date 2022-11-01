@@ -22,7 +22,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Reply, type: :model do
+RSpec.describe Reply do
   subject { build(:reply) }
 
   describe 'validations' do

@@ -3,9 +3,28 @@
 class LessonsController < ApplicationController
   before_action :set_course, except: :destroy
 
+  def show
+    if @course.owner?(current_user)
+      @lesson = @course.lessons.find(params[:id])
+    elsif @course.enrolled_in_course?(current_user)
+      @lesson = @course.lessons.find(params[:id])
+      @order = Order.find_by(user_id: current_user.id, course: @course)
+    else
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.access_error'))
+    end
+  end
+
   def new
     if @course.owner?(current_user)
       @lesson = @course.lessons.build
+    else
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.change_error'))
+    end
+  end
+
+  def edit
+    if @course.owner?(current_user)
+      @lesson = @course.lessons.find(params[:id])
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.change_error'))
     end
@@ -20,25 +39,6 @@ class LessonsController < ApplicationController
       else
         render :new
       end
-    else
-      redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.change_error'))
-    end
-  end
-
-  def show
-    if @course.owner?(current_user)
-      @lesson = @course.lessons.find(params[:id])
-    elsif @course.enrolled_in_course?(current_user)
-      @lesson = @course.lessons.find(params[:id])
-      @order = Order.find_by(user_id: current_user.id, course: @course)
-    else
-      redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.access_error'))
-    end
-  end
-
-  def edit
-    if @course.owner?(current_user)
-      @lesson = @course.lessons.find(params[:id])
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.lessons.change_error'))
     end

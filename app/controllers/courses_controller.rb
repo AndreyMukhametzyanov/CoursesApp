@@ -11,6 +11,12 @@ class CoursesController < ApplicationController
     @course = Course.new
   end
 
+  def edit
+    return if @course.owner?(current_user)
+
+    redirect_with_alert(courses_path, I18n.t('errors.courses.change_error'))
+  end
+
   def create
     @course = current_user.developed_courses.build(course_params)
 
@@ -19,12 +25,6 @@ class CoursesController < ApplicationController
     else
       render :new
     end
-  end
-
-  def edit
-    return if @course.owner?(current_user)
-
-    redirect_with_alert(courses_path, I18n.t('errors.courses.change_error'))
   end
 
   def update

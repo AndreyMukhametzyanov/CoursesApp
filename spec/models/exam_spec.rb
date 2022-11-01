@@ -23,7 +23,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Exam, type: :model do
+RSpec.describe Exam do
   subject(:exam) { build(:exam) }
 
   describe 'associations' do
@@ -42,7 +42,7 @@ RSpec.describe Exam, type: :model do
   end
 
   describe 'passed by user' do
-    let(:examination) { create :examination, exam: exam }
+    let(:examination) { create(:examination, exam: exam) }
 
     before { create(:order, course: exam.course) }
 

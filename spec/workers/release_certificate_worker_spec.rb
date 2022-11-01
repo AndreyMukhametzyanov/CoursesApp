@@ -6,7 +6,7 @@ require 'spec_helper'
 RSpec.describe ReleaseCertificateWorker, type: :worker do
   let!(:user) { create(:user) }
   let!(:student) { create(:user) }
-  let!(:course) { create :course, author: user, lessons: [(create :lesson)] }
+  let!(:course) { create(:course, author: user, lessons: [create(:lesson)]) }
   let!(:order) do
     Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
                                                             completed_lessons_ids: [course.lessons.first&.id],

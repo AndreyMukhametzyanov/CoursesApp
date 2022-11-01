@@ -3,19 +3,19 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe AttachmentsController, type: :controller do
-  let(:user) { create :user }
+RSpec.describe AttachmentsController do
+  let(:user) { create(:user) }
 
   before { sign_in user }
 
   describe '#destroy' do
     let(:picture) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/course_cover_picture.png')) }
     let(:file) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test.txt')) }
-    let!(:course) { create :course, author: user, cover_picture: picture }
-    let!(:lesson) { create :lesson, course: course, files: [file] }
+    let!(:course) { create(:course, author: user, cover_picture: picture) }
+    let!(:lesson) { create(:lesson, course: course, files: [file]) }
 
     context 'when user is not owner' do
-      let(:another_user) { create :user }
+      let(:another_user) { create(:user) }
 
       before do
         sign_in another_user

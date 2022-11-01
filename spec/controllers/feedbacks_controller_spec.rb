@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe FeedbacksController, type: :controller do
-  let(:user) { create :user }
-  let(:course) { create :course, lessons: [(create :lesson)] }
+RSpec.describe FeedbacksController do
+  let(:user) { create(:user) }
+  let(:course) { create(:course, lessons: [create(:lesson)]) }
 
   describe '#create' do
     context 'when sign in' do
@@ -15,10 +15,10 @@ RSpec.describe FeedbacksController, type: :controller do
       before { sign_in user }
 
       context 'when enrolled' do
-        before { create :order, course: course, user: user }
+        before { create(:order, course: course, user: user) }
 
         context 'when feedback exist' do
-          before { create :feedback, user: user, course: course }
+          before { create(:feedback, user: user, course: course) }
 
           it 'return alert flash and correct redirect' do
             expect do
@@ -64,7 +64,7 @@ RSpec.describe FeedbacksController, type: :controller do
       end
 
       context 'when author' do
-        let(:course) { create :course, author: user }
+        let(:course) { create(:course, author: user) }
 
         it 'return alert and correct redirect' do
           expect do

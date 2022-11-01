@@ -34,7 +34,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Examination, type: :model do
+RSpec.describe Examination do
   subject(:examination) do
     described_class.create(user: user, exam: exam, passage_time: exam.attempt_time,
                            number_of_questions: exam.questions.count, current_question: exam.questions.first,
@@ -42,7 +42,7 @@ RSpec.describe Examination, type: :model do
   end
 
   let!(:user) { create(:user) }
-  let!(:course) { create :course, author: user }
+  let!(:course) { create(:course, author: user) }
 
   let(:exam) do
     Exam.create(course: course, title: 'MyExam', description: 'Text', attempts_count: 1, attempt_time: 120,

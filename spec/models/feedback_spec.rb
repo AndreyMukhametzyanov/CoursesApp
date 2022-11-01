@@ -25,7 +25,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Feedback, type: :model do
+RSpec.describe Feedback do
   subject { build(:feedback) }
 
   describe 'associations' do

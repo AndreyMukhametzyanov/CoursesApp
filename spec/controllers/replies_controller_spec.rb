@@ -3,12 +3,12 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe RepliesController, type: :controller do
-  let(:user) { create :user }
-  let(:student) { create :user }
-  let(:course) { create :course, author: user, students: [student], lessons: [(create :lesson)] }
-  let(:final_project) { create :final_project, course: course }
-  let!(:user_project) { create :user_project, final_project: final_project, user: student }
+RSpec.describe RepliesController do
+  let(:user) { create(:user) }
+  let(:student) { create(:user) }
+  let(:course) { create(:course, author: user, students: [student], lessons: [create(:lesson)]) }
+  let(:final_project) { create(:final_project, course: course) }
+  let!(:user_project) { create(:user_project, final_project: final_project, user: student) }
 
   before { sign_in user }
 
@@ -85,7 +85,7 @@ RSpec.describe RepliesController, type: :controller do
   end
 
   describe '#update' do
-    let!(:reply) { create :reply, user_project: user_project }
+    let!(:reply) { create(:reply, user_project: user_project) }
 
     context 'when user is owner' do
       context 'when data is correct'

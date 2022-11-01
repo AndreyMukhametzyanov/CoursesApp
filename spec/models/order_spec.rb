@@ -19,7 +19,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Order, type: :model do
+RSpec.describe Order do
   subject(:order) do
     build(:order, progress: { total_lessons: 2,
                               completed_lessons_ids: [1, 2] })
@@ -31,7 +31,7 @@ RSpec.describe Order, type: :model do
   end
 
   describe 'validations' do
-    before { create :lesson, course: order.course }
+    before { create(:lesson, course: order.course) }
 
     it { is_expected.to validate_uniqueness_of(:course_id).scoped_to(:user_id) }
   end

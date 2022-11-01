@@ -16,7 +16,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Certificate, type: :model do
+RSpec.describe Certificate do
   subject { build(:certificate) }
 
   describe 'associations' do

@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe FinalProjectsController, type: :controller do
-  let(:user) { create :user }
-  let(:course) { create :course, author: user }
+RSpec.describe FinalProjectsController do
+  let(:user) { create(:user) }
+  let(:course) { create(:course, author: user) }
 
   before { sign_in user }
 
@@ -21,7 +21,7 @@ RSpec.describe FinalProjectsController, type: :controller do
 
     context 'when final project already exist' do
       before do
-        create :final_project, course: course
+        create(:final_project, course: course)
         get :new, params: { course_id: course.id }
       end
 
@@ -31,7 +31,7 @@ RSpec.describe FinalProjectsController, type: :controller do
     end
 
     context 'when user is not owner' do
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
       let(:alert_message) { I18n.t('errors.final_project.change_error') }
 
       before do
@@ -91,7 +91,7 @@ RSpec.describe FinalProjectsController, type: :controller do
     end
 
     context 'when user is not owner' do
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
       let(:alert_message) { I18n.t('errors.final_project.change_error') }
 
       before do
@@ -109,7 +109,7 @@ RSpec.describe FinalProjectsController, type: :controller do
   end
 
   describe '#update' do
-    let!(:final_project) { create :final_project, course: course }
+    let!(:final_project) { create(:final_project, course: course) }
 
     context 'when user is owner' do
       context 'when data is correct' do
@@ -140,7 +140,7 @@ RSpec.describe FinalProjectsController, type: :controller do
     end
 
     context 'when user is not owner' do
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
       let(:days) { 2 }
       let(:alert_message) { I18n.t('errors.final_project.change_error') }
 
@@ -157,11 +157,11 @@ RSpec.describe FinalProjectsController, type: :controller do
   end
 
   describe '#show' do
-    let!(:final_project) { create :final_project, course: course }
+    let!(:final_project) { create(:final_project, course: course) }
 
     context 'when user is owner or enrolled in course' do
       before do
-        create :order, user: user, course: course
+        create(:order, user: user, course: course)
         get :show, params: { course_id: course.id }
       end
 
@@ -174,7 +174,7 @@ RSpec.describe FinalProjectsController, type: :controller do
 
     context 'when user is not owner or not enrolled in course' do
       let(:error_msg) { I18n.t('errors.final_project.access_error') }
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
 
       before do
         sign_in new_user
@@ -189,12 +189,12 @@ RSpec.describe FinalProjectsController, type: :controller do
   end
 
   describe '#start' do
-    let(:student) { create :user }
-    let!(:final_project) { create :final_project, course: course }
+    let(:student) { create(:user) }
+    let!(:final_project) { create(:final_project, course: course) }
 
     context 'when user is not owner or not enrolled in course' do
       let(:error_msg) { I18n.t('errors.courses.enrolled_error') }
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
 
       before do
         sign_in new_user
@@ -212,7 +212,7 @@ RSpec.describe FinalProjectsController, type: :controller do
 
       before do
         sign_in student
-        create :order, user: student, course: course
+        create(:order, user: student, course: course)
         post :start, params: { course_id: course.id }
       end
 
@@ -223,11 +223,11 @@ RSpec.describe FinalProjectsController, type: :controller do
     end
 
     context 'when final project not exist' do
-      let(:new_course) { create :course, author: user, lessons: [(create :lesson)] }
+      let(:new_course) { create(:course, author: user, lessons: [create(:lesson)]) }
       let(:alert) { I18n.t('errors.final_project.not_create') }
 
       before do
-        create :order, user: user, course: new_course
+        create(:order, user: user, course: new_course)
         post :start, params: { course_id: new_course.id }
       end
 

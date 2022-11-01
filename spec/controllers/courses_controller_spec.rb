@@ -3,13 +3,13 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe CoursesController, type: :controller do
-  let(:user) { create :user }
+RSpec.describe CoursesController do
+  let(:user) { create(:user) }
 
   before { sign_in user }
 
   describe '#index' do
-    let!(:courses) { create_list :course, 3, author: user }
+    let!(:courses) { create_list(:course, 3, author: user) }
 
     context 'when user is owner' do
       before { get :index }
@@ -22,8 +22,8 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context 'when user is student and status not drafted' do
-      let!(:student) { create :user }
-      let!(:courses) { create_list :course, 3, author: user, status: :published }
+      let!(:student) { create(:user) }
+      let!(:courses) { create_list(:course, 3, author: user, status: :published) }
 
       before do
         sign_in student
@@ -38,7 +38,7 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context 'when user is student and status drafted' do
-      let!(:student) { create :user }
+      let!(:student) { create(:user) }
 
       before do
         sign_in student
@@ -90,7 +90,7 @@ RSpec.describe CoursesController, type: :controller do
 
   describe '#edit' do
     context 'when user is owner' do
-      let!(:course) { create :course, author: user }
+      let!(:course) { create(:course, author: user) }
 
       before { get :edit, params: { id: course.id } }
 
@@ -102,8 +102,8 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context 'when user is not owner' do
-      let!(:course) { create :course, author: user }
-      let(:user2) { create :user }
+      let!(:course) { create(:course, author: user) }
+      let(:user2) { create(:user) }
       let(:alert_message) { I18n.t('errors.courses.change_error') }
 
       before do
@@ -122,7 +122,7 @@ RSpec.describe CoursesController, type: :controller do
     context 'when user is owner' do
       context 'when data is correct' do
         let(:new_name) { 'new name' }
-        let!(:course) { create :course, author: user }
+        let!(:course) { create(:course, author: user) }
 
         before { patch :update, params: { id: course.id, course: { name: new_name } } }
 
@@ -135,7 +135,7 @@ RSpec.describe CoursesController, type: :controller do
 
       context 'when data is not correct' do
         let(:new_name) { '' }
-        let!(:course) { create :course, author: user }
+        let!(:course) { create(:course, author: user) }
         let(:error_msg) { I18n.t('errors.courses.blank_error') }
 
         before { patch :update, params: { id: course.id, course: { name: new_name } } }
@@ -149,8 +149,8 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context 'when user does not owner this course' do
-      let!(:course) { create :course, author: user }
-      let(:another_user) { create :user }
+      let!(:course) { create(:course, author: user) }
+      let(:another_user) { create(:user) }
       let(:alert_message) { I18n.t('errors.courses.change_error') }
 
       before do
@@ -166,8 +166,8 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#promo' do
-    let!(:course) { create :course, author: user }
-    let(:student) { create :user }
+    let!(:course) { create(:course, author: user) }
+    let(:student) { create(:user) }
 
     context 'when user is owner and course has published or archived status for students' do
       describe 'when user is owner of course' do
@@ -181,7 +181,7 @@ RSpec.describe CoursesController, type: :controller do
       end
 
       describe 'when user is not owner of course and course has published status' do
-        let!(:course) { create :course, author: user, status: :published }
+        let!(:course) { create(:course, author: user, status: :published) }
 
         before do
           sign_in student
@@ -196,7 +196,7 @@ RSpec.describe CoursesController, type: :controller do
       end
 
       describe 'when user is not owner of course and course has archived status' do
-        let!(:course) { create :course, author: user, status: :archived }
+        let!(:course) { create(:course, author: user, status: :archived) }
 
         before do
           sign_in student
@@ -211,7 +211,7 @@ RSpec.describe CoursesController, type: :controller do
       end
 
       describe 'when user is not owner of course and course has drafted status' do
-        let!(:course) { create :course, author: user, status: :drafted }
+        let!(:course) { create(:course, author: user, status: :drafted) }
         let(:alert) { I18n.t('errors.courses.access_error') }
 
         before do
@@ -229,8 +229,8 @@ RSpec.describe CoursesController, type: :controller do
 
   describe '#start' do
     context 'when user is not enrolled in course' do
-      let!(:course) { create :course, author: user }
-      let(:another_user) { create :user }
+      let!(:course) { create(:course, author: user) }
+      let(:another_user) { create(:user) }
       let(:student) { course.students.find_by(id: another_user.id) }
       let(:alert_message) { I18n.t('errors.courses.enrolled_error') }
 
@@ -247,11 +247,11 @@ RSpec.describe CoursesController, type: :controller do
 
     context 'when user is enrolled in course' do
       context 'when a lesson exists' do
-        let!(:course) { create :course }
-        let!(:lesson) { create :lesson, course: course }
+        let!(:course) { create(:course) }
+        let!(:lesson) { create(:lesson, course: course) }
 
         before do
-          create :order, user: user, course: course
+          create(:order, user: user, course: course)
           get :start, params: { id: course.id }
         end
 
@@ -262,7 +262,7 @@ RSpec.describe CoursesController, type: :controller do
       end
 
       context 'when a lesson does not exists' do
-        let!(:course) { create :course, author: user }
+        let!(:course) { create(:course, author: user) }
         let(:alert_message) { I18n.t('errors.lessons.access_error') }
 
         before do
@@ -280,8 +280,8 @@ RSpec.describe CoursesController, type: :controller do
   describe '#order' do
     context 'when lesson is not created yet' do
       let(:error_message) { I18n.t('errors.lessons.empty_lessons') }
-      let(:student) { create :user }
-      let!(:course) { create :course, author: user }
+      let(:student) { create(:user) }
+      let!(:course) { create(:course, author: user) }
 
       before do
         sign_in student
@@ -296,8 +296,8 @@ RSpec.describe CoursesController, type: :controller do
 
     context 'when course has not published status' do
       let(:error_message) { I18n.t('errors.courses.not_published') }
-      let(:student) { create :user }
-      let!(:course) { create :course, author: user, lessons: [(create :lesson)] }
+      let(:student) { create(:user) }
+      let!(:course) { create(:course, author: user, lessons: [create(:lesson)]) }
 
       before do
         sign_in student
@@ -311,9 +311,9 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context 'when order created' do
-      let!(:course) { create :course, author: user, status: :published }
-      let(:lesson) { create :lesson, course: course }
-      let(:student) { create :user }
+      let!(:course) { create(:course, author: user, status: :published) }
+      let(:lesson) { create(:lesson, course: course) }
+      let(:student) { create(:user) }
       let(:success_message) { I18n.t 'orders.create_order.success' }
       let(:order) { Order.find_by(user_id: student.id, course: course) }
 
@@ -336,13 +336,13 @@ RSpec.describe CoursesController, type: :controller do
     end
 
     context 'when order is not created' do
-      let!(:course) { create :course, author: user, status: :published }
-      let(:lesson) { create :lesson, course: course }
+      let!(:course) { create(:course, author: user, status: :published) }
+      let(:lesson) { create(:lesson, course: course) }
       let(:error_message) { I18n.t 'orders.create_order.error' }
 
       before do
         lesson
-        create :order, user: user, course: course
+        create(:order, user: user, course: course)
         post :order, params: { id: course.id }
       end
 
@@ -355,7 +355,7 @@ RSpec.describe CoursesController, type: :controller do
   end
 
   describe '#change_state' do
-    let!(:course) { create :course, author: user }
+    let!(:course) { create(:course, author: user) }
     let(:notice) { I18n.t('orders.change_state.change', status: course.reload.aasm.human_state) }
     let(:new_status) { 'published' }
 
