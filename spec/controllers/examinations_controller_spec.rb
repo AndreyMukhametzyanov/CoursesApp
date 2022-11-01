@@ -3,12 +3,12 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe ExaminationsController, type: :controller do
+RSpec.describe ExaminationsController do
   let!(:user) { create(:user) }
   let!(:student) { create(:user) }
-  let!(:examination) { create :examination, exam: exam }
-  let(:exam) { create :exam, course: course }
-  let!(:course) { create :course, author: user }
+  let!(:examination) { create(:examination, exam: exam) }
+  let(:exam) { create(:exam, course: course) }
+  let!(:course) { create(:course, author: user) }
   let!(:student_order) do
     Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
                                                             completed_lessons_ids: [],
@@ -75,8 +75,8 @@ RSpec.describe ExaminationsController, type: :controller do
     context 'when the student answers more then 80 % questions and next question nil' do
       let(:correct_answer) { exam.questions.last.answers.where(correct_answer: true).ids }
       let!(:examination) do
-        create :examination, exam: exam, correct_answers: exam.questions.count - 1,
-                             current_question: exam.questions.last, next_question: nil
+        create(:examination, exam: exam, correct_answers: exam.questions.count - 1,
+                             current_question: exam.questions.last, next_question: nil)
       end
 
       before do
@@ -95,8 +95,8 @@ RSpec.describe ExaminationsController, type: :controller do
 
     context 'when the student answers less then 80 % and next question nil' do
       let!(:examination) do
-        create :examination, exam: exam, correct_answers: 0,
-                             current_question: exam.questions.last, next_question: nil
+        create(:examination, exam: exam, correct_answers: 0,
+                             current_question: exam.questions.last, next_question: nil)
       end
       let(:correct_answer) { examination.exam.questions.last.answers.where(correct_answer: true).ids }
 

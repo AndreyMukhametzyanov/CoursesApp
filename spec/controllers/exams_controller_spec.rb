@@ -3,13 +3,13 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe ExamsController, type: :controller do
-  let(:user) { create :user }
+RSpec.describe ExamsController do
+  let(:user) { create(:user) }
 
   before { sign_in user }
 
   describe '#new' do
-    let!(:course) { create :course, author: user }
+    let!(:course) { create(:course, author: user) }
 
     context 'when user is owner' do
       before { get :new, params: { course_id: course.id } }
@@ -22,7 +22,7 @@ RSpec.describe ExamsController, type: :controller do
 
     context 'when user not owner' do
       let(:alert_message) { I18n.t('errors.exam.change_error') }
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
 
       before do
         sign_in new_user
@@ -37,7 +37,7 @@ RSpec.describe ExamsController, type: :controller do
   end
 
   describe '#create' do
-    let!(:course) { create :course, author: user }
+    let!(:course) { create(:course, author: user) }
 
     context 'when user is owner' do
       context 'when new exam is valid' do
@@ -93,7 +93,7 @@ RSpec.describe ExamsController, type: :controller do
 
     context 'when user not is owner' do
       let(:alert_message) { I18n.t('errors.exam.change_error') }
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
 
       before do
         sign_in new_user
@@ -109,8 +109,8 @@ RSpec.describe ExamsController, type: :controller do
   end
 
   describe '#update' do
-    let!(:course) { create :course, author: user }
-    let!(:exam) { create :exam, course: course }
+    let!(:course) { create(:course, author: user) }
+    let!(:exam) { create(:exam, course: course) }
 
     context 'when user is owner' do
       context 'when data is correct' do
@@ -145,7 +145,7 @@ RSpec.describe ExamsController, type: :controller do
     end
 
     context 'when user is not owner' do
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
       let(:alert_message) { I18n.t('errors.exam.change_error') }
       let(:new_title) { 'NewTitle' }
 
@@ -162,10 +162,10 @@ RSpec.describe ExamsController, type: :controller do
   end
 
   describe '#edit' do
-    let!(:course) { create :course, author: user }
+    let!(:course) { create(:course, author: user) }
 
     context 'when user is owner' do
-      let!(:exam) { create :exam, course: course }
+      let!(:exam) { create(:exam, course: course) }
 
       before do
         get :edit, params: { course_id: course.id }
@@ -180,7 +180,7 @@ RSpec.describe ExamsController, type: :controller do
 
     context 'when user is not owner' do
       let(:error_msg) { I18n.t('errors.exam.change_error') }
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
 
       before do
         sign_in new_user
@@ -195,8 +195,8 @@ RSpec.describe ExamsController, type: :controller do
   end
 
   describe '#show' do
-    let!(:course) { create :course, author: user }
-    let!(:exam) { create :exam, course: course }
+    let!(:course) { create(:course, author: user) }
+    let!(:exam) { create(:exam, course: course) }
 
     context 'when user is owner or user is enrolled in course' do
       before do
@@ -212,7 +212,7 @@ RSpec.describe ExamsController, type: :controller do
 
     context 'when user is not owner or is not enrolled in course' do
       let(:error_msg) { I18n.t('errors.exam.access_error') }
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
 
       before do
         sign_in new_user
@@ -227,9 +227,9 @@ RSpec.describe ExamsController, type: :controller do
   end
 
   describe '#start' do
-    let!(:course) { create :course, author: user }
-    let!(:lesson) { create :lesson, course: course }
-    let(:exam) { create :exam, course: course }
+    let!(:course) { create(:course, author: user) }
+    let!(:lesson) { create(:lesson, course: course) }
+    let(:exam) { create(:exam, course: course) }
 
     context 'when user is owner' do
       let(:error_msg) { I18n.t 'errors.examination.start_error' }
@@ -247,7 +247,7 @@ RSpec.describe ExamsController, type: :controller do
 
     context 'when user is not enrolled in course' do
       let(:error_msg) { I18n.t('errors.courses.enrolled_error') }
-      let(:new_user) { create :user }
+      let(:new_user) { create(:user) }
 
       before do
         exam
@@ -262,8 +262,8 @@ RSpec.describe ExamsController, type: :controller do
     end
 
     context 'when examination exists and not finished' do
-      let(:student) { create :user }
-      let(:examination) { create :examination, exam: exam, user: student }
+      let(:student) { create(:user) }
+      let(:examination) { create(:examination, exam: exam, user: student) }
       let(:student_order) do
         Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
                                                                 completed_lessons_ids: [],
@@ -284,7 +284,7 @@ RSpec.describe ExamsController, type: :controller do
     end
 
     context 'when start examination' do
-      let(:student) { create :user }
+      let(:student) { create(:user) }
       let(:student_order) do
         Order.create(user: student, course: course, progress: { total_lessons: course.lessons.count,
                                                                 completed_lessons_ids: [],
@@ -293,7 +293,7 @@ RSpec.describe ExamsController, type: :controller do
       end
 
       describe 'when the number of attempts is exceeded' do
-        let(:examination) { create :examination, exam: exam, user: student, finished_exam: true }
+        let(:examination) { create(:examination, exam: exam, user: student, finished_exam: true) }
         let(:error_msg) { I18n.t('errors.exam.attempt_error') }
 
         before do
@@ -310,7 +310,7 @@ RSpec.describe ExamsController, type: :controller do
       end
 
       describe 'when everything ok' do
-        let!(:exam) { create :exam, course: course }
+        let!(:exam) { create(:exam, course: course) }
         let(:examination) { Examination.find_by(exam: exam) }
 
         before do

@@ -6,35 +6,35 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 gem 'aasm'
-gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bootsnap', require: false
 gem 'cocoon'
 gem 'devise'
-gem 'image_processing', '~> 1.2'
-gem 'jbuilder', '~> 2.7'
+gem 'image_processing'
+gem 'jbuilder'
 gem 'jquery-rails'
 gem 'matrix'
 gem 'net-smtp', require: false
-gem 'pg', '~> 1.1'
+gem 'pg'
 gem 'prawn'
 gem 'prawn-svg'
-gem 'puma', '~> 5.0'
-gem 'rails', '~> 6.1.6.1'
+gem 'puma'
+gem 'rails'
 gem 'rails-controller-testing'
 gem 'rails-i18n'
 gem 'redis'
-gem 'rqrcode', '~> 2.0'
-gem 'sass-rails', '>= 6'
+gem 'rqrcode'
+gem 'sass-rails'
 gem 'sidekiq'
 gem 'simple_form'
-gem 'turbolinks', '~> 5'
-gem 'webpacker', '~> 5.0'
+gem 'turbolinks'
+gem 'webpacker'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'foreman'
   gem 'letter_opener'
-  gem 'letter_opener_web', '~> 2.0'
+  gem 'letter_opener_web'
   gem 'rspec-rails'
   gem 'rspec-sidekiq', require: false
   gem 'rubocop', require: false

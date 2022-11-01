@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_12_121945) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_10_27_101144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,8 +19,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.text "body"
     t.string "record_type", null: false
     t.bigint "record_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
@@ -30,7 +29,7 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -42,8 +41,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.text "metadata"
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -57,16 +56,16 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.string "body"
     t.boolean "correct_answer", default: false
     t.bigint "question_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
   create_table "certificates", force: :cascade do |t|
     t.bigint "order_id", null: false
     t.text "uniq_code"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_certificates_on_order_id"
   end
 
@@ -75,8 +74,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -86,8 +85,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.string "name"
     t.string "description"
     t.integer "level"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "youtube_video_id"
     t.string "short_description"
     t.boolean "create_certificate", default: false
@@ -107,8 +106,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.bigint "user_id", null: false
     t.bigint "next_question_id"
     t.bigint "current_question_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["current_question_id"], name: "index_examinations_on_current_question_id"
     t.index ["exam_id"], name: "index_examinations_on_exam_id"
     t.index ["next_question_id"], name: "index_examinations_on_next_question_id"
@@ -121,8 +120,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.integer "attempts_count"
     t.integer "attempt_time"
     t.bigint "course_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_exams_on_course_id"
   end
 
@@ -131,8 +130,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.integer "grade"
     t.bigint "user_id", null: false
     t.bigint "course_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_feedbacks_on_course_id"
     t.index ["user_id", "course_id"], name: "index_feedback_on_course_id_and_user_id", unique: true
     t.index ["user_id"], name: "index_feedbacks_on_user_id"
@@ -143,8 +142,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.text "short_description"
     t.integer "execution_days"
     t.bigint "course_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_final_projects_on_course_id"
   end
 
@@ -152,8 +151,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.text "youtube_video_id"
     t.text "content"
     t.bigint "course_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "title"
     t.integer "order_factor"
     t.index ["course_id"], name: "index_lessons_on_course_id"
@@ -162,16 +161,16 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
   create_table "links", force: :cascade do |t|
     t.string "address", null: false
     t.bigint "lesson_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["lesson_id"], name: "index_links_on_lesson_id"
   end
 
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "course_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.json "progress"
     t.index ["course_id", "user_id"], name: "index_orders_on_course_id_and_user_id", unique: true
     t.index ["course_id"], name: "index_orders_on_course_id"
@@ -181,8 +180,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
   create_table "questions", force: :cascade do |t|
     t.string "title"
     t.bigint "exam_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["exam_id"], name: "index_questions_on_exam_id"
   end
 
@@ -191,8 +190,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.text "teacher_comment"
     t.text "status"
     t.bigint "user_project_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_project_id"], name: "index_replies_on_user_project_id"
   end
 
@@ -200,8 +199,8 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.boolean "complete", default: false
     t.bigint "final_project_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["final_project_id", "user_id"], name: "index_user_project_final_project_id_and_user_id", unique: true
     t.index ["final_project_id"], name: "index_user_projects_on_final_project_id"
     t.index ["user_id"], name: "index_user_projects_on_user_id"
@@ -214,14 +213,14 @@ ActiveRecord::Schema.define(version: 2022_09_12_121945) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

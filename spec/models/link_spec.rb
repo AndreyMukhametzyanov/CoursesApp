@@ -16,7 +16,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Link, type: :model do
+RSpec.describe Link do
   subject(:link) { build(:link) }
 
   describe 'associations' do

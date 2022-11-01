@@ -21,7 +21,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Answer, type: :model do
+RSpec.describe Answer do
   subject { build(:answer) }
 
   describe 'associations' do

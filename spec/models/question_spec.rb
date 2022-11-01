@@ -20,7 +20,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Question, type: :model do
+RSpec.describe Question do
   subject { build(:question) }
 
   describe 'validations' do

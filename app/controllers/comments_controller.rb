@@ -31,9 +31,9 @@ class CommentsController < ApplicationController
 
   def prepare_flash(comment)
     if comment.errors.any?
-      flash[:alert] = comment.errors.full_messages.first
+      flash.now[:alert] = comment.errors.full_messages.first
     else
-      flash[:notice] = I18n.t('comments.create.success')
+      flash.now[:notice] = I18n.t('comments.create.success')
     end
   end
 

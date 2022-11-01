@@ -3,11 +3,33 @@
 class ExamsController < ApplicationController
   before_action :set_course
 
+  def show
+    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
+      @exam = @course.exam
+      @examinations = Examination.where(user: current_user, exam: @exam).order(:created_at)
+      @not_finished_exam = Examination.where(user: current_user, exam: @exam, finished_exam: false).first
+      @full_finished_exam = Examination.find_by(user: current_user, exam: @exam, finished_exam: true,
+                                                percentage_passing: 100)
+      @user_attempts = Examination.where(user: current_user, exam: @exam).count
+      @attempts_of_exam = @exam.attempts_count
+    else
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.access_error'))
+    end
+  end
+
   def new
     if @course.owner?(current_user)
       return redirect_to(edit_course_exam_path(@course)) if @course.exam.present?
 
       @exam = @course.build_exam
+    else
+      redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.change_error'))
+    end
+  end
+
+  def edit
+    if @course.owner?(current_user)
+      @exam = @course.exam
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.change_error'))
     end
@@ -37,28 +59,6 @@ class ExamsController < ApplicationController
       end
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.change_error'))
-    end
-  end
-
-  def edit
-    if @course.owner?(current_user)
-      @exam = @course.exam
-    else
-      redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.change_error'))
-    end
-  end
-
-  def show
-    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
-      @exam = @course.exam
-      @examinations = Examination.where(user: current_user, exam: @exam).order(:created_at)
-      @not_finished_exam = Examination.where(user: current_user, exam: @exam, finished_exam: false).first
-      @full_finished_exam = Examination.find_by(user: current_user, exam: @exam, finished_exam: true,
-                                                percentage_passing: 100)
-      @user_attempts = Examination.where(user: current_user, exam: @exam).count
-      @attempts_of_exam = @exam.attempts_count
-    else
-      redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.access_error'))
     end
   end
 
