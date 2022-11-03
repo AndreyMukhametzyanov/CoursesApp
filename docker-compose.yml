@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+     POSTGRES_USERNAME: postgres
+     POSTGRES_PASSWORD: password
+
+  redis:
+    image: redis
+    restart: always
+
+  course_app:
+    build: .
+    command: bash -c 'bundle exec puma'
+    environment:
+      - POSTGRESQL_PASSWORD=password
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_HOST=db
+      - POSTGRESQL_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+    volumes:
+      - .:/courses_app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+      - redis
