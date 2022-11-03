@@ -2,11 +2,10 @@ version: '3.9'
 
 services:
   db:
-    image: postgres
-    restart: always
+    image: postgres:13
     environment:
-     POSTGRES_USERNAME: postgres
-     POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
 
   redis:
     image: redis
@@ -16,13 +15,9 @@ services:
     build: .
     command: bash -c 'bundle exec puma'
     environment:
-      - POSTGRESQL_PASSWORD=password
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_HOST=db
-      - POSTGRESQL_PORT=5432
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - REDIS_DB=1
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: postgres
     volumes:
       - .:/courses_app
     ports:

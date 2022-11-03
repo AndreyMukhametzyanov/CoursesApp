@@ -17,11 +17,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: <%= ENV.fetch('PGHOST', 'localhost') %>
+  username: <%= ENV.fetch('PGUSER', 'postgres') %>
+  password: <%= ENV.fetch('PGPASSWORD', 'password') %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: <%= ENV.fetch('POSTGRESQL_HOST', 'localhost') %>
-  port: <%= ENV.fetch('POSTGRESQL_PORT', 5432) %>
-  username: <%= ENV.fetch('POSTGRESQL_USERNAME', 'CourseApp') %>
-  password: <%= ENV.fetch('POSTGRESQL_PASSWORD', 'password') %>
 
 development:
   <<: *default
