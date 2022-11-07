@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  redis:
+    image: redis
+    restart: always
+
+  sidekiq:
+    build: .
+    command: bash -c 'sidekiq'
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      RAILS_ENV: docker
+
+    volumes:
+      - .:/courses_app
+    depends_on:
+      - db
+      - redis
+
+  course_app:
+    build: .
+    command: bash -c 'bundle exec puma'
+    environment:
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 1
+      RAILS_ENV: docker
+    volumes:
+      - .:/courses_app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+      - redis
+      - sidekiq
