@@ -17,9 +17,6 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV.fetch('PGHOST', 'localhost') %>
-  username: <%= ENV.fetch('PGUSER', 'postgres') %>
-  password: <%= ENV.fetch('PGPASSWORD', 'password') %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -35,3 +32,10 @@ production:
   database: CoursesApp_production
   username: CoursesApp
   password: <%= ENV['COURSESAPP_DATABASE_PASSWORD'] %>
+
+docker:
+  <<: *default
+  database: CoursesApp_development
+  host: <%= ENV.fetch('PGHOST', 'localhost') %>
+  username: <%= ENV.fetch('PGUSER', 'CoursesApp') %>
+  password: <%= ENV.fetch('PGPASSWORD', 'postgres') %>
