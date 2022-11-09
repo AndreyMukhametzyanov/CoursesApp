@@ -221,6 +221,15 @@ ru:
     certificate: 'Сертификат'
     confirm: 'Данный сертификат подтверждает, что'
     finished: '%{user} успешно освоил курс:'
+  account:
+    edit: 'Изменить аккаунт'
+    my_courses: 'Преподавание'
+    my_education: 'Обучение'
+    my_certificates: 'Мои сертификаты'
+    students_reply: 'Решения студентов'
+    not_studied: 'Вы еще ничего не изучаете'
+    not_courses: 'У вас нет созданных курсов'
+    not_replies: 'Нет решений от студентов'
   buttons:
     create: 'Создать'
     edit: 'Изменить'

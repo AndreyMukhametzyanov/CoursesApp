@@ -1,0 +1,35 @@
+<h2 class="text-center my-4"><%= t('certificate.head') %></h2>
+<% if @certificates.empty? %>
+  <h5 class="text-center my-4"><%= I18n.t('errors.certificate.not_yet') %></h5>
+<% end %>
+<div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% @certificates.each do |certificate| %>
+          <div class="col mb-4">
+            <div class="card, text-center">
+              <div class="card-body">
+                <h5 class="card-title mb-4"><%= t('certificate.for_course') %></h5>
+                <%= certificate.order.course.name %>
+                </h5>
+                <p class="card- mt-3">
+                  <%= link_to t('certificate.download'), rails_blob_path(certificate.pdf, disposition: :attachment), class: 'btn btn-outline-primary' %>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-2 ms-auto mt-2">
+      <div class="list-group">
+        <%= link_to t('account.edit'), edit_user_registration_path, class: "list-group-item my-1" %>
+        <%= link_to t('account.my_courses'), users_created_courses_path, class: "list-group-item my-1" %>
+        <%= link_to t('account.students_reply'), users_students_reply_path, class: "list-group-item my-1" %>
+        <%= link_to t('account.my_certificates'), users_certificates_path, class: "list-group-item my-1 active" %>
+        <%= link_to t('account.my_education'), users_studied_courses_path, class: "list-group-item my-1" %>
+      </div>
+    </div>
+  </div>
+</div>

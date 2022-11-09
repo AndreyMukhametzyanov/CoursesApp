@@ -220,6 +220,15 @@ en:
     subject: 'Certificate of completion of the course | Course Platform'
     certificate: 'Certificate'
     confirm: 'This certificate confirms that '
+  account:
+    edit: 'Edit account'
+    my_courses: 'My courses'
+    my_education: 'My education'
+    my_certificates: 'My certificates'
+    students_reply: 'Students reply'
+    not_studied: 'You are not studied yet'
+    not_courses: 'You have not created courses yet'
+    not_replies: 'Not replies yet'
   buttons:
     create: 'Create'
     edit: 'Edit'

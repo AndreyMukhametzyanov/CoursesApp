@@ -1,35 +1,48 @@
-<h2><%= t('edit.edit') %></h2>
+<h2 class="text-center"><%= t('edit.edit') %></h2>
+<div class="row">
+  <div class="col-md-7">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= f.error_notification %>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+      <div class="form-inputs">
+        <%= f.input :email, required: true, autofocus: true %>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+        <% end %>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+        <%= f.input :password,
+                    hint: "#{t('edit.no_change')}",
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :password_confirmation,
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :current_password,
+                    hint: "#{t('edit.confirm_change')}",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "#{t('edit.update')}", class: "btn btn-outline-primary mt-3" %>
+      </div>
     <% end %>
 
-    <%= f.input :password,
-                hint: "#{t('edit.no_change')}",
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: false,
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :current_password,
-                hint: "#{t('edit.confirm_change')}",
-                required: true,
-                input_html: { autocomplete: "current-password" } %>
+    <h5 class="mt-3 mb-0"> <%= t('edit.destroy_acc') %></h5>
+
+    <p><%= link_to "#{t('edit.destroy_acc')}", registration_path(resource_name), data: { confirm: "#{t('edit.warning')}" }, method: :delete, class: "btn btn-outline-primary mt-3" %></p>
+
+    <p><%= link_to "#{t('buttons.back')}", :back, class: "btn btn-outline-primary mt-3" %></p>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "#{t('edit.update')}" %>
+  <div class="col-md-2 ms-auto mt-2">
+    <div class="list-group">
+      <%= link_to t('account.edit'), edit_user_registration_path, class: "list-group-item my-1 active" %>
+      <%= link_to t('account.my_courses'), users_created_courses_path, class: "list-group-item my-1" %>
+      <%= link_to t('account.students_reply'), users_students_reply_path, class: "list-group-item my-1" %>
+      <%= link_to t('account.my_certificates'), users_certificates_path, class: "list-group-item my-1" %>
+      <%= link_to t('account.my_education'), users_studied_courses_path, class: "list-group-item my-1" %>
+    </div>
   </div>
-<% end %>
+</div>
 
-<h3><%= t('edit.destroy_acc') %></h3>
-
-<p><%= link_to "#{t('edit.destroy_acc')}", registration_path(resource_name), data: { confirm: "#{t('edit.warning')}" }, method: :delete %></p>
-
-<%= link_to "#{t('buttons.back')}", :back %>
