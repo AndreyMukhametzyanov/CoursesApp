@@ -30,11 +30,10 @@
       <%= link_to t('menu.sign_out'), destroy_user_session_path, method: :delete, class: 'btn btn-outline-primary my-1' %>
       <%= link_to current_user.first_name, edit_user_registration_path, class: 'btn btn-outline-primary my-1 mx-2' %>
       <%= link_to t('menu.create_course'), new_course_path, class: 'btn btn-outline-primary my-1' %>
-      <%= link_to t('menu.certificates'), certificates_path, class: 'btn btn-outline-primary mx-2 my-1' %>
 
     <% else %>
-      <div style="margin-left: 30px;"><%= link_to t('menu.sign_up'), new_user_registration_path, class: 'btn btn-outline-primary' %></div>
-      <div style="margin-left: 30px;"><%= link_to t('menu.sign_in'), new_user_session_path, class: 'btn btn-outline-primary' %></div>
+      <div style=""><%= link_to t('menu.sign_up'), new_user_registration_path, class: 'btn btn-outline-primary' %></div>
+      <div style="margin-left: 10px;"><%= link_to t('menu.sign_in'), new_user_session_path, class: 'btn btn-outline-primary' %></div>
     <% end %>
   </div>
 </div>

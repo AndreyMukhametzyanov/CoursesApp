@@ -1,0 +1,41 @@
+<h2 class="text-center my-4"><%= t('account.my_courses') %></h2>
+<% if @courses.empty? %>
+  <h5 class="text-center my-4"><%= I18n.t('account.not_courses') %></h5>
+<% end %>
+<div>
+  <div class="row">
+    <div class="col-sm-10">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% @courses.each do |course| %>
+          <div class="col mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title mb-4">
+                  <%= course.name %>
+                </h5>
+                <h6 class="card-title my-2"><%= t('courses.index.short_description') %>
+                  :</h6> <%= course.short_description %>
+                <h6 class="card-title my-2"><%= t('courses.index.author') %>:</h6> <%= course.author.first_name %>
+                <h6 class="card-title my-2"><%= t('courses.index.status') %>:</h6> <%= course.aasm.human_state %>
+                <p class="card-text mt-3">
+                <div class="col-sm"> <%= link_to t('courses.index.detailed'), promo_course_path(course.id), class: 'btn btn-outline-primary' %> </div>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-2 ms-auto mt-2">
+      <div class="list-group">
+        <%= link_to t('account.edit'), edit_user_registration_path, class: "list-group-item my-1" %>
+        <%= link_to t('account.my_courses'), users_created_courses_path, class: "list-group-item my-1 active" %>
+        <%= link_to t('account.students_reply'), users_students_reply_path, class: "list-group-item my-1" %>
+        <%= link_to t('account.my_certificates'), users_certificates_path, class: "list-group-item my-1" %>
+        <%= link_to t('account.my_education'), users_studied_courses_path, class: "list-group-item my-1" %>
+      </div>
+    </div>
+
+  </div>
+  <div>&copy;andrey <%= Time.now.year %></div>
+</div>

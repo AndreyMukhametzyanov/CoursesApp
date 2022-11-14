@@ -1,0 +1,41 @@
+<h2 class="text-center my-4"><%= t('account.students_reply') %></h2>
+<% if @replies.empty? %>
+  <h5 class="text-center my-4"><%= I18n.t('account.not_replies') %></h5>
+<% end %>
+<div class="row">
+  <div class="card mb-6" style="width: 40rem;">
+    <% @replies.each do |reply| %>
+      <div class="card-header">
+        <div class="row">
+          <div class="col"><%= "#{t('reply.reply')} #{t('reply.from')} #{reply.user.first_name} #{reply.created_at.strftime("%Y.%m.%d %H:%M")}" %>
+            <span class="float-end badge <%= reply_status_color(reply.status) %> fs-6"><%= reply.aasm.human_state %></span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <%= reply.user_reply %>
+          <% if reply.teacher_comment.present? %>
+          <h6><%= I18n.t('reply.teacher_comment') %></h6>
+          <%= reply.teacher_comment %>
+        <% end %>
+        <% reply.files.each do |file| %>
+          <div class="col-sm-8">
+            <%= I18n.t('lessons.label.label_name') %>
+            <%= link_to file.filename, rails_blob_path(file, disposition: :attachment), class: '' %>
+          </div>
+        <% end %>
+        <%= render partial: 'replies/teacher_form', locals: { course: reply.user_project.final_project.course, reply: reply } %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-2 ms-auto mt-2">
+    <div class="list-group">
+      <%= link_to t('account.edit'), edit_user_registration_path, class: "list-group-item my-1" %>
+      <%= link_to t('account.my_courses'), users_created_courses_path, class: "list-group-item my-1" %>
+      <%= link_to t('account.students_reply'), users_students_reply_path, class: "list-group-item my-1 active" %>
+      <%= link_to t('account.my_certificates'), users_certificates_path, class: "list-group-item my-1" %>
+      <%= link_to t('account.my_education'), users_studied_courses_path, class: "list-group-item my-1" %>
+    </div>
+  </div>
+</div>

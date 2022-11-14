@@ -2,6 +2,12 @@
 
 Rails.application.routes.draw do
   devise_for :users
+  devise_scope :users do
+    get '/users/created_courses', to: 'users_accounts#created_courses'
+    get '/users/certificates', to: 'users_accounts#certificates'
+    get '/users/studied_courses', to: 'users_accounts#studied_courses'
+    get '/users/students_reply', to: 'users_accounts#students_reply'
+  end
 
   concern :commentable do
     resources :comments, only: %i[create edit destroy]
