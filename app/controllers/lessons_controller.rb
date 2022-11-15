@@ -33,7 +33,6 @@ class LessonsController < ApplicationController
   def create
     if @course.owner?(current_user)
       @lesson = @course.lessons.build(lesson_params)
-
       if @lesson.save
         redirect_to course_lesson_path(@course, @lesson)
       else
@@ -81,7 +80,36 @@ class LessonsController < ApplicationController
 
   def destroy; end
 
+  def like
+    render json: get_information('like')
+  end
+
+  def dislike
+    render json: get_information('dislike')
+  end
+
   private
+
+  def get_information(kind)
+    @lesson = @course.lessons.find(params[:id])
+    @user_vote = current_user.votes.find_by(lesson: @lesson)
+    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
+      if @user_vote
+        return redirect_with_alert(course_lesson_path(@course, @lesson), "uge #{kind}") if @user_vote.kind == kind.to_s
+
+        kind == 'like' ? @user_vote.like! : @user_vote.dislike!
+      else
+        @vote = Vote.create(user: current_user, lesson: @lesson, kind: kind.to_s)
+      end
+
+      likes_count = Vote.where(kind: 'like').count
+      dislikes_count = Vote.where(kind: 'dislike').count
+
+      "{ status: :ok, kind: (:#{kind}), likes_count: #{likes_count}, dislike_count: #{dislikes_count} }"
+    else
+      '{ status: :not_authenticate }'
+    end
+  end
 
   def set_course
     @course = Course.find(params[:course_id])
@@ -89,7 +117,7 @@ class LessonsController < ApplicationController
 
   def lesson_params
     permit_params(
-      :lesson, :title, :content, :youtube_video_id, :order_factor,
+      :lesson, :title, :content, :youtube_video_id, :order_factor, :likes, :dislikes,
       files: [],
       links_attributes: %i[id address _destroy]
     )

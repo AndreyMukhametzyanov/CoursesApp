@@ -26,6 +26,7 @@ class Lesson < ApplicationRecord
 
   belongs_to :course
   has_many :links, dependent: :destroy
+  has_many :votes, dependent: :destroy
   has_many_attached :files
   has_rich_text :content
 
