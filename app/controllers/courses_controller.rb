@@ -5,6 +5,7 @@ class CoursesController < ApplicationController
 
   def index
     @courses = Course.all.where('user_id = ? OR status != ?', current_user, :drafted)
+    @likes = Vote.joins(lesson: [:course]).where(kind: 'like').count
   end
 
   def new

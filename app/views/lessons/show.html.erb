@@ -67,9 +67,10 @@
 </p>
 
 <div>
-  <%= button_to "Like ", like_course_lesson_path(@course, @lesson), params: { vote: { lesson_id: @lesson.id }, method: :post } %>
-  <%#= link_to "likes #{@lesson.votes.count}", like_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
-  <%= link_to "dislike #{@lesson.votes.count}", dislike_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
+  <% likes_count = @lesson.votes.where(kind: 'like').count %>
+  <% dislikes_count = @lesson.votes.where(kind: 'dislike').count %>
+  <%= link_to "like #{likes_count}", like_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
+  <%= link_to "dislike #{dislikes_count}", dislike_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
 </div>
 
 <%= render partial: 'comments/comments', locals: { resource: @lesson } %>

@@ -95,17 +95,17 @@ class LessonsController < ApplicationController
     @user_vote = current_user.votes.find_by(lesson: @lesson)
     if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
       if @user_vote
-        return redirect_with_alert(course_lesson_path(@course, @lesson), "uge #{kind}") if @user_vote.kind == kind.to_s
+        return '{ status: :without_changes }' if @user_vote.kind == kind.to_s
 
         kind == 'like' ? @user_vote.like! : @user_vote.dislike!
       else
         @vote = Vote.create(user: current_user, lesson: @lesson, kind: kind.to_s)
       end
 
-      likes_count = Vote.where(kind: 'like').count
-      dislikes_count = Vote.where(kind: 'dislike').count
+      @likes_count = @lesson.votes.where(kind: 'like').count
+      @dislikes_count = @lesson.votes.where(kind: 'dislike').count
 
-      "{ status: :ok, kind: (:#{kind}), likes_count: #{likes_count}, dislike_count: #{dislikes_count} }"
+      "{ status: :ok, kind: (:#{kind}), likes_count: #{@likes_count}, dislike_count: #{@dislikes_count} }"
     else
       '{ status: :not_authenticate }'
     end
