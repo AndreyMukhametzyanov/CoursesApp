@@ -24,7 +24,7 @@
 #
 FactoryBot.define do
   factory :vote do
-    lesson { nil }
-    user { nil }
+    user
+    lesson
   end
 end

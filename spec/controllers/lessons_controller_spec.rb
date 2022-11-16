@@ -338,4 +338,102 @@ RSpec.describe LessonsController do
       end
     end
   end
+
+  describe '#like' do
+    let!(:course) { create(:course, author: user) }
+    let(:lesson) { create(:lesson, course: course) }
+
+    context 'when user vote as like first time' do
+      let(:result) { { 'dislike_count' => 0, 'kind' => 'like', 'likes_count' => 1, 'status' => 'ok' } }
+
+      before do
+        lesson
+        post :like, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'return json with status ok and type of kind like' do
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq(result)
+      end
+    end
+
+    context 'when user vote as like again' do
+      let(:result) { { 'status' => 'without_changes' } }
+
+      before do
+        lesson
+        post :like, params: { course_id: course.id, id: lesson.id }
+        post :like, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'return json with status ok and type of kind like' do
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq(result)
+      end
+    end
+
+    context 'when non authorized user try vote as like' do
+      let(:result) { { 'status' => 'not_authenticate' } }
+
+      before do
+        lesson
+        sign_out user
+        post :like, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'return json with status ok and type of kind like' do
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq(result)
+      end
+    end
+  end
+
+  describe '#dislike' do
+    let!(:course) { create(:course, author: user) }
+    let(:lesson) { create(:lesson, course: course) }
+
+    context 'when user vote as dislike first time' do
+      let(:result) { { 'dislike_count' => 1, 'kind' => 'dislike', 'likes_count' => 0, 'status' => 'ok' } }
+
+      before do
+        lesson
+        post :dislike, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'return json with status ok and type of kind like' do
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq(result)
+      end
+    end
+
+    context 'when user vote as dislike again' do
+      let(:result) { { 'status' => 'without_changes' } }
+
+      before do
+        lesson
+        post :dislike, params: { course_id: course.id, id: lesson.id }
+        post :dislike, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'return json with status ok and type of kind like' do
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq(result)
+      end
+    end
+
+    context 'when non authorized user try vote as dislike' do
+      let(:result) { { 'status' => 'not_authenticate' } }
+
+      before do
+        lesson
+        sign_out user
+        post :dislike, params: { course_id: course.id, id: lesson.id }
+      end
+
+      it 'return json with status ok and type of kind like' do
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)).to eq(result)
+      end
+    end
+  end
 end

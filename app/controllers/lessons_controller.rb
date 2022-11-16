@@ -2,6 +2,8 @@
 
 class LessonsController < ApplicationController
   before_action :set_course, except: :destroy
+  skip_before_action :authenticate_user!, only: %i[like dislike]
+  skip_before_action :verify_authenticity_token, only: %i[like dislike]
 
   def show
     if @course.owner?(current_user)
@@ -91,6 +93,8 @@ class LessonsController < ApplicationController
   private
 
   def get_information(kind)
+    return { status: :not_authenticate } unless current_user
+
     @lesson = @course.lessons.find(params[:id])
     @user_vote = current_user.votes.find_by(lesson: @lesson)
     if @user_vote

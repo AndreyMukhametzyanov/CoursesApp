@@ -25,5 +25,15 @@
 require 'rails_helper'
 
 RSpec.describe Vote do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { build(:vote) }
+
+  describe 'validations' do
+    it { is_expected.to define_enum_for(:kind).with_values(%i[dislike like]) }
+    it { is_expected.to validate_uniqueness_of(:user_id).scoped_to(:lesson_id) }
+  end
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:lesson) }
+    it { is_expected.to belong_to(:user) }
+  end
 end

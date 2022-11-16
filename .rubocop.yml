@@ -69,3 +69,6 @@ RSpec/ExampleLength:
 
 Rails/FilePath:
   Enabled: false
+
+Metrics/ClassLength:
+  Max: 150

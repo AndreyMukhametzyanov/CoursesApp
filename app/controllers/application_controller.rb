@@ -3,15 +3,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user!, exept: %i[index show]
+  before_action :authenticate_user!
   before_action :set_locale
 
   def default_url_options
     I18n.default_locale == I18n.locale ? {} : { locale: I18n.locale }
-  end
-
-  rescue_from ActionController::InvalidAuthenticityToken do |_exception|
-    render json: { status: :not_authenticate }
   end
 
   protected

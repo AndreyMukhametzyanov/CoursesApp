@@ -29,4 +29,5 @@ class Vote < ApplicationRecord
   enum kind: { dislike: 0, like: 1 }
 
   validates :user_id, uniqueness: { scope: :lesson_id }
+  validates :kind, inclusion: { in: Vote.kinds.keys }
 end
