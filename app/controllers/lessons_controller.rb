@@ -93,22 +93,18 @@ class LessonsController < ApplicationController
   def get_information(kind)
     @lesson = @course.lessons.find(params[:id])
     @user_vote = current_user.votes.find_by(lesson: @lesson)
-    if @course.owner?(current_user) || @course.enrolled_in_course?(current_user)
-      if @user_vote
-        return '{ status: :without_changes }' if @user_vote.kind == kind.to_s
+    if @user_vote
+      return { status: :without_changes } if @user_vote.kind == kind.to_s
 
-        kind == 'like' ? @user_vote.like! : @user_vote.dislike!
-      else
-        @vote = Vote.create(user: current_user, lesson: @lesson, kind: kind.to_s)
-      end
-
-      @likes_count = @lesson.votes.where(kind: 'like').count
-      @dislikes_count = @lesson.votes.where(kind: 'dislike').count
-
-      "{ status: :ok, kind: (:#{kind}), likes_count: #{@likes_count}, dislike_count: #{@dislikes_count} }"
+      kind == 'like' ? @user_vote.like! : @user_vote.dislike!
     else
-      '{ status: :not_authenticate }'
+      @vote = Vote.create(user: current_user, lesson: @lesson, kind: kind.to_s)
     end
+
+    @likes_count = @lesson.votes.where(kind: 'like').count
+    @dislikes_count = @lesson.votes.where(kind: 'dislike').count
+
+    { status: :ok, kind: kind.to_sym, likes_count: @likes_count, dislike_count: @dislikes_count }
   end
 
   def set_course
@@ -117,7 +113,7 @@ class LessonsController < ApplicationController
 
   def lesson_params
     permit_params(
-      :lesson, :title, :content, :youtube_video_id, :order_factor, :likes, :dislikes,
+      :lesson, :title, :content, :youtube_video_id, :order_factor,
       files: [],
       links_attributes: %i[id address _destroy]
     )

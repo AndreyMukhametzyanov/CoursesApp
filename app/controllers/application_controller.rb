@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
     I18n.default_locale == I18n.locale ? {} : { locale: I18n.locale }
   end
 
+  rescue_from ActionController::InvalidAuthenticityToken do |_exception|
+    render json: { status: :not_authenticate }
+  end
+
   protected
 
   def set_locale

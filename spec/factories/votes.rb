@@ -5,7 +5,7 @@
 # Table name: votes
 #
 #  id         :bigint           not null, primary key
-#  kind       :integer          default("not_set")
+#  kind       :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  lesson_id  :bigint           not null
