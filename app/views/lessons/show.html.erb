@@ -69,8 +69,8 @@
 <div>
   <% likes_count = @lesson.votes.where(kind: 'like').count %>
   <% dislikes_count = @lesson.votes.where(kind: 'dislike').count %>
-  <%= link_to "like #{likes_count}", like_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
-  <%= link_to "dislike #{dislikes_count}", dislike_course_lesson_path(@course, @lesson), method: 'post', class: 'btn btn-outline-primary' %>
+  <%= link_to "like #{likes_count}", "#", class: 'btn btn-outline-primary', :id => "like" %>
+  <%= link_to "dislike #{dislikes_count}", "#", class: 'btn btn-outline-primary', :id => "dislike" %>
 </div>
 
 <%= render partial: 'comments/comments', locals: { resource: @lesson } %>

@@ -84,10 +84,12 @@ class LessonsController < ApplicationController
 
   def like
     render json: get_information('like')
+    # render json: { status: :ok, kind: :like, likes_count: 1, dislike_count: 0 }
   end
 
   def dislike
     render json: get_information('dislike')
+    # render json: { status: :ok, kind: :dislike, likes_count: 0, dislike_count: 1 }
   end
 
   private
