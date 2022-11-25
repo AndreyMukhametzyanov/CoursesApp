@@ -74,6 +74,16 @@ class Course < ApplicationRecord
     aasm.human_state
   end
 
+  def votes
+    likes = 0
+    dislikes = 0
+    lessons.each do |lesson|
+      likes += lesson.votes.where(kind: 'like').count
+      dislikes += lesson.votes.where(kind: 'dislike').count
+    end
+    { course: self, likes: likes, dislikes: dislikes }
+  end
+
   private
 
   def take_video_id

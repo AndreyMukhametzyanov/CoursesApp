@@ -9,15 +9,15 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title mb-4">
-                  <%= course.name %>
+                  <%= course[:course].name %>
                 </h5>
                 <h6 class="card-title my-2"><%= t('courses.index.short_description') %>
-                  :</h6> <%= course.short_description %>
-                <h6 class="card-title my-2"><%= t('courses.index.author') %>:</h6> <%= course.author.first_name %>
-                <h6 class="card-title my-2"><%= t('courses.index.status') %>:</h6> <%= course.aasm.human_state %>
-                <h6 class="card-title my-2">Likes:</h6> <%= @likes %>
+                  :</h6> <%= course[:course].short_description %>
+                <h6 class="card-title my-2"><%= t('courses.index.author') %>:</h6> <%= course[:course].author.first_name %>
+                <h6 class="card-title my-2"><%= t('courses.index.status') %>:</h6> <%= course[:course].aasm.human_state %>
+                <h6 class="card-title my-2">Likes:</h6> <%= course[:likes] %>
                 <p class="card-text mt-3">
-                <div class="col-sm"> <%= link_to t('courses.index.detailed'), promo_course_path(course.id), class: 'btn btn-outline-primary' %> </div>
+                <div class="col-sm"> <%= link_to t('courses.index.detailed'), promo_course_path(course[:course].id), class: 'btn btn-outline-primary' %> </div>
                 </p>
               </div>
             </div>
