@@ -5,7 +5,7 @@
 # Table name: votes
 #
 #  id         :bigint           not null, primary key
-#  kind       :integer
+#  kind       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  lesson_id  :bigint           not null
@@ -26,7 +26,7 @@ class Vote < ApplicationRecord
   belongs_to :lesson
   belongs_to :user
 
-  enum kind: { dislike: 0, like: 1 }
+  enum kind: { dislike: 'dislike', like: 'like' }
 
   validates :user_id, uniqueness: { scope: :lesson_id }
   validates :kind, inclusion: { in: Vote.kinds.keys }

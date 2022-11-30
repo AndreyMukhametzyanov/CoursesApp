@@ -83,16 +83,16 @@ class LessonsController < ApplicationController
   def destroy; end
 
   def like
-    render json: get_information('like')
+    render json: get_hash_by_kind('like')
   end
 
   def dislike
-    render json: get_information('dislike')
+    render json: get_hash_by_kind('dislike')
   end
 
   private
 
-  def get_information(kind)
+  def get_hash_by_kind(kind)
     return { status: :not_authenticate } unless current_user
 
     @lesson = @course.lessons.find(params[:id])
