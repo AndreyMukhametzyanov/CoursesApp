@@ -25,10 +25,15 @@
 require 'rails_helper'
 
 RSpec.describe Vote do
-  subject { build(:vote) }
+  subject(:vote) { build(:vote) }
 
   describe 'validations' do
-    it { is_expected.to define_enum_for(:kind).with_values(%i[dislike like]) }
+    it {
+      expect(vote).to define_enum_for(:kind)
+        .with_values(dislike: 'dislike', like: 'like')
+        .backed_by_column_of_type(:string)
+    }
+
     it { is_expected.to validate_uniqueness_of(:user_id).scoped_to(:lesson_id) }
   end
 

@@ -4,8 +4,16 @@ class CoursesController < ApplicationController
   before_action :set_course, only: %i[start promo update order edit change_state]
 
   def index
-    courses = Course.all.where('user_id = ? OR status != ?', current_user, :drafted)
-    @courses = courses.map(&:votes).sort_by { |hsh| hsh[:likes] }.reverse!
+    @courses = Course
+               .left_joins(lessons: :votes)
+               .where('courses.user_id = ? OR courses.status != ?', current_user, :drafted)
+               .select(
+                 'courses.*',
+                 "SUM(case when votes.kind = 'like' then 1 else 0 end) as likes_count",
+                 "SUM(case when votes.kind = 'dislike' then 1 else 0 end) as dislikes_count"
+               )
+               .group('courses.id')
+               .order('likes_count DESC')
   end
 
   def new
