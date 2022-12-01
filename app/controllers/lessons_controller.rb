@@ -2,6 +2,8 @@
 
 class LessonsController < ApplicationController
   before_action :set_course, except: :destroy
+  skip_before_action :authenticate_user!, only: %i[like dislike]
+  skip_before_action :verify_authenticity_token, only: %i[like dislike]
 
   def show
     if @course.owner?(current_user)
@@ -33,7 +35,6 @@ class LessonsController < ApplicationController
   def create
     if @course.owner?(current_user)
       @lesson = @course.lessons.build(lesson_params)
-
       if @lesson.save
         redirect_to course_lesson_path(@course, @lesson)
       else
@@ -81,7 +82,34 @@ class LessonsController < ApplicationController
 
   def destroy; end
 
+  def like
+    render json: get_hash_by_kind('like')
+  end
+
+  def dislike
+    render json: get_hash_by_kind('dislike')
+  end
+
   private
+
+  def get_hash_by_kind(kind)
+    return { status: :not_authenticate } unless current_user
+
+    @lesson = @course.lessons.find(params[:id])
+    @user_vote = current_user.votes.find_by(lesson: @lesson)
+    if @user_vote
+      return { status: :without_changes } if @user_vote.kind == kind.to_s
+
+      kind == 'like' ? @user_vote.like! : @user_vote.dislike!
+    else
+      @vote = Vote.create(user: current_user, lesson: @lesson, kind: kind.to_s)
+    end
+
+    @likes_count = @lesson.votes.where(kind: 'like').count
+    @dislikes_count = @lesson.votes.where(kind: 'dislike').count
+
+    { status: :ok, kind: kind.to_sym, likes_count: @likes_count, dislike_count: @dislikes_count }
+  end
 
   def set_course
     @course = Course.find(params[:course_id])

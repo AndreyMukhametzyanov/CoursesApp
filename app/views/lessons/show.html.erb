@@ -66,5 +66,12 @@
   <% end %>
 </p>
 
+<div>
+  <% likes_count = @lesson.votes.where(kind: 'like').count %>
+  <% dislikes_count = @lesson.votes.where(kind: 'dislike').count %>
+  <%= link_to "Like #{likes_count}", "#", class: 'btn btn-outline-primary', :id => "like" %>
+  <%= link_to "Dislike #{dislikes_count}", "#", class: 'btn btn-outline-primary', :id => "dislike" %>
+</div>
+
 <%= render partial: 'comments/comments', locals: { resource: @lesson } %>
 <%= render partial: 'comments/form', locals: { resources: [@course, @lesson] } %>

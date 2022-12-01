@@ -1,6 +1,11 @@
 document.addEventListener("turbolinks:load", function (event) {
     const timer = document.getElementById("timer")
     const form = document.getElementById("question-form")
+
+    if (!timer && !form) {
+        return
+    }
+
     let seconds = parseInt(timer.dataset.time)
     timer.innerHTML = secToTimeString(seconds)
     setInterval(function () {

@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     resources :lessons, except: :index, concerns: :commentable do
       member do
         post 'complete'
+        post 'like'
+        post 'dislike'
       end
     end
     member do

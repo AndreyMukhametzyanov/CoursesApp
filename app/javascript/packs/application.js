@@ -16,6 +16,7 @@ import "channels"
 import 'bootstrap'
 import '../stylesheets/application.scss'
 import './exam_timer'
+import './vote'
 
 const images = require.context('../images', true)
 
