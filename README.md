@@ -100,4 +100,4 @@ docker_stop
 </details>
 <br>
 
-&copy; Andrey Mukhametzianov 
+&copy; Andrey Mukhametzianov 2022
