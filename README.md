@@ -76,8 +76,8 @@ foreman start
 
 Для запуска используйте:
 
-```
-$ make check
+```shell
+make check
 ```
 
 </details>
@@ -87,16 +87,17 @@ $ make check
 
 Для запуска Docker используйте:
 
-```
-$ docker_start
+```shell
+docker_start
 ```
 
 Для остановки Docker и удаления контейнеров используйте:
 
-```
-$ docker_stop
+```shell
+docker_stop
 ```
 
 </details>
+<br>
 
 &copy; Andrey Mukhametzianov 
