@@ -23,6 +23,8 @@ ru:
             order_factor:
               is_not_uniq_type: 'лекция с такой очередностью уже существует'
     attributes:
+      user:
+        remember_me: 'Запомнить меня'
       course:
         name: 'Название'
         level: 'Сложность'
@@ -99,6 +101,7 @@ ru:
       create_order: 'Записаться на курс'
       create_fp: 'Создать дипломный проект'
       edit_fp: 'Изменить дипломный проект'
+      control: 'Управление курсом'
     label:
       label_name: 'Изображение для обложки'
     status:

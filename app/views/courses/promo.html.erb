@@ -37,20 +37,28 @@
 <p><strong><%= t('courses.promo.level') %></strong>  <%= @course.level %></p>
 <p class="card-text mt-3">
   <% if @course.owner?(current_user) %>
-    <% if @course.lessons.empty? %>
-      <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
-      <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
-    <% else %>
-      <%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'btn btn-outline-primary' %>
-      <%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'btn btn-outline-primary' %>
-      <%= link_to t('courses.promo.owner_continue'), start_course_path, class: 'btn btn-outline-primary' %>
-      <%= link_to @course.exam ? t('exam.edit_button') : t('exam.create_button'), new_course_exam_path(@course), class: 'btn btn-outline-primary' %>
-      <%= link_to @course.final_project ? t('courses.promo.edit_fp') : t('courses.promo.create_fp'), new_course_final_project_path(@course), class: 'btn btn-outline-primary' %>
-    <div>
-      <h6><%= I18n.t('activerecord.attributes.course.status') %></h6>
-      <%= link_to "#{@course.next_state_status}", change_state_course_path(@course), method: :post, class: 'btn btn-outline-primary' %>
-    </div>
-  <% end %>
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <%= t('courses.promo.control') %>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <% if @course.lessons.empty? %>
+        <li><%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'dropdown-item' %></li>
+        <li><%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'dropdown-item' %></li>
+      <% else %>
+        <li><%= link_to t('courses.promo.edit_course'), edit_course_path(@course), class: 'dropdown-item' %></li>
+        <li><%= link_to t('lessons.lesson_create'), new_course_lesson_path(@course, @lesson), class: 'dropdown-item' %></li>
+        <li><%= link_to t('courses.promo.owner_continue'), start_course_path, class: 'dropdown-item' %></li>
+        <li><%= link_to @course.exam ? t('exam.edit_button') : t('exam.create_button'), new_course_exam_path(@course), class: 'dropdown-item' %></li>
+        <li><%= link_to @course.final_project ? t('courses.promo.edit_fp') : t('courses.promo.create_fp'), new_course_final_project_path(@course), class: 'dropdown-item' %></li>
+        </ul>
+        </div>
+        <div class="my-3">
+          <h6><%= I18n.t('activerecord.attributes.course.status') %></h6>
+          <%= link_to "#{@course.next_state_status}", change_state_course_path(@course), method: :post, class: 'btn btn-outline-primary mt-2' %>
+        </div>
+      <% end %>
 <% else %>
   <% if @course.enrolled_in_course?(current_user) %>
     <%= link_to t('courses.promo.continue'), start_course_path, class: 'btn btn-outline-primary' %>
@@ -78,4 +86,3 @@
   <% end %>
   <%= render partial: 'comments/form', locals: { resources: [@course] } %>
 <% end %>
-

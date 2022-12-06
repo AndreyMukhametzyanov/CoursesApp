@@ -3,5 +3,5 @@
   <div>
     <%= f.input :correct_answer, as: :boolean, label: "#{t('answer.correct')}" %>
   </div>
-  <%= link_to_remove_association "#{I18n.t('answer.remove')}", f %>
+  <%= link_to_remove_association "#{I18n.t('answer.remove')}", f, class: "btn btn-outline-primary mt-3" %>
 </div>
