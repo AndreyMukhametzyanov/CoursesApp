@@ -12,6 +12,23 @@ class ExamsController < ApplicationController
                                                 percentage_passing: 100)
       @user_attempts = Examination.where(user: current_user, exam: @exam).count
       @attempts_of_exam = @exam.attempts_count
+
+      max_percentage_passing = Examination.where(user: current_user, exam: @exam, passed_exam: true)
+                                          .maximum(:percentage_passing)
+      max_percentage_passing = -1 if max_percentage_passing.nil?
+
+      Rails.logger.debug max_percentage_passing.class.inspect
+
+      @examinations2 = Examination.where(user: current_user, exam: @exam)
+                                  .select(
+                                    '*',
+                                    "case
+                                          when percentage_passing = #{max_percentage_passing} then 'table-success'
+                                          when passed_exam = true then 'table-info'
+                                     else 'table-danger'
+                                     end as row_color"
+                                  ).order('percentage_passing')
+
     else
       redirect_with_alert(promo_course_path(@course), I18n.t('errors.exam.access_error'))
     end
