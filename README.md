@@ -88,13 +88,13 @@ make check
 Для запуска Docker используйте:
 
 ```shell
-docker_start
+make docker_start
 ```
 
 Для остановки Docker и удаления контейнеров используйте:
 
 ```shell
-docker_stop
+make docker_stop
 ```
 
 </details>

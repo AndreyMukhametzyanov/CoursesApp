@@ -1,4 +1,20 @@
 en:
+  buttons:
+    sign_in: 'Sign in'
+    sign_up: 'Sign up'
+    forgot_password: 'Forgot password?'
+    instructions: 'Did not receive an email with instructions?'
+    unlock: 'Did not get the confirmation link?'
+    min_pass_length: 'Minimum number of characters:'
+    back: 'Back'
+  edit:
+    edit: 'Changing user data'
+    no_change: 'leave the field empty if you dont want to change it'
+    confirm_change: 'enter the current password to confirm the changes'
+    update: 'Update'
+    destroy_acc: 'Delete account'
+    warning: 'Are you sure?'
+
   simple_form:
     "yes": 'Yes'
     "no": 'No'

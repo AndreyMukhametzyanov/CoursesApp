@@ -63,7 +63,7 @@ RSpec.describe Examination do
   end
 
   describe '.time_remaining' do
-    let(:time) { (examination.created_at + exam.attempt_time) - Time.zone.now }
+    let(:time) { (examination.created_at + (exam.attempt_time * 60)) - Time.zone.now }
 
     it 'returns correct data' do
       expect(examination.time_remaining - time).to be < 0.1

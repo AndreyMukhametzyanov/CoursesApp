@@ -13,8 +13,8 @@
 
 <h1><%= "#{t('exam.welcome')} #{@course.name}" %></h1>
 <p><%= "#{t('exam.description')}: #{@course.exam.description}" %></p>
-<p><%= "#{t('exam.attempts_number')}: #{@course.exam.attempts_count}" %> </p>
-<p><%= "#{t('exam.attempts_time')}: #{@course.exam.attempt_time}" %> </p>
+<p><%= t('exam.attempts_number') %> <b><%= @course.exam.attempts_count %></b></p>
+<p><%= t('exam.attempts_time') %> <b><%= @course.exam.attempt_time %></b></p>
 
 <div class="my-3">
   <% if @user_attempts < @attempts_of_exam %>
@@ -28,7 +28,7 @@
   <% end %>
 </div>
 
-<% if @examinations.any? %>
+<% if @examinations2.any? %>
   <h4><%= I18n.t('exam.table.head') %></h4>
   <table class="table table-bordered mt-4">
     <thead>
@@ -44,8 +44,9 @@
     </tr>
     </thead>
     <tbody>
-    <% @examinations.each_with_index do |examination, i| %>
-      <tr>
+
+    <% @examinations2.each_with_index do |examination, i| %>
+      <tr class="<%= examination.row_color %>">
         <th scope="row"><%= i + 1 %></th>
         <td><%= current_user.first_name %></td>
         <td><%= examination.created_at.strftime("%d.%m.%Y %T") %></td>

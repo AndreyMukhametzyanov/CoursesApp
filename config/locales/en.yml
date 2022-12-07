@@ -23,6 +23,8 @@ en:
             order_factor:
               is_not_uniq_type: 'лекция с такой очередностью уже существует'
     attributes:
+      user:
+        remember_me: 'Remember me'
       course:
         name: 'Name'
         level: 'Level'
@@ -99,6 +101,7 @@ en:
       create_order: 'Buy course'
       create_fp: 'Create project'
       edit_fp: 'Edit project'
+      control: 'Course management'
     label:
       label_name: 'Cover image'
     status:
@@ -159,7 +162,7 @@ en:
     title: 'Title'
     description: 'Description'
     attempts_number: 'Number of exam attempts'
-    attempts_time: 'Time to take the exam (sec)'
+    attempts_time: 'Time to take the exam (min)'
     welcome: 'Welcome to the course exam '
     table:
       head: 'Your attempts'

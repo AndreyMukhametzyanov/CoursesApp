@@ -47,7 +47,7 @@ class Examination < ApplicationRecord
   end
 
   def time_remaining
-    ((created_at + exam.attempt_time) - Time.zone.now)
+    ((created_at + (exam.attempt_time * 60)) - Time.zone.now)
   end
 
   def time_is_over?
